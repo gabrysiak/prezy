@@ -22,20 +22,20 @@ module.exports = function(grunt) {
                 files: paths.js,
                 tasks: ['jshint'],
                 options: {
-                    livereload: true
+                    livereload: false
                 }
             },
             html: {
                 files: paths.html,
                 options: {
-                    livereload: true
+                    livereload: false
                 }
             },
             css: {
                 files: paths.css,
                 tasks: ['csslint'],
                 options: {
-                    livereload: true
+                    livereload: false
                 }
             }
         },
@@ -104,9 +104,17 @@ module.exports = function(grunt) {
             unit: {
                 configFile: 'test/karma/karma.conf.js'
             }
+        },
+        forever: {
+          server1: {
+            options: {
+              index: 'server.js',
+              logDir: 'logs'
+            }
+          }
         }
     });
-
+    
     //Load NPM tasks
     require('load-grunt-tasks')(grunt);
 
@@ -123,4 +131,7 @@ module.exports = function(grunt) {
     // For Heroku users only.
     // Docs: https://github.com/linnovate/mean/wiki/Deploying-on-Heroku
     grunt.registerTask('heroku:production', ['cssmin', 'uglify']);
+
+    //Forever Task
+    grunt.loadNpmTasks('grunt-forever');
 };

@@ -71,6 +71,7 @@ module.exports = function(passport) {
                     user = new User({
                         name: profile.displayName,
                         username: profile.username,
+                        email: profile.username+'@twitter.com',
                         provider: 'twitter',
                         twitter: profile._json,
                         roles: ['authenticated']

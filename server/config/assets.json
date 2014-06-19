@@ -12,9 +12,12 @@
                 "public/system/lib/angular-mocks/angular-mocks.js",
                 "public/system/lib/angular-cookies/angular-cookies.js",
                 "public/system/lib/angular-resource/angular-resource.js",
+                "public/system/lib/angular-sanitize/angular-sanitize.js",
                 "public/system/lib/angular-ui-router/release/angular-ui-router.js",
                 "public/system/lib/angular-bootstrap/ui-bootstrap.js",
                 "public/system/lib/angular-bootstrap/ui-bootstrap-tpls.js",
+                "public/system/lib/impress/impress.js",
+                "public/system/lib/underscore/underscore.js",
                 "public/init.js",
                 "public/*/*.js",
                 "public/*/{controllers,routes,services}/*.js"

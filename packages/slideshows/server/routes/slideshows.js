@@ -1,26 +1,27 @@
 'use strict';
 
-// The Package is past automatically as first parameter
-module.exports = function(Slideshows, app, auth, database) {
+var slideshows = require('../controllers/slideshows');
 
-    app.get('/slideshows/example/anyone', function(req, res, next) {
-        res.send('Anyone can access this');
-    });
+// Slideshow authorization helpers
+var hasAuthorization = function(req, res, next) {
+    if (!req.user.isAdmin && req.slideshow.user.id !== req.user.id) {
+        return res.send(401, 'User is not authorized');
+    }
+    next();
+};
 
-    app.get('/slideshows/example/auth', auth.requiresLogin, function(req, res, next) {
-        res.send('Only authenticated users can access this');
-    });
+module.exports = function(Slideshows, app, auth) {
 
-    app.get('/slideshows/example/admin', auth.requiresAdmin, function(req, res, next) {
-        res.send('Only users with Admin role can access this');
-    });
+    app.route('/slideshows')
+        .get(slideshows.all)
+        .post(auth.requiresLogin, slideshows.create);
+    app.route('/slideshows/:slideshowId')
+        .get(slideshows.show)
+        .put(auth.requiresLogin, hasAuthorization, slideshows.update)
+        .delete(auth.requiresLogin, hasAuthorization, slideshows.destroy);
+    app.route('/slideshows/play/:slideshowId')
+        .get(slideshows.show);
 
-    app.get('/slideshows/example/render', function(req, res, next) {
-        Slideshows.render('index', {
-            package: 'slideshows'
-        }, function(err, html) {
-            //Rendering a view from the Package server/views
-            res.send(html);
-        });
-    });
+    // Finish with setting up the slideshowId param
+    app.param('slideshowId', slideshows.slideshow);
 };

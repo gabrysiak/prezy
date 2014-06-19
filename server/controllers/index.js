@@ -1,9 +1,31 @@
 'use strict';
 
 var mean = require('meanio');
+var config = require('../config/config');
+
+var BitlyAPI = require('node-bitlyapi');
+
+var Bitly = new BitlyAPI({
+    client_id: config.bitly.clientID,
+    client_secret: config.bitly.clientSecret    
+});
+
+Bitly.setAccessToken(config.bitly.accessToken); 
+
+exports.bitly = function(req, res) {
+    var url = 'http://' + req.headers.host + '/#!/slideshows/play/' + req.params.slideshowId;
+
+    Bitly.shorten({longUrl:url}, function(err, results) {
+        if (err) throw err;
+        results = JSON.parse(results);        
+        res.jsonp({
+            shortUrl: results.data.url
+        });
+    });
+};
+
 
 exports.render = function(req, res) {
-
     var modules = [];
 
     // Preparing angular modules list with dependencies

@@ -17,8 +17,16 @@ for (var index in window.modules) {
 }
 
 // Default modules
-var modules = ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'mean.system', 'mean.auth'];
+var modules = ['ngSanitize', 'ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'mean.system', 'mean.auth'];
 modules = modules.concat(packageModules);
 
 // Combined modules
-angular.module('mean', modules);
+angular.module('mean', modules).run(['$rootScope','$location',
+    function ($rootScope,$location) {
+        // check current url
+        $rootScope.currentLocation = function (url) {
+            var re = new RegExp('^.*'+url+'.*','gi'); 
+            return re.test(location.hash);
+        };
+    }
+]);

@@ -1,9 +1,15 @@
 'use strict';
 
-angular.module('mean.slideshows').factory('Slideshows', [
-    function() {
-        return {
-            name: 'slideshows'
-        };
+//Slideshows service used for slideshows REST endpoint
+angular.module('mean')
+.factory('Slideshows', ['$resource',
+    function($resource) {
+        return $resource('slideshows/:slideshowId', {
+            slideshowId: '@_id'
+        }, {
+            update: {
+                method: 'PUT'
+            }
+        });
     }
 ]);

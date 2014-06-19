@@ -18,10 +18,14 @@ Slideshows.register(function(app, auth, database) {
 
     //We are adding a link to the main menu for all authenticated users
     Slideshows.menus.add({
-        title: 'slideshows example page',
-        link: 'slideshows example page',
-        roles: ['authenticated'],
-        menu: 'main'
+        'roles': ['authenticated'],
+        'title': 'Slideshows',
+        'link': 'all slideshows'
+    });
+    Slideshows.menus.add({
+        'roles': ['authenticated'],
+        'title': 'Create New Slideshow',
+        'link': 'create slideshow'
     });
 
     /**
@@ -45,6 +49,8 @@ Slideshows.register(function(app, auth, database) {
         //you now have the settings object
     });
     */
+
+    Slideshows.aggregateAsset('css', 'slideshows.css');
 
     return Slideshows;
 });

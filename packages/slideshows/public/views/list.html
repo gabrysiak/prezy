@@ -1,0 +1,22 @@
+<section data-ng-controller="SlideshowsController" data-ng-init="find()">
+    <ul class="slideshows unstyled">
+        <li data-ng-repeat="slideshow in slideshows">
+            <span>{{slideshow.created | date:'medium'}}</span> /
+            <span>{{slideshow.user.name}}</span>
+            <h2>
+                <a data-ng-href="#!/slideshows/{{slideshow._id}}">{{slideshow.title}}</a>
+                <a data-ng-href="{{slideshow.shortUrl}}" target="_blank">Play {{slideshow.title}}</a>
+                <span data-ng-if="hasAuthorization(slideshow)">
+                    <a class="btn" href="/#!/slideshows/{{slideshow._id}}/edit">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                    <a class="btn" data-ng-click="remove(slideshow);">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                </span>
+            </h2>
+            <div>{{slideshow.content}}</div>
+        </li>
+    </ul>
+    <h1 data-ng-hide="!slideshows || slideshows.length">No slideshows yet. <br> Why don't you <a href="/#!/slideshows/create">Create One</a>?</h1>
+</section>

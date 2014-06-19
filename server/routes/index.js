@@ -7,5 +7,7 @@ module.exports = function(app) {
 
     app.route('/')
         .get(index.render);
+    app.route('/bitly/:slideshowId')
+        .get(index.bitly);
 
 };

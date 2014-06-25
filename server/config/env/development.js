@@ -16,8 +16,8 @@ module.exports = {
         callbackURL: 'http://prezy.ycproduction1.com:3000/auth/twitter/callback'
     },
     github: {
-        clientID: 'APP_ID',
-        clientSecret: 'APP_SECRET',
+        clientID: '95504c14c0262391c8be',
+        clientSecret: 'fc94a83443097df6bb39da7d21333bd8acfbebbb',
         callbackURL: 'http://prezy.ycproduction1.com:3000/auth/github/callback'
     },
     google: {
@@ -26,8 +26,8 @@ module.exports = {
         callbackURL: 'http://prezy.ycproduction1.com:3000/auth/google/callback'
     },
     linkedin: {
-        clientID: 'API_KEY',
-        clientSecret: 'SECRET_KEY',
+        clientID: '77y8prz18flzno',
+        clientSecret: 'bdAyB3Mx7wyU3zOz',
         callbackURL: 'http://prezy.ycproduction1.com:3000/auth/linkedin/callback'
     },
     bitly: {

@@ -6,18 +6,9 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-
-/**
- * Slideshow Schema
- */
-var SlideshowSchema = new Schema({
-    created: {
-        type: Date,
-        default: Date.now
-    },
-    title: {
-        type: String,
-    required: true,
+var Slides = new Schema({
+    id: {
+        type: Number,
         trim: true
     },
     slideNumber: {
@@ -39,7 +30,22 @@ var SlideshowSchema = new Schema({
         type: String,
     required: false,
         trim: true
+    }
+});
+/**
+ * Slideshow Schema
+ */
+var SlideshowSchema = new Schema({
+    created: {
+        type: Date,
+        default: Date.now
     },
+    title: {
+        type: String,
+    required: true,
+        trim: true
+    },
+    slides: [Slides],
     shortUrl: {
         type: String,
     required: false,
@@ -58,11 +64,11 @@ SlideshowSchema.path('title').validate(function(title) {
     return !!title;
 }, 'Title cannot be blank');
 
-SlideshowSchema.path('slideNumber').validate(function(slideNumber) {
+Slides.path('slideNumber').validate(function(slideNumber) {
     return !!slideNumber;
 }, 'Slide number cannot be blank');
 
-SlideshowSchema.path('content').validate(function(content) {
+Slides.path('content').validate(function(content) {
     return !!content;
 }, 'Content cannot be blank');
 

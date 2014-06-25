@@ -4,19 +4,28 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
     function($scope, $stateParams, $location, $http, $log, Global, Slideshows, Shorturls) {
         $scope.global = Global;
 
+
+        $scope.slides = [{
+            id: 1,
+            slideNumber: 1,
+            content: null,
+            data_x: null,
+            data_y: null
+        }];
+
         $scope.hasAuthorization = function(slideshow) {
             if (!slideshow || !slideshow.user) return false;
             return $scope.global.isAdmin || slideshow.user._id === $scope.global.user._id;
         };
 
         $scope.create = function(isValid) {
+
             if (isValid) {
+                this.slides = $scope.slides;
+
                 var slideshow = new Slideshows({
                     title: this.title,
-                    slideNumber: this.slideNumber,
-                    content: this.content,
-                    data_x: this.data_x,
-                    data_y: this.data_y,
+                    slides: this.slides,
                     shortUrl: null
                 });
                 slideshow.$save(function(response) {
@@ -77,8 +86,34 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
             });
         };
 
-        $scope.addSlide = function() {
+        $scope.addSlide = function(slideshow) {
+            if( !slideshow ) {
+                var newItemNo = $scope.slides.length+1;
+                $scope.slides.push({
+                    id: newItemNo,
+                    slideNumber: newItemNo,
+                    content: null,
+                    data_x: null,
+                    data_y: null
+                });
+                return;
+            } else {
+                var editItemNo = slideshow.slides.length+1;
+                slideshow.slides.push({
+                    id: editItemNo,
+                    slideNumber: editItemNo,
+                    content: null,
+                    data_x: null,
+                    data_y: null
+                });
+            }
+        };
 
+        $scope.removeSlide = function(id) {
+            var index = $scope.slides.indexOf(id);
+            if( index > -1 ) {
+                $scope.slides.splice(index, 1);
+            }
         };
 
         $scope.createShortUrl = function(slideshowId) {

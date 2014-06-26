@@ -1,0 +1,21 @@
+<section data-ng-controller="ClientsController" data-ng-init="find()">
+    <ul class="clients unstyled">
+        <li data-ng-repeat="client in clients">
+            <span>{{client.created | date:'medium'}}</span> /
+            <span>{{client.user.name}}</span>
+            <h2>
+                <a data-ng-href="#!/clients/{{client._id}}">{{client.title}}</a>
+                <span data-ng-if="hasAuthorization(client)">
+                    <a class="btn" href="/#!/clients/{{client._id}}/edit">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                    <a class="btn" data-ng-click="remove(client);">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                </span>
+            </h2>
+            <div>{{client.content}}</div>
+        </li>
+    </ul>
+    <h1 data-ng-hide="!clients || clients.length">No clients yet. <br> Why don't you <a href="/#!/clients/create">Create One</a>?</h1>
+</section>

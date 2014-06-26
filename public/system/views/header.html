@@ -5,8 +5,14 @@
 
     <div class="left pull-left">
         <ul class="navbar-nav nav">
-            <li data-ng-repeat="item in menus.main" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
-                <a mean-token="item.link" ui-sref='{{item.link}}'>{{item.title}}</a>
+            <li data-ng-repeat="item in menus.main" ui-route="/{{item.link}}" class="dropdown" ng-class="{active: $uiRoute}">
+                <a mean-token="item.link" ng-hide="item.dropdown" ui-sref="{{item.link}}">{{item.title}}</a>
+                <a mean-token="item.title" ng-show="item.dropdown" class="dropdown-toggle" href>{{item.title}}<b class="caret"></b></a>
+                <ul ng-show="item.dropdown" class="dropdown-menu">
+                    <li ng-repeat="subitem in item.dropdown" ui-route="/{{subitem.link}}" ng-class="{active: $uiRoute, divider: subitem.divider}">
+                        <a mean-token="subitem.link" ui-sref='{{subitem.link}}'>{{subitem.title}}</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>

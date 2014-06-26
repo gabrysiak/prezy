@@ -1,0 +1,14 @@
+<section data-ng-controller="ClientsController" data-ng-init="findOne()">
+    <span>{{client.created | date:'medium'}}</span> /
+    <span>{{client.user.name}}</span>
+    <h2>{{client.title}}</h2>
+    <div data-ng-if="hasAuthorization(client)">
+        <a class="btn" href="/#!/clients/{{client._id}}/edit">
+            <i class="glyphicon glyphicon-edit"></i>
+        </a>
+        <a class="btn" data-ng-click="remove(client);">
+            <i class="glyphicon glyphicon-trash"></i>
+        </a>
+    </div>
+    <div>{{ client.content }}</div>
+</section>

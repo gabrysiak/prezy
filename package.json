@@ -65,7 +65,8 @@
     "node-bitlyapi": "^0.4.0",
     "multipart": "~0.1.5",
     "connect-busboy": "0.0.1",
-    "busboy": "~0.2.7"
+    "busboy": "~0.2.7",
+    "mongoose-types": "~1.0.3"
   },
   "devDependencies": {
     "grunt-karma": "^0.8.2",

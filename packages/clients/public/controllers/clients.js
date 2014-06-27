@@ -23,7 +23,10 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
                 console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
             }).success(function(data, status, headers, config) {
                 // file is uploaded successfully
-                $scope.file = JSON.parse(data);
+                if (!$scope.client) {
+                    $scope.client = {};
+                }
+                $scope.client.logo = JSON.parse(data);
             });
             //.error(...)
             //.then(success, error, progress); 
@@ -40,20 +43,17 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
                 // delete request to api
                 $http.delete('/uploads/logos/' + client._id)
                     .success(function (data, status, headers, config) {
-                        // console.log(data);
-                        // return data;
+                        if (status !== 200) return;
+                        //update the model
                         $scope.client.logo = null;
-                        // update the model
-                        $scope.update(true);
 
+                        client.$update();
                     }).error(function (data, status, headers, config) {
                         console.log(data);
                         return data;
                 });
             } else {
-                // $scope.client.$remove(function(response) {
-                     $location.path('clients');
-                // });
+                $location.path('clients');
             }
         };
 
@@ -67,7 +67,7 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
                 var client = new Clients({
                     title: this.title,
                     content: this.content,
-                    logo: $scope.file
+                    logo: $scope.client.logo
                 });
                 client.$save(function(response) {
                     $location.path('clients/' + response._id);
@@ -97,7 +97,10 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
         $scope.update = function(isValid) {
             if (isValid) {
                 var client = $scope.client;
-                
+                // check if logo was uploaded
+                if ($scope.client.logo) {
+                    client.logo = $scope.client.logo;
+                }
                 if (!client.updated) {
                     client.updated = [];
                 }

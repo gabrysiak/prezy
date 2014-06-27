@@ -4,7 +4,13 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    // load Email and URL type from npm package
+    mongooseTypes = require("mongoose-types");
+    mongooseTypes.loadTypes(mongoose);
+
+var Email = mongoose.SchemaTypes.Email;
+var Url = mongoose.SchemaTypes.Url;
 
 /**
  * Client Schema
@@ -21,12 +27,22 @@ var ClientSchema = new Schema({
     },
     content: {
         type: String,
-    required: true,
+    required: false,
+        trim: true
+    },
+    contactName: {
+        type: String,
+    required: false,
+        trim: true
+    },
+    contactEmail: {
+        type: Email,
+    required: false,
         trim: true
     },
     logo: {
         type: String,
-    required: true,
+    required: false,
         trim: true
     },
     user: {

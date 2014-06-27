@@ -18,10 +18,12 @@
                 </div>
             </div>
         </div>
-        <img data-ng-src="{{client.logo}}" alt="{{client.title}} Logo">
-        <a class="btn" data-ng-click="removeLogo(client);">
-            <i class="glyphicon glyphicon-trash"></i>
-        </a>
+        <div data-ng-show="client.logo">
+            <img data-ng-src="{{client.logo}}" alt="{{client.title}} Logo">
+            <a class="btn" data-ng-click="removeLogo(client);">
+                <i class="glyphicon glyphicon-trash"></i>
+            </a>
+        </div>
         <div data-ng-hide="client.logo" class="form-group" ng-class="{ 'has-error' : submitted && clientForm.logo.$invalid }">
             <label mean-token="'create-file'" class="col-md-3 control-label">File</label>
             <div class="col-md-9">
@@ -31,7 +33,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <button mean-token="'edit-submit'" type="submit" class="btn btn-success">Submit</button>
-                <a mean-token="'edit-cancel'" class="btn btn-default" data-ng-href="#!/slideshows">Cancel</a>
+                <a mean-token="'edit-cancel'" class="btn btn-default" data-ng-href="#!/clients">Cancel</a>
             </div>
         </div>
     </form>

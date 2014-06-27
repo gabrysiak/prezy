@@ -23,6 +23,7 @@ var express = require('express'),
     util = require('meanio/lib/util'),
     assetmanager = require('assetmanager'),
     fs = require('fs'),
+    busboy = require('connect-busboy'),
     Grid = require('gridfs-stream');
 
 module.exports = function(app, passport, db) {
@@ -67,6 +68,7 @@ module.exports = function(app, passport, db) {
 
     // Request body parsing middleware should be above methodOverride
     app.use(expressValidator());
+    app.use(busboy());
     app.use(bodyParser());
     app.use(methodOverride());
 

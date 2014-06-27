@@ -1,5 +1,5 @@
 <section data-ng-controller="ClientsController">
-    <form name="clientForm" class="form-horizontal col-md-6" role="form" data-ng-submit="create(clientForm.$valid)" novalidate>
+    <form name="clientForm" enctype="multipart/form-data" class="form-horizontal col-md-6" role="form" data-ng-submit="create(clientForm.$valid)" novalidate>
         <div class="form-group" ng-class="{ 'has-error' : submitted && clientForm.title.$invalid }">
             <label mean-token="'create-title'" class="col-md-3 control-label">Title</label>
             <div class="col-md-9">
@@ -16,6 +16,12 @@
                 <div ng-show="submitted && clientForm.content.$invalid" class="help-block">
                     <p ng-show="clientForm.content.$error.required">Content is required</p>
                 </div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error' : submitted && clientForm.logo.$invalid }">
+            <label mean-token="'create-logo'" class="col-md-3 control-label">Logo</label>
+            <div class="col-md-9">
+                <input name="logo" type="file" class="form-control" ng-file-select="onFileSelect($files)" id="logo">
             </div>
         </div>
         <div class="form-group">

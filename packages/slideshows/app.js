@@ -20,14 +20,17 @@ Slideshows.register(function(app, auth, database) {
     Slideshows.menus.add({
         roles: ['authenticated'],
         title: 'Slideshows',
+        menu: 'main',
         dropdown: [{
             title: 'Slideshows list',
-            link: 'all slideshows'
+            link: 'all slideshows',
+            route: '/#!/slideshows'
         }, {
             divider: true
         }, {
             title: 'Create New Slideshow',
-            link: 'create slideshow'
+            link: 'create slideshow',
+            route: '/#!/slideshows/create'
         }]
     });
 

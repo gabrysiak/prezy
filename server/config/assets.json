@@ -18,6 +18,8 @@
                 "public/system/lib/angular-bootstrap/ui-bootstrap-tpls.js",
                 "public/system/lib/impress/impress.js",
                 "public/system/lib/underscore/underscore.js",
+                "public/system/lib/danialfarid-angular-file-upload/dist/angular-file-upload-shim.js",
+                "public/system/lib/danialfarid-angular-file-upload/dist/angular-file-upload.min.js",
                 "public/init.js",
                 "public/*/*.js",
                 "public/*/{controllers,routes,services}/*.js"

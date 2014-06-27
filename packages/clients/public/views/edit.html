@@ -3,7 +3,7 @@
         <div class="form-group" ng-class="{ 'has-error' : submitted && clientForm.title.$invalid }">
             <label mean-token="'edit-title'" for="title" class="col-md-2 control-label">Title</label>
             <div class="col-md-10">
-                <input name="title" type="text" class="form-control" data-ng-model="title" id="title" placeholder="Title" required>
+                <input name="title" type="text" class="form-control" data-ng-model="client.title" id="title" placeholder="Title" required>
                 <div ng-show="submitted && clientForm.title.$invalid" class="help-block">
                     <p ng-show="clientForm.title.$error.required">Title is required</p>
                 </div>
@@ -12,10 +12,20 @@
         <div class="form-group" ng-class="{ 'has-error' : submitted && clientForm.content.$invalid }">
             <label mean-token="'edit-content'" for="content" class="col-md-2 control-label">Content</label>
             <div class="col-md-10">
-                <textarea name="content" data-ng-model="content" id="content" cols="30" rows="10" placeholder="Content" class="form-control" required></textarea>
+                <textarea name="content" data-ng-model="client.content" id="content" cols="30" rows="10" placeholder="Content" class="form-control" required></textarea>
                 <div ng-show="submitted && clientForm.content.$invalid" class="help-block">
                     <p ng-show="clientForm.content.$error.required">Content is required</p>
                 </div>
+            </div>
+        </div>
+        <img data-ng-src="{{client.logo}}" alt="{{client.title}} Logo">
+        <a class="btn" data-ng-click="removeLogo(client);">
+            <i class="glyphicon glyphicon-trash"></i>
+        </a>
+        <div data-ng-hide="client.logo" class="form-group" ng-class="{ 'has-error' : submitted && clientForm.logo.$invalid }">
+            <label mean-token="'create-file'" class="col-md-3 control-label">File</label>
+            <div class="col-md-9">
+                <input name="logo" type="file" class="form-control" ng-file-select="onFileSelect($files)" id="logo">
             </div>
         </div>
         <div class="form-group">

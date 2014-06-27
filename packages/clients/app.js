@@ -20,14 +20,17 @@ Clients.register(function(app, auth, database) {
     Clients.menus.add({
         roles: ['authenticated'],
         title: 'Clients',
+        menu: 'main',
         dropdown: [{
             title: 'Clients list',
-            link: 'all clients'
+            link: 'all clients',
+            route: '/#!/clients'
         }, {
             divider: true
         }, {
             title: 'Create New Client',
-            link: 'create client'
+            link: 'create client',
+            route: '/#!/clients/create'
         }]
     });
 
@@ -53,7 +56,7 @@ Clients.register(function(app, auth, database) {
     });
     */
 
-    Clients.aggregateAsset('css', 'slideshows.css');
+    Clients.aggregateAsset('css', 'clients.css');
 
     return Clients;
 });

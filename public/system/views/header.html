@@ -2,7 +2,9 @@
     <div class="logo pull-left">
         <a class="navbar-brand" ui-sref="home" mean-token="'site-title'">Prezy</a>
     </div>
-
+    
+    <!--  Fix this at later time, for now hardcode -->
+    <!-- 
     <div class="left pull-left">
         <ul class="navbar-nav nav">
             <li data-ng-repeat="item in menus.main" ui-route="/{{item.link}}" class="dropdown" ng-class="{active: $uiRoute}">
@@ -16,7 +18,20 @@
             </li>
         </ul>
     </div>
-
+ -->
+    <div class="left pull-left">
+        <ul class="navbar-nav nav">
+            <li data-ng-repeat="item in menus.main" ui-route="/{{item.link}}" class="dropdown" ng-class="{active: $uiRoute}">
+                <a mean-token="item.link" ng-hide="item.dropdown" href="/#!/admin/tokens">{{item.title}}</a>
+                <a mean-token="item.title" ng-show="item.dropdown" class="dropdown-toggle" href>{{item.title}}<b class="caret"></b></a>
+                <ul ng-show="item.dropdown" class="dropdown-menu">
+                    <li ng-repeat="subitem in item.dropdown" href="{{subitem.route}}" ng-class="{active: $uiRoute, divider: subitem.divider}">
+                        <a mean-token="subitem.link" href='{{subitem.route}}'>{{subitem.title}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
     <div class="account">
         <div class="text-edit">
             <div class="pull-right" data-ng-show="global.authenticated" mean-token-editable></div>

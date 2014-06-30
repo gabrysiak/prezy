@@ -21,7 +21,7 @@ var modules = ['ngSanitize', 'ngCookies', 'ngResource', 'ui.bootstrap', 'ui.rout
 modules = modules.concat(packageModules);
 
 // Combined modules
-angular.module('mean', modules).run(['$rootScope','$location',
+angular.module('mean', modules).run(['$rootScope','$location', 
     function ($rootScope,$location) {
         // check current url
         $rootScope.currentLocation = function (url) {

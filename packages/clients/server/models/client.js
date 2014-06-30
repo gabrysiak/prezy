@@ -6,11 +6,11 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     // load Email and URL type from npm package
-    mongooseTypes = require("mongoose-types");
+    mongooseTypes = require('mongoose-types');
     mongooseTypes.loadTypes(mongoose);
 
 var Email = mongoose.SchemaTypes.Email;
-var Url = mongoose.SchemaTypes.Url;
+// var Url = mongoose.SchemaTypes.Url;
 
 /**
  * Client Schema

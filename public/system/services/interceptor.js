@@ -19,7 +19,6 @@ angular.module('mean-factory-interceptor',[])
                 }
                 return $q.reject(rejection);
             }
-
         };
     }
     ])

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean').controller('ClientsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', '$timeout', '$upload',
-    function($scope, $stateParams, $location, $http, $log, Global, Clients, $timeout, $upload) {
+angular.module('mean').controller('ClientsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'FlashService', '$timeout', '$upload',
+    function($scope, $stateParams, $location, $http, $log, Global, Clients, FlashService, $timeout, $upload) {
         $scope.global = Global;
 
         $scope.onFileSelect = function($files) {
@@ -67,6 +67,8 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
                 var client = new Clients({
                     title: this.title,
                     content: this.content,
+                    contactName: this.contactName,
+                    contactEmail: this.contactEmail,
                     logo: $scope.client.logo
                 });
                 client.$save(function(response) {

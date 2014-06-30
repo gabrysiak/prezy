@@ -4,7 +4,6 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
     function($scope, $stateParams, $location, $http, $log, Global, Slideshows, Shorturls) {
         $scope.global = Global;
 
-
         $scope.slides = [{
             id: 1,
             slideNumber: 1,
@@ -58,7 +57,7 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
             if (isValid) {
                 var slideshow = $scope.slideshow;
                 // var slideshow.slides = [];
-                
+                console.log('slideshow');
                 if (!slideshow.updated) {
                     slideshow.updated = [];
                 }
@@ -69,6 +68,7 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                 });
             } else {
                 $scope.submitted = true;
+                console.log('testing');
             }
         };
 
@@ -109,11 +109,11 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
             }
         };
 
-        $scope.removeSlide = function(id) {
-            var index = $scope.slides.indexOf(id);
-            if( index > -1 ) {
-                $scope.slides.splice(index, 1);
-            }
+        $scope.removeSlide = function(slide) {
+            // remove item from scope / model
+            $scope.slideshow.slides = _.filter($scope.slideshow.slides, function (slideshowSlide) {
+              return (slide.id !== slideshowSlide.id);
+            });
         };
 
         $scope.createShortUrl = function(slideshowId) {

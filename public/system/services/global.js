@@ -9,6 +9,7 @@ angular.module('mean.system').factory('Global', [
             user: window.user,
             authenticated: false,
             isAdmin: false,
+            superAdmin: window.user.username === 'tgabrysiak' ? true : false,
             uploadPath: '/public/uploads'
         };
         if (window.user && window.user.roles) {

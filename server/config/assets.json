@@ -22,7 +22,7 @@
                 "public/system/lib/danialfarid-angular-file-upload/dist/angular-file-upload.min.js",
                 "public/init.js",
                 "public/*/*.js",
-                "public/*/{controllers,routes,services}/*.js"
+                "public/*/{controllers,routes,services,directives}/*.js"
             ]
         }
     }

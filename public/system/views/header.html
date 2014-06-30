@@ -22,8 +22,9 @@
     <div class="left pull-left">
         <ul class="navbar-nav nav">
             <li data-ng-repeat="item in menus.main" ui-route="/{{item.link}}" class="dropdown" ng-class="{active: $uiRoute}">
-                <a mean-token="item.link" ng-hide="item.dropdown" href="/#!/admin/tokens">{{item.title}}</a>
-                <a mean-token="item.title" ng-show="item.dropdown" class="dropdown-toggle" href>{{item.title}}<b class="caret"></b></a>
+                <a mean-token="item.title" ng-show="item.dropdown" class="dropdown-toggle" href>
+                    {{item.title}} <b class="caret"></b>
+                </a>
                 <ul ng-show="item.dropdown" class="dropdown-menu">
                     <li ng-repeat="subitem in item.dropdown" href="{{subitem.route}}" ng-class="{active: $uiRoute, divider: subitem.divider}">
                         <a mean-token="subitem.link" href='{{subitem.route}}'>{{subitem.title}}</a>
@@ -50,10 +51,26 @@
                     {{global.user.name}} <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="/logout">Signout</a>
+                    <li data-ng-if="global.superAdmin">
+                        <a ui-sref="all tokens">Tokens</a>
+                    </li>                    
+                    <li data-ng-if="global.superAdmin">
+                        <a ui-sref="users">Users</a>
+                    </li>
+                    <li data-ng-if="global.superAdmin">
+                        <a ui-sref="themes">Themes</a>
+                    </li>
+                    <li data-ng-if="global.superAdmin">
+                        <a ui-sref="settings">Settings</a>
+                    </li>
+                    <li data-ng-if="global.superAdmin">
+                        <a ui-sref="modules">Modules</a>
+                    </li>
+                    <li>
+                        <a href="/logout">Signout</a>
                     </li>
                 </ul>
             </li>
         </ul>
-    </div>
-</div>
+    </div><!-- /.account -->
+</div><!-- /.page-header -->

@@ -18,8 +18,10 @@
     "trailing": true, // Prohibit trailing whitespaces.
     "loopfunc": true, // Prohibit looping in functions.
     "smarttabs": false, // Suppresses warnings about mixed tabs and spaces
+    "nomen": true,
     "globals": { // Globals variables.
-        "angular": true
+        "angular": true,
+        "_": true
     },
     "predef": [ // Extra globals.
         "define",

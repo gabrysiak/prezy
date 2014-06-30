@@ -4,6 +4,7 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
     function($scope, $stateParams, $location, $http, $log, Global, Clients, Slideshows, Shorturls) {
         $scope.global = Global;
 
+        // initial slide values
         $scope.slides = [{
             id: 1,
             slideNumber: 1,
@@ -14,7 +15,10 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
 
         // populate the clients dropdown
         Clients.query(function(clients) {
-            $scope.clients = [];
+            $scope.clients = [{
+                value: null,
+                text: 'None'
+            }];
             angular.forEach(clients, function(client) {
                 $scope.clients.push({
                     value: client._id,
@@ -39,7 +43,6 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                     shortUrl: null
                 });
                 slideshow.$save(function(response) {
-                    // $location.path('slideshows/' + response._id);
                     $scope.createShortUrl(response._id);
                 });
 
@@ -95,6 +98,19 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                     if (!clients) return;
                     $scope.slideshow = slideshow;
                 }, true);
+            });
+        };
+
+        $scope.duplicate = function(slideshow) {
+            if (!slideshow) return;
+            var slideshowDuplicate = new Slideshows({
+                title: slideshow.title,
+                slides: slideshow.slides,
+                client: slideshow.client,
+                shortUrl: slideshow.shortUrl
+            });
+            slideshowDuplicate.$save(function(response) {
+                $scope.slideshows.push(response);
             });
         };
 

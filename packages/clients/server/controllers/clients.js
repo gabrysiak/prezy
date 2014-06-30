@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
     Client = mongoose.model('Client'),
+    Slideshow = mongoose.model('Slideshow'),
     _ = require('lodash'),
     appUploadPath = '/public/uploads',
     uploadPath = process.cwd() + appUploadPath,
@@ -130,4 +131,20 @@ exports.all = function(req, res) {
         }
         res.jsonp(clients);
     });
+};
+
+/**
+ * Get Client Slideshows
+ */
+exports.clientSlideshows = function(req, res, next) {
+    var clientId = req.param('clientId');
+    Slideshow.find({client: clientId}, function(err, result){
+        if (err) {
+            return res.jsonp(500,{
+                error: 'Cannot find slideshows belonging to clientId: ' + clientId
+            });
+        }
+        res.jsonp(result);
+    });
+
 };

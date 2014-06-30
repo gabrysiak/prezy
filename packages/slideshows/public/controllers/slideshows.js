@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean').controller('SlideshowsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Slideshows', 'Shorturls',
-    function($scope, $stateParams, $location, $http, $log, Global, Slideshows, Shorturls) {
+angular.module('mean').controller('SlideshowsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Slideshows', 'Shorturls',
+    function($scope, $stateParams, $location, $http, $log, Global, Clients, Slideshows, Shorturls) {
         $scope.global = Global;
 
         $scope.slides = [{
@@ -12,19 +12,30 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
             data_y: null
         }];
 
+        // populate the clients dropdown
+        Clients.query(function(clients) {
+            $scope.clients = [];
+            angular.forEach(clients, function(client) {
+                $scope.clients.push({
+                    value: client._id,
+                    text: client.title
+                });
+            });
+        });
+
         $scope.hasAuthorization = function(slideshow) {
             if (!slideshow || !slideshow.user) return false;
             return $scope.global.isAdmin || slideshow.user._id === $scope.global.user._id;
         };
 
         $scope.create = function(isValid) {
-
             if (isValid) {
                 this.slides = $scope.slides;
 
                 var slideshow = new Slideshows({
                     title: this.title,
                     slides: this.slides,
+                    client: this.client,
                     shortUrl: null
                 });
                 slideshow.$save(function(response) {
@@ -56,8 +67,7 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
         $scope.update = function(isValid) {
             if (isValid) {
                 var slideshow = $scope.slideshow;
-                // var slideshow.slides = [];
-                console.log('slideshow');
+
                 if (!slideshow.updated) {
                     slideshow.updated = [];
                 }
@@ -68,7 +78,6 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                 });
             } else {
                 $scope.submitted = true;
-                console.log('testing');
             }
         };
 
@@ -82,7 +91,10 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
             Slideshows.get({
                 slideshowId: $stateParams.slideshowId
             }, function(slideshow) {
-                $scope.slideshow = slideshow;
+                $scope.$watch('clients', function(clients){
+                    if (!clients) return;
+                    $scope.slideshow = slideshow;
+                }, true);
             });
         };
 

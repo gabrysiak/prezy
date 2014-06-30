@@ -19,6 +19,8 @@ module.exports = function(Clients, app, auth) {
         .get(clients.show)
         .put(auth.requiresLogin, hasAuthorization, clients.update)
         .delete(auth.requiresLogin, hasAuthorization, clients.destroy);
+    app.route('/clients/:clientId/slideshows')
+        .get(clients.clientSlideshows);
     app.route('/uploads/logos')
         .post(auth.requiresLogin, clients.uploadLogo);
     app.route('/uploads/logos/:clientId')

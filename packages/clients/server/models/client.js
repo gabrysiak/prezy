@@ -62,6 +62,7 @@ ClientSchema.path('content').validate(function(content) {
     return !!content;
 }, 'Content cannot be blank');
 
+
 /**
  * Statics
  */

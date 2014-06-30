@@ -18,7 +18,7 @@ var Slides = new Schema({
     },
     content: {
         type: String,
-    required: true,
+    required: false,
         trim: true
     },
     data_x: {
@@ -51,6 +51,10 @@ var SlideshowSchema = new Schema({
     required: false,
         trim: true
     },
+    client: {
+        type: Schema.ObjectId,
+        ref: 'Client'
+    },
     user: {
         type: Schema.ObjectId,
         ref: 'User'
@@ -68,10 +72,6 @@ Slides.path('slideNumber').validate(function(slideNumber) {
     return !!slideNumber;
 }, 'Slide number cannot be blank');
 
-Slides.path('content').validate(function(content) {
-    return !!content;
-}, 'Content cannot be blank');
-
 /**
  * Statics
  */
@@ -79,6 +79,12 @@ SlideshowSchema.statics.load = function(id, cb) {
     this.findOne({
         _id: id
     }).populate('user', 'name username').exec(cb);
+};
+
+SlideshowSchema.statics.saveClient = function(id, cb) {
+    this.findOne({
+        _id: id
+    }).populate('client', 'title content contactName contactEmail').exec(cb);
 };
 
 mongoose.model('Slideshow', SlideshowSchema);

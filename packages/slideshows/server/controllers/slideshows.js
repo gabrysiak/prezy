@@ -30,7 +30,8 @@ exports.create = function(req, res) {
     slideshow.save(function(err) {
         if (err) {
        return res.jsonp(500,{
-        error: 'Cannot save the slideshow'
+        error: 'Cannot save the slideshow',
+        detail: err
             });
         }
     res.jsonp(slideshow);
@@ -48,13 +49,23 @@ exports.update = function(req, res) {
 
     slideshow.save(function(err) {
         if (err) {
-        return res.jsonp(500,{
-        error: 'Cannot update the slideshow'
-            });
-    }
-    res.jsonp(slideshow);
+            return res.jsonp(500,{
+            error: 'Cannot update the slideshow',
+            detail: err
+                });
+        }
 
+        Slideshow.saveClient(slideshow.client, function(err, slideshow) {
+            if (err) {
+                return res.jsonp(500,{
+                        error: 'Cannot populate client',
+                        data: slideshow,
+                        detail: err
+                            });
+            }
+        });
     });
+    res.jsonp(slideshow);
 };
 
 /**

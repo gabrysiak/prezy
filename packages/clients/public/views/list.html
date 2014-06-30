@@ -15,6 +15,12 @@
                 </span>
             </h2>
             <div>{{client.content}}</div>
+            <div data-ng-if="client.slideshows">
+                <h1>Slideshows</h1>
+                <ul data-ng-repeat="slideshow in client.slideshows">
+                    <li><a data-ng-href="#!/slideshows/{{slideshow._id}}">{{ slideshow.title }}</a></li>
+                </ul>
+            </div>
         </li>
     </ul>
     <h1 data-ng-hide="!clients || clients.length">No clients yet. <br> Why don't you <a href="/#!/clients/create">Create One</a>?</h1>

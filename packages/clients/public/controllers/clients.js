@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean').controller('ClientsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'FlashService', '$timeout', '$upload',
-    function($scope, $stateParams, $location, $http, $log, Global, Clients, FlashService, $timeout, $upload) {
+angular.module('mean').controller('ClientsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Slideshows', 'FlashService', '$timeout', '$upload',
+    function($scope, $stateParams, $location, $http, $log, Global, Clients, Slideshows, FlashService, $timeout, $upload) {
         $scope.global = Global;
 
         $scope.onFileSelect = function($files) {
@@ -117,7 +117,16 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
         };
 
         $scope.find = function() {
-            Clients.query(function(clients) {
+            Clients.query(function(clients) {         
+                angular.forEach(clients, function(client){
+                    $http.get('/clients/' + client._id + '/slideshows')
+                        .success(function (data, status, headers, config) {
+                        if (status !== 200) return;
+                        client.slideshows = data;                          
+                    }).error(function (data, status, headers, config) {
+                        console.log(data);
+                    });
+                });
                 $scope.clients = clients;
             });
         };

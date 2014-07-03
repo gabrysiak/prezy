@@ -1,5 +1,41 @@
 <section data-ng-controller="ClientsController" data-ng-init="find()">
-    <ul class="clients unstyled">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th mean-token="'client-table-id'">#</th>
+                    <th mean-token="'client-table-name'">Client</th>
+                    <th mean-token="'client-table-created'">Created</th>
+                    <th mean-token="'client-table-created-by'">By User</th>
+                    <th mean-token="'client-table-presentations'">Presentations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="client in clients">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ client.title }}</td>
+                    <td>{{client.created | date:'short'}}</td>
+                    <td>{{ client.user.name }}</td>
+                    <td data-ng-if="hasAuthorization(client)">
+                        <a class="btn btn-warning" data-ng-click="rememberClient(client)" data-ng-href="/#!/clients/{{client._id}}/slideshows" >
+                            <i class="glyphicon glyphicon-search"></i>View
+                        </a>
+                    </td>
+                    <td data-ng-if="hasAuthorization(client)">
+                        <a class="btn btn-info" data-ng-href="/#!/clients/{{client._id}}/edit">
+                            <i class="glyphicon glyphicon-edit"></i>Edit
+                        </a>
+                    </td>
+                    <td data-ng-if="hasAuthorization(client)">
+                        <a class="btn btn-danger" data-ng-click="remove(client);">
+                            <i class="glyphicon glyphicon-trash"></i>Delete
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<!--     <ul class="clients unstyled">
         <li data-ng-repeat="client in clients">
             <span>{{client.created | date:'medium'}}</span> /
             <span>{{client.user.name}}</span>
@@ -22,6 +58,6 @@
                 </ul>
             </div>
         </li>
-    </ul>
+    </ul> -->
     <h1 data-ng-hide="!clients || clients.length">No clients yet. <br> Why don't you <a href="/#!/clients/create">Create One</a>?</h1>
 </section>

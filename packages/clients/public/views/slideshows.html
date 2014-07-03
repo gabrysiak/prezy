@@ -1,0 +1,38 @@
+<section data-ng-controller="ClientsController" data-ng-init="findSlideshows()">
+    <h1>{{ global.client.title }} Presentations</h1>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th mean-token="'slideshow-table-id'">#</th>
+                    <th mean-token="'slideshow-table-name'">slideshow</th>
+                    <th mean-token="'slideshow-table-created'">Created</th>
+                    <th mean-token="'slideshow-table-created-by'">By User</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="slideshow in slideshows">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ slideshow.title }}</td>
+                    <td>{{slideshow.created | date:'short'}}</td>
+                    <td>{{ slideshow.user.name }}</td>
+                    <td data-ng-if="hasAuthorization(slideshow)">
+                        <a class="btn btn-warning" data-ng-href="#">
+                            <i class="glyphicon glyphicon-search"></i>View
+                        </a>
+                    </td>
+                    <td data-ng-if="hasAuthorization(slideshow)">
+                        <a class="btn btn-info" data-ng-href="/#!/slideshows/{{slideshow._id}}/edit">
+                            <i class="glyphicon glyphicon-edit"></i>Edit
+                        </a>
+                    </td>
+                    <td data-ng-if="hasAuthorization(slideshow)">
+                        <a class="btn btn-danger" data-ng-click="remove(slideshow);">
+                            <i class="glyphicon glyphicon-trash"></i>Delete
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

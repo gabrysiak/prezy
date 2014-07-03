@@ -52,6 +52,13 @@ angular.module('mean').config(['$stateProvider',
                 resolve: {
                     loggedin: checkLoggedin
                 }
+            })
+            .state('client slideshows', {
+                url: '/clients/:clientId/slideshows',
+                templateUrl: 'clients/views/slideshows.html',
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             });
     }
 ]);

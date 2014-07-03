@@ -138,13 +138,13 @@ exports.all = function(req, res) {
  */
 exports.clientSlideshows = function(req, res, next) {
     var clientId = req.param('clientId');
-    Slideshow.find({client: clientId}, function(err, result){
+    Slideshow.find({client: clientId}, function(err, slideshows){
         if (err) {
             return res.jsonp(500,{
                 error: 'Cannot find slideshows belonging to clientId: ' + clientId
             });
         }
-        res.jsonp(result);
+        res.jsonp(slideshows);
     });
 
 };

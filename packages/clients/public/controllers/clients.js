@@ -118,17 +118,22 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
 
         $scope.find = function() {
             Clients.query(function(clients) {         
-                angular.forEach(clients, function(client){
-                    $http.get('/clients/' + client._id + '/slideshows')
-                        .success(function (data, status, headers, config) {
-                        if (status !== 200) return;
-                        client.slideshows = data;                          
-                    }).error(function (data, status, headers, config) {
-                        console.log(data);
-                    });
-                });
+                // angular.forEach(clients, function(client){
+                //     $http.get('/clients/' + client._id + '/slideshows')
+                //         .success(function (data, status, headers, config) {
+                //         if (status !== 200) return;
+                //         client.slideshows = data;                          
+                //     }).error(function (data, status, headers, config) {
+                //         console.log(data);
+                //     });
+                // });
                 $scope.clients = clients;
             });
+        };
+
+        // add client to global
+        $scope.rememberClient = function(client) {
+            $scope.global.client = client;
         };
 
         $scope.findOne = function() {
@@ -136,6 +141,14 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
                 clientId: $stateParams.clientId
             }, function(client) {
                 $scope.client = client;
+            });
+        };
+
+        $scope.findSlideshows = function() {
+            Clients.slideshows({
+                clientId: $stateParams.clientId
+            }, function(slideshows) {
+                $scope.slideshows = slideshows;
             });
         };
     }

@@ -1,7 +1,7 @@
 'use strict';
 /* Directives */
 angular.module('mean')
-.directive('initiateImpress', [
+.directive('tgInitiateImpress', [
     '$timeout',
     '$rootScope',
     function($timeout, $rootScope) {

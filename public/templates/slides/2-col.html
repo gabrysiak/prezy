@@ -1,8 +1,13 @@
+<!-- Template -->
+<div class="form-group">
+    <label class="col-md-2 control-label"></label>
+    <label class="col-md-9 control-label">{{ slidemodel.template ? slidemodel.template : 'default' }}</label>
+</div>
 <!-- Slide Number -->
 <div class="form-group" ng-class="{ 'has-error' : submitted && slidemodel.slideNumber.$invalid }" >
     <label mean-token="'create-slideNumber'" class="col-md-2 control-label">Slide Number</label>
     <div class="col-md-9">
-        <input type="number" class="form-control" data-ng-model="slidemodel.slideNumber" id="slideNumber" min="1" max="99" required>
+        <input type="number" name="slideNumber" class="form-control" data-ng-model="slidemodel.slideNumber" id="slideNumber" min="1" max="99" required>
         <div ng-show="submitted && slideshowForm.slideNumber.$invalid" class="help-block">
             <p ng-show="slideshowForm.slideNumber.$error.required">Slide Number is required</p>
         </div>
@@ -12,9 +17,10 @@
 <div class="form-group">
     <label mean-token="'create-content'" for="content" class="col-md-2 control-label">Content</label>
     <div class="col-md-9">
-        <summernote data-ng-model="slidemodel.content" id="content" class="form-control" config="texteditor.options" on-image-upload="texteditor.imageUpload(files, editor, welEditable, slidemodel);"></summernote>
+        <summernote data-ng-model="slidemodel.content" id="content" class="form-control" config="texteditor.options"></summernote>
     </div>
 </div>
+
 <div data-ng-show="slidemodel.template === '2-col'" class="form-group">
     <label mean-token="'create-content-right'" for="contentRight" class="col-md-2 control-label">Content Right</label>
     <div class="col-md-9">

@@ -96,11 +96,12 @@ var SlideshowSchema = new Schema({
     },
     client: {
         type: Schema.ObjectId,
-        ref: 'Client'
+         ref: 'Client',
+    required: true
     },
     user: {
         type: Schema.ObjectId,
-        ref: 'User'
+         ref: 'User'
     }
 });
 
@@ -110,6 +111,10 @@ var SlideshowSchema = new Schema({
 SlideshowSchema.path('title').validate(function(title) {
     return !!title;
 }, 'Title cannot be blank');
+
+SlideshowSchema.path('client').validate(function(client) {
+    return !!client;
+}, 'Please select a client');
 
 Slides.path('slideNumber').validate(function(slideNumber) {
     return !!slideNumber;

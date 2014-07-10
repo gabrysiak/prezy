@@ -28,30 +28,21 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
         $scope.summernoteWysiwyg = {
             options: {
                 height: '300',
-                focus: true,
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['height', ['height']],
-                    ['insert', ['link', 'picture']]
-                ]
+                airMode: true
             },
-            imageUpload: function(files, editor, welEditable, slide) {
+            imageUpload: function(files, editor, welEditable, slidemodel) {
                 var file = files[0];
-                console.log($scope.slides[slide.id-1]);
-                // $scope.upload = $upload.upload({
-                //     url: '/uploads/slideshows', //upload.php script, node.js route, or servlet url
-                //     file: file, // or list of files: $files for html5 only
-                // }).progress(function(evt) {
-                //     console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-                // }).success(function(data, status, headers, config) {
-                //     editor.insertImage(welEditable, JSON.parse(data));
-                    
-                //     var imgObj = new SlideImage(file,JSON.parse(data),slide.id);
-                //     slide.images.push(imgObj);
-                // });
+                $scope.upload = $upload.upload({
+                    url: '/uploads/slideshows', //upload.php script, node.js route, or servlet url
+                    file: file, // or list of files: $files for html5 only
+                }).progress(function(evt) {
+                    console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+                }).success(function(data, status, headers, config) {
+                    editor.insertImage(welEditable, JSON.parse(data));
+                 
+                    var imgObj = new SlideImage(file,JSON.parse(data),slidemodel.id);
+                    slidemodel.images.push(imgObj);
+                });
             }
         };
 

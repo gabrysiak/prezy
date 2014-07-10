@@ -1,7 +1,7 @@
 'use strict';
 /* Directives */
 angular.module('mean')
-.directive('ngBack', [
+.directive('tgBack', [
     function () {
         return {
             restrict: 'A',

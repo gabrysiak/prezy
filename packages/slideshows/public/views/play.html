@@ -13,7 +13,7 @@
             <div id="start" class="step" data-x="-1500" data-y="0">
                 <p>{{ slideshow.title }}</p>
             </div>
-            <div data-ng-repeat="slide in slideshow.slides" class="step" data-x="{{slide.data_x}}" data-y="{{slide.data_y}}" initiate-impress="">
+            <div data-ng-repeat="slide in slideshow.slides" class="step" data-x="{{slide.data_x}}" data-y="{{slide.data_y}}" tg-initiate-impress="">
                 <p ng-bind-html="slide.content"></p>
             </div>
 

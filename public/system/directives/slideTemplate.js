@@ -1,7 +1,7 @@
 'use strict';
 /* Directives */
 angular.module('mean')
-.directive('ngSlideTemplate', [
+.directive('tgSlideTemplate', [
     '$compile', '$http', '$templateCache',
     function ($compile, $http, $templateCache) {
         

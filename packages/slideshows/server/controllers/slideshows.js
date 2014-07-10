@@ -5,7 +5,10 @@
  */
 var mongoose = require('mongoose'),
     Slideshow = mongoose.model('Slideshow'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    appUploadPath = '/public/uploads',
+    uploadPath = process.cwd() + appUploadPath,
+    fs = require('fs');
 
 
 /**
@@ -17,6 +20,43 @@ exports.slideshow = function(req, res, next, id) {
         if (!slideshow) return next(new Error('Failed to load slideshow ' + id));
         req.slideshow = slideshow;
         next();
+    });
+};
+
+/**
+ * Upload a slideshow image
+ */
+exports.uploadSlideshowImage = function(req, res) {
+    // Handle Image upload
+    var fstream;
+    req.pipe(req.busboy);
+    req.busboy.on('file', function (fieldname, file, filename) {
+        console.log('Uploading: ' + filename); 
+        fstream = fs.createWriteStream(uploadPath + '/slideshows/' + filename);
+        file.pipe(fstream);
+        fstream.on('close', function () {
+            res.jsonp(appUploadPath + '/slideshows/' + filename);
+        });
+    });
+};
+
+/**
+ * Delete a slideshow image
+ */
+exports.destroySlideshowImage = function(req, res) {
+    // logo will include path /public/uploads/slideshows/img.png
+    var logo = req.client.logo;
+    var delPath = process.cwd() + logo;
+    fs.exists(delPath, function(exists) {
+        if(exists) {
+            fs.unlink(delPath, function (err) {
+                if (err) throw err;
+                console.log('successfully deleted : '+ delPath );
+                return res.jsonp(200,{
+                    success: 'successfully deleted : ' + delPath
+                });
+            });
+        }
     });
 };
 

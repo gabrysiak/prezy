@@ -1,3 +1,4 @@
+<div data-ng-include="'/public/system/views/misc-controls.html'"></div>
 <section data-ng-controller="ClientsController" data-ng-init="find()">
     <div class="table-responsive">
         <table class="table table-striped">
@@ -17,18 +18,18 @@
                     <td>{{client.created | date:'short'}}</td>
                     <td>{{ client.user.name }}</td>
                     <td data-ng-if="hasAuthorization(client)">
-                        <a class="btn btn-warning" data-ng-click="rememberClient(client)" data-ng-href="/#!/clients/{{client._id}}/slideshows" >
-                            <i class="glyphicon glyphicon-search"></i>View
+                        <a class="btn btn-success" data-ng-click="rememberClient(client)" data-ng-href="/#!/clients/{{client._id}}/slideshows" >
+                            <i class="fa fa-eye fa-lg"></i> View
                         </a>
                     </td>
                     <td data-ng-if="hasAuthorization(client)">
-                        <a class="btn btn-info" data-ng-href="/#!/clients/{{client._id}}/edit">
-                            <i class="glyphicon glyphicon-edit"></i>Edit
+                        <a class="btn btn-warning" data-ng-href="/#!/clients/{{client._id}}/edit">
+                            <i class="fa fa-edit fa-lg"></i> Edit
                         </a>
                     </td>
                     <td data-ng-if="hasAuthorization(client)">
                         <a class="btn btn-danger" data-ng-click="remove(client);">
-                            <i class="glyphicon glyphicon-trash"></i>Delete
+                            <i class="fa fa-trash-o fa-lg"></i> Delete
                         </a>
                     </td>
                 </tr>

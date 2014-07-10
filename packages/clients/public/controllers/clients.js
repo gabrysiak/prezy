@@ -109,7 +109,8 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
                 client.updated.push(new Date().getTime());
 
                 client.$update(function() {
-                    $location.path('clients/' + client._id);
+                    // $location.path('clients/' + client._id);
+                    $location.path('clients');
                 });
             } else {
                 $scope.submitted = true;
@@ -118,15 +119,6 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
 
         $scope.find = function() {
             Clients.query(function(clients) {         
-                // angular.forEach(clients, function(client){
-                //     $http.get('/clients/' + client._id + '/slideshows')
-                //         .success(function (data, status, headers, config) {
-                //         if (status !== 200) return;
-                //         client.slideshows = data;                          
-                //     }).error(function (data, status, headers, config) {
-                //         console.log(data);
-                //     });
-                // });
                 $scope.clients = clients;
             });
         };
@@ -149,6 +141,15 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
                 clientId: $stateParams.clientId
             }, function(slideshows) {
                 $scope.slideshows = slideshows;
+            });
+        };
+
+        $scope.removeSlideshow = function(slideshow) {
+            Slideshows.delete({
+                slideshowId: slideshow._id
+            }, function(slideshow){
+                // remove slideshow from scope
+                $scope.slideshows = _.without($scope.slideshows, _.findWhere($scope.slideshows, {_id: slideshow._id}));
             });
         };
     }

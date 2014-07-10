@@ -1,3 +1,4 @@
+<div data-ng-include="'/public/system/views/misc-controls.html'"></div>
 <section data-ng-controller="ClientsController">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -53,7 +54,7 @@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <div class="pull-right">
-                            <a mean-token="'create-cancel'" class="btn btn-default" data-ng-href="#!/clients">Cancel</a>
+                            <a mean-token="'create-cancel'" class="btn btn-default" ui-sref="all clients">Cancel</a>
                             <button mean-token="'create-submit'" type="submit" class="btn btn-success">Submit</button>
                         </div>
                     </div>

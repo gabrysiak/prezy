@@ -1,17 +1,11 @@
 'use strict';
 
-angular.module('mean').controller('SlideshowsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Slideshows', 'Shorturls',
-    function($scope, $stateParams, $location, $http, $log, Global, Clients, Slideshows, Shorturls) {
+angular.module('mean').controller('SlideshowsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Slideshows', 'Shorturls', 'Templates', '$upload', 'SlideImage',
+    function($scope, $stateParams, $location, $http, $log, Global, Clients, Slideshows, Shorturls, Templates, $upload, SlideImage) {
         $scope.global = Global;
-
+        
         // initial slide values
-        $scope.slides = [{
-            id: 1,
-            slideNumber: 1,
-            content: null,
-            data_x: null,
-            data_y: null
-        }];
+        $scope.slides = [];
 
         // populate the clients dropdown
         Clients.query(function(clients) {
@@ -25,6 +19,45 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                     text: client.title
                 });
             });
+        });
+
+        // populate templates from service
+        $scope.templates = Templates.all();
+
+        // summernote options
+        $scope.summernoteWysiwyg = {
+            options: {
+                height: '300',
+                focus: true,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['insert', ['link', 'picture']]
+                ]
+            },
+            imageUpload: function(files, editor, welEditable, slide) {
+                var file = files[0];
+                console.log($scope.slides[slide.id-1]);
+                // $scope.upload = $upload.upload({
+                //     url: '/uploads/slideshows', //upload.php script, node.js route, or servlet url
+                //     file: file, // or list of files: $files for html5 only
+                // }).progress(function(evt) {
+                //     console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+                // }).success(function(data, status, headers, config) {
+                //     editor.insertImage(welEditable, JSON.parse(data));
+                    
+                //     var imgObj = new SlideImage(file,JSON.parse(data),slide.id);
+                //     slide.images.push(imgObj);
+                // });
+            }
+        };
+
+        //Event Listener for ng-repeat on slideshow slides.This is needed because impress tries to render the cards while ng-repeat is still populating the attributes in the template.  This works alongside the initiateImpress directive
+        $scope.$on('ngRepeatFinished', function() {
+             impress().init();
         });
 
         $scope.hasAuthorization = function(slideshow) {
@@ -77,7 +110,8 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                 slideshow.updated.push(new Date().getTime());
 
                 slideshow.$update(function() {
-                    $location.path('slideshows/' + slideshow._id);
+                    // $location.path('slideshows/' + slideshow._id);
+                    $location.path('slideshows');
                 });
             } else {
                 $scope.submitted = true;
@@ -97,6 +131,7 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                 $scope.$watch('clients', function(clients){
                     if (!clients) return;
                     $scope.slideshow = slideshow;
+                    $scope.slides = $scope.slideshow.slides;
                 }, true);
             });
         };
@@ -107,10 +142,13 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                 title: slideshow.title,
                 slides: slideshow.slides,
                 client: slideshow.client,
-                shortUrl: slideshow.shortUrl
+                shortUrl: null
             });
             slideshowDuplicate.$save(function(response) {
-                $scope.slideshows.push(response);
+                $scope.createShortUrl(response._id, true, function(shortUrl){
+                    response.shortUrl = shortUrl;
+                    $scope.slideshows.push(response);
+                });
             });
         };
 
@@ -119,32 +157,46 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                 var newItemNo = $scope.slides.length+1;
                 $scope.slides.push({
                     id: newItemNo,
+                    template: typeof $scope.slides.template === 'undefined' ? null : $scope.slides.template,
                     slideNumber: newItemNo,
                     content: null,
+                    contentRight: null,
+                    images: [],
                     data_x: null,
                     data_y: null
                 });
                 return;
-            } else {
-                var editItemNo = slideshow.slides.length+1;
-                slideshow.slides.push({
-                    id: editItemNo,
-                    slideNumber: editItemNo,
-                    content: null,
-                    data_x: null,
-                    data_y: null
-                });
             }
+
+            var editItemNo = slideshow.slides.length+1;
+            slideshow.slides.push({
+                id: editItemNo,
+                template: typeof slideshow.slides.template === 'undefined' ? null : slideshow.slides.template,
+                slideNumber: editItemNo,
+                content: null,
+                contentRight: null,
+                images: [],
+                data_x: null,
+                data_y: null
+            });
         };
 
         $scope.removeSlide = function(slide) {
             // remove item from scope / model
-            $scope.slideshow.slides = _.filter($scope.slideshow.slides, function (slideshowSlide) {
-              return (slide.id !== slideshowSlide.id);
-            });
+            if( $scope.slideshow ) {
+                $scope.slideshow.slides = _.filter($scope.slideshow.slides, function (slideshowSlide) {
+                    return (slide.id !== slideshowSlide.id);
+                });
+                $scope.reorderSlides($scope.slideshow.slides);
+            } else {
+                $scope.slides = _.filter($scope.slides, function (slideshowSlide) {
+                    return (slide.id !== slideshowSlide.id);
+                });
+                $scope.reorderSlides($scope.slides);
+            }
         };
 
-        $scope.createShortUrl = function(slideshowId) {
+        $scope.createShortUrl = function(slideshowId, duplicate, callback) {
             Slideshows.get({
                 slideshowId: slideshowId
             }, function(slideshow) {
@@ -154,10 +206,21 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
             $http.get('/bitly/' + slideshowId).then(function (response) {
                 $scope.slideshow.shortUrl = response.data.shortUrl;
                 $scope.slideshow.$update(function() {
-                    $location.path('slideshows/' + slideshowId);
+                    if( duplicate ) {
+                        callback($scope.slideshow.shortUrl);
+                    } else {
+                        $location.path('slideshows/' + slideshowId);
+                    }  
                 });
             }).catch(function (response, status, headers, config) {
                 $log.error(response);  //error occured
+            });
+        };
+
+        $scope.reorderSlides = function(slides) {
+            angular.forEach(slides, function(value,key) {
+                value.id = key+1;
+                value.slideNumber = key+1;
             });
         };
     }

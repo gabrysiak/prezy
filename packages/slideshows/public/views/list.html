@@ -1,25 +1,45 @@
+<div data-ng-include="'/public/system/views/misc-controls.html'"></div>
 <section data-ng-controller="SlideshowsController" data-ng-init="find()">
-    <ul class="slideshows unstyled">
-        <li data-ng-repeat="slideshow in slideshows">
-            <span>{{slideshow.created | date:'medium'}}</span> /
-            <span>{{slideshow.user.name}}</span>
-            <h2>
-                <a data-ng-href="#!/slideshows/{{slideshow._id}}">{{slideshow.title}}</a>
-                <a data-ng-href="{{slideshow.shortUrl}}" target="_blank">Play {{slideshow.title}}</a>
-                <span data-ng-if="hasAuthorization(slideshow)">
-                    <a class="btn" href="/#!/slideshows/{{slideshow._id}}/edit">
-                        <i class="glyphicon glyphicon-edit"></i>
-                    </a>
-                    <a class="btn" data-ng-click="remove(slideshow);">
-                        <i class="glyphicon glyphicon-trash"></i>
-                    </a>
-                    <a class="btn" data-ng-click="duplicate(slideshow);">
-                        <i class="glyphicon glyphicon-repeat"></i>
-                    </a>
-                </span>
-            </h2>
-            <div>{{slideshow.content}}</div>
-        </li>
-    </ul>
-    <h1 data-ng-hide="!slideshows || slideshows.length">No slideshows yet. <br> Why don't you <a href="/#!/slideshows/create">Create One</a>?</h1>
+    <h1>{{ global.client.title }} Presentations</h1>
+    <div data-ng-show="!slideshows || slideshows.length" class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th mean-token="'slideshow-table-id'">#</th>
+                    <th mean-token="'slideshow-table-name'">slideshow</th>
+                    <th mean-token="'slideshow-table-created'">Created</th>
+                    <th mean-token="'slideshow-table-slide-count'"># slides</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="slideshow in slideshows">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ slideshow.title }}</td>
+                    <td>{{slideshow.created | date:'short'}}</td>
+                    <td>{{ slideshow.slides.length }}</td>
+                    <td data-ng-if="hasAuthorization(slideshow)">
+                        <a class="btn btn-success" data-ng-href="{{ slideshow.shortUrl }}" target="_blank">
+                            <i class="fa fa-eye fa-lg"></i> View
+                        </a>
+                    </td>
+                    <td data-ng-if="hasAuthorization(slideshow)">
+                        <a class="btn btn-warning" data-ng-href="/#!/slideshows/{{slideshow._id}}/edit">
+                            <i class="fa fa-edit fa-lg"></i> Edit
+                        </a>
+                    </td>
+                    <td data-ng-if="hasAuthorization(slideshow)">
+                        <a class="btn btn-info" data-ng-click="duplicate(slideshow);">
+                            <i class="fa fa-refresh fa-spin fa-lg"></i> Duplicate
+                        </a>
+                    </td>
+                    <td data-ng-if="hasAuthorization(slideshow)">
+                        <a class="btn btn-danger" data-ng-click="remove(slideshow);">
+                            <i class="fa fa-trash-o fa-lg"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h1 data-ng-hide="!slideshows || slideshows.length">No presentations yet. <br> Why don't you <a href="/#!/slideshows/create">Create One</a>?</h1>
 </section>

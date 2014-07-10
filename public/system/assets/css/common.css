@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+
 .page-header {
     padding-bottom: 0 !important;
     margin: 0 !important;
@@ -45,4 +47,27 @@ footer p {
 }
 .ng-valid.ng-dirty{
     border-color:#78FA89;
+}
+
+/*
+Buttons
+================================================================>
+*/
+body .btn {
+    text-decoration: none !important;
+    font-weight: normal;
+}
+
+.form-control-feedback {
+    cursor: move;
+}
+
+/* Prevent selectable text while dragging on .content */
+.content, .row{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: moz-none;
+    -ms-user-select: none;
+    user-select: none;
 }

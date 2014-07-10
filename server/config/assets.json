@@ -2,6 +2,8 @@
     "core": {
         "css": {
             "public/build/css/dist.min.css": [
+                "public/system/lib/summernote/dist/summernote.css",
+                "public/system/lib/summernote/dist/summernote-bs3.css",
                 "public/**/assets/css/*.css"
             ]
         },
@@ -14,12 +16,18 @@
                 "public/system/lib/angular-resource/angular-resource.js",
                 "public/system/lib/angular-sanitize/angular-sanitize.js",
                 "public/system/lib/angular-ui-router/release/angular-ui-router.js",
+                "public/system/lib/angular-reorder/ngRepeatReorder.js",
                 "public/system/lib/angular-bootstrap/ui-bootstrap.js",
                 "public/system/lib/angular-bootstrap/ui-bootstrap-tpls.js",
+                "public/system/lib/bootstrap/dist/js/bootstrap.min.js",
+                "public/system/lib/hammerjs/hammer.min.js",
+                "public/system/lib/angular-hammer/angular-hammer.js",
                 "public/system/lib/impress/impress.js",
                 "public/system/lib/underscore/underscore.js",
                 "public/system/lib/danialfarid-angular-file-upload/dist/angular-file-upload-shim.js",
                 "public/system/lib/danialfarid-angular-file-upload/dist/angular-file-upload.min.js",
+                "public/system/lib/angular-summernote/dist/angular-summernote.min.js",
+                "public/system/lib/summernote/dist/summernote.js",
                 "public/init.js",
                 "public/*/*.js",
                 "public/*/{controllers,routes,services,directives}/*.js"

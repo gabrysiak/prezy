@@ -1,6 +1,7 @@
 'use strict';
 /* Directives */
-angular.module('mean').directive('ngNotification', [
+angular.module('mean')
+.directive('ngNotification', [
   '$timeout',
   '$rootScope',
   function ($timeout, $rootScope) {

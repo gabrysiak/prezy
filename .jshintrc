@@ -21,7 +21,8 @@
     "nomen": true,
     "globals": { // Globals variables.
         "angular": true,
-        "_": true
+        "_": true,
+        "impress": true
     },
     "predef": [ // Extra globals.
         "define",
@@ -38,6 +39,7 @@
         "expect",
         "spyOn"
     ],
+    "multistr": true, //EOL closing string
     "indent": 4, // Specify indentation spacing
     "devel": true, // Allow development statements e.g. `console.log();`.
     "noempty": true // Prohibit use of empty blocks.

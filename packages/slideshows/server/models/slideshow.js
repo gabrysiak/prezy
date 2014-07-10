@@ -6,9 +6,46 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
+var Images = new Schema({
+    slideId: {
+        type: Number,
+        trim: true
+    },
+    name: {
+        type: String,
+    required: false,
+        trim: true
+    },
+    path: {
+        type: String,
+    required: false,
+        trim: true
+    },
+    type: {
+        type: String,
+    required: false,
+        trim: true
+    },
+    size: {
+        type: String,
+    required: false,
+        trim: true
+    },
+    lastModifiedDate: {
+        type: String,
+    required: false,
+        trim: true
+    }
+});
+
 var Slides = new Schema({
     id: {
         type: Number,
+        trim: true
+    },
+    template: {
+        type: String,
+    required: false,
         trim: true
     },
     slideNumber: {
@@ -21,6 +58,12 @@ var Slides = new Schema({
     required: false,
         trim: true
     },
+    contentRight: {
+        type: String,
+    required: false,
+        trim: true
+    },
+    images: [Images],
     data_x: {
         type: String,
     required: false,

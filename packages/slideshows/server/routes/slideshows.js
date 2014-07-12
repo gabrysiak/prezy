@@ -22,6 +22,7 @@ module.exports = function(Slideshows, app, auth) {
     app.route('/slideshows/play/:slideshowId')
         .get(slideshows.show);
     app.route('/uploads/slideshows')
+        .get(slideshows.allUploads)
         .post(auth.requiresLogin, slideshows.uploadSlideshowImage);
     app.route('/uploads/slideshows/:slideshowId')
         .get(slideshows.show)

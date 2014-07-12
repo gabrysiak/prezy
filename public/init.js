@@ -17,7 +17,7 @@ for (var index in window.modules) {
 }
 
 // Default modules
-var modules = ['ngSanitize', 'ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'mean.system', 'mean.auth', 'angularFileUpload', 'hmTouchEvents', 'ngRepeatReorder', 'summernote'];
+var modules = ['ngSanitize', 'ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'mean.system', 'mean.auth', 'angularFileUpload', 'hmTouchEvents', 'ngRepeatReorder'];
 modules = modules.concat(packageModules);
 
 // Combined modules

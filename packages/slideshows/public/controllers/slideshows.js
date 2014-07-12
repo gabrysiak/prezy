@@ -1,11 +1,16 @@
 'use strict';
 
-angular.module('mean').controller('SlideshowsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Slideshows', 'Shorturls', 'Templates', '$upload', 'SlideImage',
-    function($scope, $stateParams, $location, $http, $log, Global, Clients, Slideshows, Shorturls, Templates, $upload, SlideImage) {
+angular.module('mean').controller('SlideshowsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Slideshows', 'Shorturls', 'Templates', '$upload', '$sce',
+    function($scope, $stateParams, $location, $http, $log, Global, Clients, Slideshows, Shorturls, Templates, $upload, $sce) {
         $scope.global = Global;
         
         // initial slide values
         $scope.slides = [];
+        $scope.slideDataX = 0;
+        $scope.slideDataY = 0;
+
+        // populate templates from service
+        $scope.templates = Templates.all();
 
         // populate the clients dropdown
         Clients.query(function(clients) {
@@ -21,35 +26,15 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
             });
         });
 
-        // populate templates from service
-        $scope.templates = Templates.all();
-
-        // summernote options
-        $scope.summernoteWysiwyg = {
-            options: {
-                height: '300',
-                airMode: true
-            },
-            imageUpload: function(files, editor, welEditable, slidemodel) {
-                var file = files[0];
-                $scope.upload = $upload.upload({
-                    url: '/uploads/slideshows', //upload.php script, node.js route, or servlet url
-                    file: file, // or list of files: $files for html5 only
-                }).progress(function(evt) {
-                    console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-                }).success(function(data, status, headers, config) {
-                    editor.insertImage(welEditable, JSON.parse(data));
-                 
-                    var imgObj = new SlideImage(file,JSON.parse(data),slidemodel.id);
-                    slidemodel.images.push(imgObj);
-                });
-            }
-        };
-
         //Event Listener for ng-repeat on slideshow slides.This is needed because impress tries to render the cards while ng-repeat is still populating the attributes in the template.  This works alongside the initiateImpress directive
         $scope.$on('ngRepeatFinished', function() {
              impress().init();
         });
+
+        // pass html to $sce service and trust it.  Make sure this is coming from source you trust
+        $scope.to_trusted = function(html_code) {
+            return $sce.trustAsHtml(html_code);
+        };
 
         $scope.hasAuthorization = function(slideshow) {
             if (!slideshow || !slideshow.user) return false;
@@ -144,47 +129,54 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
         };
 
         $scope.addSlide = function(slideshow) {
-            if( !slideshow ) {
-                var newItemNo = $scope.slides.length+1;
-                $scope.slides.push({
-                    id: newItemNo,
-                    template: typeof $scope.slides.template === 'undefined' ? null : $scope.slides.template,
-                    slideNumber: newItemNo,
-                    content: null,
-                    contentRight: null,
-                    images: [],
-                    data_x: null,
-                    data_y: null
-                });
-                return;
-            }
+            // auto increment slide data x,y
+            this.autoDataXY('add', function(){
+                if( !slideshow ) {
+                    var newItemNo = $scope.slides.length+1;
+                    $scope.slides.push({
+                        id: newItemNo,
+                        template: typeof $scope.slides.template === 'undefined' ? null : $scope.slides.template,
+                        slideNumber: newItemNo,
+                        content: '',
+                        contentRight: '',
+                        images: [],
+                        data_x: $scope.slideDataX,
+                        data_y: $scope.slideDataY
+                    });
+                    return;
+                }
 
-            var editItemNo = slideshow.slides.length+1;
-            slideshow.slides.push({
-                id: editItemNo,
-                template: typeof slideshow.slides.template === 'undefined' ? null : slideshow.slides.template,
-                slideNumber: editItemNo,
-                content: null,
-                contentRight: null,
-                images: [],
-                data_x: null,
-                data_y: null
+                var editItemNo = slideshow.slides.length+1;
+                slideshow.slides.push({
+                    id: editItemNo,
+                    template: typeof slideshow.slides.template === 'undefined' ? null : slideshow.slides.template,
+                    slideNumber: editItemNo,
+                    content: '',
+                    contentRight: '',
+                    images: [],
+                    data_x: $scope.slideDataX,
+                    data_y: $scope.slideDataY
+                });
             });
         };
 
         $scope.removeSlide = function(slide) {
-            // remove item from scope / model
-            if( $scope.slideshow ) {
-                $scope.slideshow.slides = _.filter($scope.slideshow.slides, function (slideshowSlide) {
-                    return (slide.id !== slideshowSlide.id);
-                });
-                $scope.reorderSlides($scope.slideshow.slides);
-            } else {
-                $scope.slides = _.filter($scope.slides, function (slideshowSlide) {
-                    return (slide.id !== slideshowSlide.id);
-                });
-                $scope.reorderSlides($scope.slides);
-            }
+
+            // auto adjust slide data data x,y
+            this.autoDataXY('remove', function(){
+                // remove item from scope / model
+                if( $scope.slideshow ) {
+                    $scope.slideshow.slides = _.filter($scope.slideshow.slides, function (slideshowSlide) {
+                        return (slide.id !== slideshowSlide.id);
+                    });
+                    $scope.reorderSlides($scope.slideshow.slides);
+                } else {
+                    $scope.slides = _.filter($scope.slides, function (slideshowSlide) {
+                        return (slide.id !== slideshowSlide.id);
+                    });
+                    $scope.reorderSlides($scope.slides);
+                }
+            });
         };
 
         $scope.createShortUrl = function(slideshowId, duplicate, callback) {
@@ -201,7 +193,7 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                         callback($scope.slideshow.shortUrl);
                     } else {
                         $location.path('slideshows/' + slideshowId);
-                    }  
+                    }
                 });
             }).catch(function (response, status, headers, config) {
                 $log.error(response);  //error occured
@@ -213,6 +205,36 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                 value.id = key+1;
                 value.slideNumber = key+1;
             });
+        };
+
+        $scope.autoDataXY = function(action, callback) {
+            
+            // after removing a slide we need to loop through
+            // all slides and fix the data x,y
+            var adjustData = function(slides) {
+                console.log(slides);
+            };
+
+            // action is either add or remove
+            if( !action ) return;
+            
+            // check slide action and calculate data x,y
+            switch (action) {
+                case 'add': 
+                    $scope.slideDataX += 1500;
+                    $scope.slideDataY += 0;
+                    break;
+                case 'remove':
+                    $scope.slideDataX -= 1500;
+                    $scope.slideDataY += 0;
+                    adjustData($scope.slideDataX);
+                    adjustData($scope.slideDataY);
+                    break;
+                default:
+            }
+
+            // execute callback function if exists
+            if( callback ) callback();
         };
     }
 ]);

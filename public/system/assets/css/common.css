@@ -28,7 +28,7 @@
     margin-top:70px;
     width:100%
 }
-footer {
+/*footer {
     position:fixed;
     left:0;
     bottom:0;
@@ -41,7 +41,7 @@ footer {
 }
 footer p {
     padding:5px 0 12px 10px
-}
+}*/
 .ng-invalid.ng-dirty{
     border-color:#FA787E;
 }
@@ -70,4 +70,8 @@ body .btn {
     -moz-user-select: moz-none;
     -ms-user-select: none;
     user-select: none;
+}
+
+body .container {
+    padding: 30px;
 }

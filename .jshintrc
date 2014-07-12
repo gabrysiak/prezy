@@ -22,7 +22,8 @@
     "globals": { // Globals variables.
         "angular": true,
         "_": true,
-        "impress": true
+        "impress": true,
+        "$": true
     },
     "predef": [ // Extra globals.
         "define",

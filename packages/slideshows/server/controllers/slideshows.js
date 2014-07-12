@@ -24,6 +24,38 @@ exports.slideshow = function(req, res, next, id) {
 };
 
 /**
+ * Show slideshow images
+ */
+exports.allUploads = function(req, res) {
+    var walk = function(dir) {
+        var results = [],
+            rootFile,
+            list = fs.readdirSync(dir);
+        list.forEach(function(file) {
+            rootFile = dir + '/' + file;
+            var stat = fs.statSync(rootFile);
+            if (stat && stat.isDirectory()) {
+                results = results.concat(walk(rootFile));
+            } else {
+                results.push('/public/uploads/slideshows/' + file);
+            }
+        });
+        return results;
+    };
+
+    var files = walk('/var/www/prezy/httpdocs/public/uploads/slideshows'),
+        slideshowImages = [];
+
+    files.forEach(function(file) {
+        slideshowImages.push({
+        'filelink': file, 'thumb': file, 'image': file
+        });
+    });
+    
+    res.jsonp(slideshowImages);
+};
+
+/**
  * Upload a slideshow image
  */
 exports.uploadSlideshowImage = function(req, res) {
@@ -35,7 +67,7 @@ exports.uploadSlideshowImage = function(req, res) {
         fstream = fs.createWriteStream(uploadPath + '/slideshows/' + filename);
         file.pipe(fstream);
         fstream.on('close', function () {
-            res.jsonp(appUploadPath + '/slideshows/' + filename);
+            res.jsonp({'filelink': appUploadPath + '/slideshows/' + filename, 'thumb': appUploadPath + '/slideshows/' + filename, 'image': appUploadPath + '/slideshows/' + filename});
         });
     });
 };

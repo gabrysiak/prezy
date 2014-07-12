@@ -2,8 +2,7 @@
     "core": {
         "css": {
             "public/build/css/dist.min.css": [
-                "public/system/lib/summernote/dist/summernote.css",
-                "public/system/lib/summernote/dist/summernote-bs3.css",
+                "public/system/lib/bootstrap/dist/css/bootstrap.css",
                 "public/**/assets/css/*.css"
             ]
         },

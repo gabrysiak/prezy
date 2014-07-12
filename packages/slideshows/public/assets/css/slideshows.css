@@ -701,3 +701,17 @@ i, em { font-style: italic }
     Thanks for reading. I hope you enjoyed it at least as much as I enjoyed writing it
     for you.
 */
+
+/* Start Template Styles */
+.step.title {
+    font-size: 6em;
+    color: green;
+}
+
+.step.default {
+    font-size: 4em;
+    font-style: italic;
+}
+.step.default:before, .step.default:after {
+    content: '"';
+}

@@ -31,8 +31,7 @@ angular.module('mean')
         return {
             restrict: 'E',
             scope: {
-                slidemodel: '=',
-                texteditor: '='
+                slidemodel: '='
             },
             link: function(scope, element, attrs) {
                 var loader = getTemplate(scope.slidemodel.template),

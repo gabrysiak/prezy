@@ -37,13 +37,13 @@ exports.allUploads = function(req, res) {
             if (stat && stat.isDirectory()) {
                 results = results.concat(walk(rootFile));
             } else {
-                results.push('/public/uploads/slideshows/' + file);
+                results.push( appUploadPath + '/slideshows/' + file);
             }
         });
         return results;
     };
 
-    var files = walk('/var/www/prezy/httpdocs/public/uploads/slideshows'),
+    var files = walk( process.env.PWD + appUploadPath + '/slideshows'),
         slideshowImages = [];
 
     files.forEach(function(file) {

@@ -8,7 +8,6 @@ angular.module('mean')
             require: '?ngModel',
             restrict: 'E',
             link: function (scope, el, attrs, ngModel) {
-
                 // Function to update model
                 var updateModel = function() {
                     $timeout(function () {

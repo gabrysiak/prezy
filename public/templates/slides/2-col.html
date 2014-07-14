@@ -7,7 +7,7 @@
 <div class="form-group" ng-class="{ 'has-error' : submitted && slidemodel.slideNumber.$invalid }" >
     <label mean-token="'create-slideNumber'" class="col-md-2 control-label">Slide Number</label>
     <div class="col-md-9">
-        <input type="number" name="slideNumber" class="form-control" data-ng-model="slidemodel.slideNumber" id="slideNumber" min="1" max="99" required auto-fill-sync>
+        <input type="number" name="slideNumber" class="form-control" data-ng-model="slidemodel.slideNumber" id="slideNumber" min="1" max="99" required>
         <div ng-show="submitted && slideshowForm.slideNumber.$invalid" class="help-block">
             <p ng-show="slideshowForm.slideNumber.$error.required">Slide Number is required</p>
         </div>
@@ -32,7 +32,7 @@
 <div class="form-group">
     <label mean-token="'create-data_x'" class="col-md-2 control-label">Data-X</label>
     <div class="col-md-9">
-        <input name="data_x" type="text" class="form-control" data-ng-model="slidemodel.data_x" id="data_x" placeholder="Data-X">
+        <input name="data_x" type="number" class="form-control" data-ng-model="slidemodel.data_x" id="data_x" placeholder="Data-X">
     </div>
 </div>
 
@@ -40,6 +40,6 @@
 <div class="form-group">
     <label mean-token="'create-data_y'" class="col-md-2 control-label">Data-Y</label>
     <div class="col-md-9">
-        <input name="data_y" type="text" class="form-control" data-ng-model="slidemodel.data_y" id="data_y" placeholder="Data-Y">
+        <input name="data_y" type="number" class="form-control" data-ng-model="slidemodel.data_y" id="data_y" placeholder="Data-Y">
     </div>
 </div>

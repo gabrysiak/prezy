@@ -73,26 +73,6 @@ exports.uploadSlideshowImage = function(req, res) {
 };
 
 /**
- * Delete a slideshow image
- */
-exports.destroySlideshowImage = function(req, res) {
-    // logo will include path /public/uploads/slideshows/img.png
-    var logo = req.client.logo;
-    var delPath = process.cwd() + logo;
-    fs.exists(delPath, function(exists) {
-        if(exists) {
-            fs.unlink(delPath, function (err) {
-                if (err) throw err;
-                console.log('successfully deleted : '+ delPath );
-                return res.jsonp(200,{
-                    success: 'successfully deleted : ' + delPath
-                });
-            });
-        }
-    });
-};
-
-/**
  * Create an slideshow
  */
 exports.create = function(req, res) {

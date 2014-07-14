@@ -139,7 +139,6 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                         slideNumber: newItemNo,
                         content: '',
                         contentRight: '',
-                        images: [],
                         data_x: $scope.slideDataX,
                         data_y: $scope.slideDataY
                     });
@@ -153,7 +152,6 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                     slideNumber: editItemNo,
                     content: '',
                     contentRight: '',
-                    images: [],
                     data_x: $scope.slideDataX,
                     data_y: $scope.slideDataY
                 });
@@ -161,22 +159,37 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
         };
 
         $scope.removeSlide = function(slide) {
+            // after removing a slide we need to loop through
+            // all slides and fix the data x,y
+            var adjustData = function() {
+                var dataX = 1500;
+                angular.forEach($scope.slides, function(slide) {
+                    slide.data_x = $scope.slideDataX = dataX;
+                    dataX += 1500;
+                });
+            };
 
             // auto adjust slide data data x,y
             this.autoDataXY('remove', function(){
                 // remove item from scope / model
-                if( $scope.slideshow ) {
+                if( $scope.slideshow && $scope.slideshow.slides ) {
                     $scope.slideshow.slides = _.filter($scope.slideshow.slides, function (slideshowSlide) {
                         return (slide.id !== slideshowSlide.id);
                     });
+                    // sync up slides
+                    $scope.slides = $scope.slideshow.slides;
+                    // reorder slides
                     $scope.reorderSlides($scope.slideshow.slides);
                 } else {
                     $scope.slides = _.filter($scope.slides, function (slideshowSlide) {
                         return (slide.id !== slideshowSlide.id);
                     });
+                    // reorder slides
                     $scope.reorderSlides($scope.slides);
                 }
             });
+
+            adjustData();
         };
 
         $scope.createShortUrl = function(slideshowId, duplicate, callback) {
@@ -192,7 +205,8 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                     if( duplicate ) {
                         callback($scope.slideshow.shortUrl);
                     } else {
-                        $location.path('slideshows/' + slideshowId);
+                        // $location.path('slideshows/' + slideshowId);
+                        $location.path('slideshows');
                     }
                 });
             }).catch(function (response, status, headers, config) {
@@ -209,26 +223,28 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
 
         $scope.autoDataXY = function(action, callback) {
             
-            // after removing a slide we need to loop through
-            // all slides and fix the data x,y
-            var adjustData = function(slides) {
-                console.log(slides);
-            };
-
             // action is either add or remove
             if( !action ) return;
             
+            // check if we are editing exisiting slideshow and get current data x,y
+            var checkSlideshowDataXY = function() {
+                // check current slideshow scope, then adjust data x,y value
+                if( $scope.slideshow && $scope.slideshow.slides ) {
+                    $scope.slideDataX = $scope.slideshow.slides[$scope.slideshow.slides.length-1].data_x;
+                    $scope.slideDataY = $scope.slideshow.slides[$scope.slideshow.slides.length-1].data_y;
+                }
+            };
             // check slide action and calculate data x,y
             switch (action) {
                 case 'add': 
+                    checkSlideshowDataXY();
                     $scope.slideDataX += 1500;
                     $scope.slideDataY += 0;
                     break;
                 case 'remove':
+                    checkSlideshowDataXY();
                     $scope.slideDataX -= 1500;
                     $scope.slideDataY += 0;
-                    adjustData($scope.slideDataX);
-                    adjustData($scope.slideDataY);
                     break;
                 default:
             }

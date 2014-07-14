@@ -32,12 +32,12 @@ var Slides = new Schema({
         trim: true
     },
     data_x: {
-        type: String,
+        type: Number,
     required: false,
         trim: true
     },
     data_y: {
-        type: String,
+        type: Number,
     required: false,
         trim: true
     }

@@ -4,6 +4,9 @@
         <form name="slideshowForm" class="form-horizontal" role="form" data-ng-submit="update(slideshowForm.$valid)" novalidate>
             <!-- Form Name -->
             <h1>Slideshows Edit</h1>
+
+                        {{ slideshow.slides }}
+
             <!-- Title -->
             <div class="form-group" ng-class="{ 'has-error' : submitted && slideshowForm.title.$invalid }">
                 <label mean-token="'edit-title'" for="title" class="col-md-2 control-label">Title</label>
@@ -29,6 +32,7 @@
                 <a class="btn btn-info col-md-2" data-ng-click="addSlide(slideshow)"><i class="fa fa-plus fa-lg"></i> Slide</a>
                 <div class="col-md-10">
                     <select class="form-control" data-ng-model="slides.template" data-ng-options="template.value as template.text for template in templates">
+                        <option value="">-- Select Template --</option>
                     </select>
                 </div>
             </div>
@@ -37,42 +41,10 @@
             <!-- Slides -->
             <div class="has-feedback transition" ng-repeat-reorder='slide in slides track by $index' ng-repeat-reorder-handle="i.fa.fa-bars">
                 
-                <!-- Slide Number -->
-                <div class="form-group" ng-class="{ 'has-error' : submitted && slideshow.slides[$index].slideNumber.$invalid }">
-                    <label mean-token="'edit-slideNumber'" class="col-md-2 control-label">Slide Number</label>
-                    <div class="col-md-9">
-                        <input name="slideNumber" type="number" class="form-control" data-ng-model="slideshow.slides[$index].slideNumber" id="slideNumber" min="1" max="99" required>
-                        <div ng-show="submitted && slideshow.slides[$index].slideNumber.$invalid" class="help-block">
-                            <p ng-show="slideshow.slides[$index].slideNumber.$error.required">Slide Number is required</p>
-                        </div>
-                    </div>
-                </div>
+                <i data-ng-hide="slideshow.slides.length === 1" class="fa fa-bars fa-lg form-control-feedback" tg-reorder-slides></i>
+                <tg-slide-template slidemodel="slideshow.slides[$index]">
 
-                <!-- Content -->
-                <div class="form-group">
-                    <label mean-token="'edit-content'" for="content" class="col-md-2 control-label">Content</label>
-                    <div class="col-md-9">
-                        <textarea name="content" data-ng-model="slideshow.slides[$index].content" id="content" cols="30" rows="10" placeholder="Content" class="form-control"></textarea>
-                    </div>
-                </div>
-
-                <!-- Data X -->
-                <div class="form-group" >
-                    <label mean-token="'edit-data_x'" class="col-md-2 control-label">Data-X</label>
-                    <div class="col-md-9">
-                        <input name="data_x" type="text" class="form-control" data-ng-model="slideshow.slides[$index].data_x" id="data_x" placeholder="Data-X">
-                    </div>
-                </div>
-
-                <!-- Data Y -->
-                <div class="form-group">
-                    <label mean-token="'edit-data_y'" class="col-md-2 control-label">Data-Y</label>
-                    <div class="col-md-9">
-                        <input name="data_y" type="text" class="form-control" data-ng-model="slideshow.slides[$index].data_y" id="data_y" placeholder="Data-Y">
-                    </div>
-                </div>
-                <i data-ng-hide="slideshow.slides.length === 1" class="col-md-12 fa fa-bars fa-lg form-control-feedback"></i>
-
+                </tg-slide-template>
                 <div data-ng-hide="slideshow.slides.length === 1" class="form-group">
                     <a class="col-md-2 btn btn-danger" data-ng-click="removeSlide(slideshow.slides[$index])"><i class="fa fa-minus fa-lg"></i> Slide</a>
                     <div class="col-md-10">

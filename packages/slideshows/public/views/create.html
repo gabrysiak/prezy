@@ -5,7 +5,6 @@
             <!-- Form Name -->
             <h1>Slideshows New</h1>
             
-            {{ slides }}
             <!-- Title -->
             <div class="form-group" ng-class="{ 'has-error' : submitted && slideshowForm.title.$invalid }">
                 <label mean-token="'create-title'" class="col-md-2 control-label">Title</label>
@@ -44,9 +43,7 @@
             <div class="has-feedback transition" ng-repeat-reorder='slide in slides track by $index' ng-repeat-reorder-handle="i.fa.fa-bars">
                 
                 <i data-ng-hide="slides.length === 1" class="fa fa-bars fa-lg form-control-feedback" tg-reorder-slides></i>
-                <tg-slide-template slidemodel="slides[$index]" texteditor="summernoteWysiwyg">
-
-                </tg-slide-template>
+                <tg-slide-template slidemodel="slides[$index]"></tg-slide-template>
                 <div data-ng-hide="slides.length === 1" class="form-group">
                     <a class="col-md-2 btn btn-danger" data-ng-click="removeSlide(slide)"><i class="fa fa-minus fa-lg"></i> Slide</a>
                     <div class="col-md-10">

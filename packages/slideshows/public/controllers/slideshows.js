@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean').controller('SlideshowsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Slideshows', 'Shorturls', 'Templates', '$upload', '$sce',
-    function($scope, $stateParams, $location, $http, $log, Global, Clients, Slideshows, Shorturls, Templates, $upload, $sce) {
+angular.module('mean').controller('SlideshowsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Slideshows', 'Shorturls', 'Templates', '$upload', '$sce', '$timeout',
+    function($scope, $stateParams, $location, $http, $log, Global, Clients, Slideshows, Shorturls, Templates, $upload, $sce, $timeout) {
         $scope.global = Global;
         
         // initial slide values
@@ -28,7 +28,9 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
 
         //Event Listener for ng-repeat on slideshow slides.This is needed because impress tries to render the cards while ng-repeat is still populating the attributes in the template.  This works alongside the initiateImpress directive
         $scope.$on('ngRepeatFinished', function() {
-             impress().init();
+            $timeout(function(){
+                impress().init();
+            });
         });
 
         // pass html to $sce service and trust it.  Make sure this is coming from source you trust

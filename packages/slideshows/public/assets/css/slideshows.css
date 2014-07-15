@@ -715,3 +715,8 @@ i, em { font-style: italic }
 .step.default:before, .step.default:after {
     content: '"';
 }
+
+nav {
+    position: fixed;
+    z-index: 999999;
+}

@@ -3,6 +3,9 @@
         "css": {
             "public/build/css/dist.min.css": [
                 "public/system/lib/bootstrap/dist/css/bootstrap.css",
+                "public/system/lib/owl.carousel2/assets/owl.carousel.css",
+                "public/system/lib/owl.carousel2/assets/owl.theme.css",
+                "public/system/lib/owl.carousel2/assets/owl.transitions.css",
                 "public/**/assets/css/*.css"
             ]
         },
@@ -25,8 +28,7 @@
                 "public/system/lib/underscore/underscore.js",
                 "public/system/lib/danialfarid-angular-file-upload/dist/angular-file-upload-shim.js",
                 "public/system/lib/danialfarid-angular-file-upload/dist/angular-file-upload.min.js",
-                "public/system/lib/angular-summernote/dist/angular-summernote.min.js",
-                "public/system/lib/summernote/dist/summernote.min.js",
+                "public/system/lib/owl.carousel2/owl.carousel.min.js",
                 "public/init.js",
                 "public/*/*.js",
                 "public/*/{controllers,routes,services,directives}/*.js"

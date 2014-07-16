@@ -1,29 +1,39 @@
 <section class="slides-body" data-ng-controller="SlideshowsController" data-ng-init="findOne()">
-    <ul>
-        <li><a href="#step">Step1</a></li>
-    </ul>
-    <div class="impress-not-supported">
+    
+    <div class="impress-container">
+        <div class="impress-not-supported">
+            <!--
+                For example this fallback message is only visible when there is `impress-not-supported` class on body.
+            -->
+            <div class="fallback-message">
+                <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+                <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+            </div>
+            <div id="impress">
+                <div id="start" class="step" data-x="0" data-y="0">
+                    <p>{{ slideshow.title }}</p>
+                </div>
 
-        <!--
-            For example this fallback message is only visible when there is `impress-not-supported` class on body.
-        -->
-        <div class="fallback-message">
-            <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
-            <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
-        </div>
-        <div id="impress">
-            <div id="start" class="step" data-x="0" data-y="0">
+                <div data-ng-repeat="slide in slideshow.slides" class="step {{ slide.template ? slide.template : 'default' }}" data-x="{{slide.data_x}}" data-y="{{slide.data_y}}" tg-initiate-impress="">
+                    <tg-slideshows-template></tg-slideshows-template>
+                </div>
+
+                <div id="overview" class="step" data-x="3000" data-y="1500" data-scale="10">
+            </div>
+        </div><!-- /.impress-not-supported -->
+    </div><!-- /.impress-container -->
+    
+    <div class="carousel-container">
+        <tg-owl-carousel class="owl-carousel" data-options="carousel" tg-initiate-impress="" watch="slideshow.slides">
+            <div class="item" ng-click="carouselNav($index+1, true)">
                 <p>{{ slideshow.title }}</p>
             </div>
-
-            <div data-ng-repeat="slide in slideshow.slides" class="step {{ slide.template ? slide.template : 'default' }}" data-x="{{slide.data_x}}" data-y="{{slide.data_y}}" tg-initiate-impress="">
+            <div data-ng-repeat="slide in slideshow.slides" class="item {{ slide.template ? slide.template : 'default' }}" ng-click="carouselNav($index+1, false)">
                 <tg-slideshows-template></tg-slideshows-template>
             </div>
-
-            <div id="overview" class="step" data-x="3000" data-y="1500" data-scale="10">
-        </div>
-        
-    </div>
+        </tg-owl-carousel>    
+    </div><!-- /.carousel-container -->
+    
 </section>
 <div class="hint">
     <p>Use a spacebar or arrow keys to navigate</p>
@@ -34,17 +44,4 @@ if ("ontouchstart" in document.documentElement) {
 }
 </script>
 
-    <tg-owl-carousel id="carousel" class="owl-carousel" data-options="{loop:true, margin:10, nav:true}">
-    <div class="item"><h4>1</h4></div>
-    <div class="item"><h4>2</h4></div>
-    <div class="item"><h4>3</h4></div>
-    <div class="item"><h4>4</h4></div>
-    <div class="item"><h4>5</h4></div>
-    <div class="item"><h4>6</h4></div>
-    <div class="item"><h4>7</h4></div>
-    <div class="item"><h4>8</h4></div>
-    <div class="item"><h4>9</h4></div>
-    <div class="item"><h4>10</h4></div>
-    <div class="item"><h4>11</h4></div>
-    <div class="item"><h4>12</h4></div>
-    </tg-owl-carousel>
+

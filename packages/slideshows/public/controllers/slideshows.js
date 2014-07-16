@@ -3,7 +3,7 @@
 angular.module('mean').controller('SlideshowsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Slideshows', 'Shorturls', 'Templates', '$upload', '$sce', '$timeout',
     function($scope, $stateParams, $location, $http, $log, Global, Clients, Slideshows, Shorturls, Templates, $upload, $sce, $timeout) {
         $scope.global = Global;
-        
+
         // initial slide values
         $scope.slides = [];
         $scope.slideDataX = 0;
@@ -33,6 +33,37 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
             });
         });
 
+        // owl carousel options
+        $scope.carousel = {
+            nav: true,
+            margin:10,
+            responsiveClass:true,
+            responsive:{
+                0:{
+                    items:1,
+                    nav:true
+                },
+                600:{
+                    items:3,
+                    nav:false
+                },
+                1000:{
+                    items:5,
+                    nav:true,
+                    loop:false
+                }
+            }
+        };
+
+        // angular.js function encodeUriQuery was modified to add replace(/%2F/gi, '/'). on line 1248
+        // without this the impressjs navigation carousel wont work
+        $scope.carouselNav = function(id, start){
+            if( start && start === true ) {
+                impress().goto('start');
+            } else {
+                impress().goto(id);
+            }
+        };
         // pass html to $sce service and trust it.  Make sure this is coming from source you trust
         $scope.to_trusted = function(html_code) {
             return $sce.trustAsHtml(html_code);

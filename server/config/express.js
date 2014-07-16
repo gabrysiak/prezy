@@ -175,11 +175,10 @@ module.exports = function(app, passport, db) {
         //mean middlware from modules after routes
         app.use(mean.chainware.after);
 
-        app.all('/*', function(req, res, next) {
-            // Just send the index.html for other files to support HTML5Mode
-            // res.sendfile('index.html', { root: __dirname });
-            res.redirect('/');
-        });
+        // app.all('/*', function(req, res, next) {
+        //     // Just send the index.html for other files to support HTML5Mode
+        //     res.redirect('/');
+        // });
 
 
         // Assume "not found" in the error msgs is a 404. this is somewhat

@@ -37,7 +37,6 @@ angular.module('mean')
                 var loader = getTemplate(scope.slidemodel.template),
                     promise;
                     
-
                 promise = loader.success(function(html) {
                     element.html(html);
                 }).then(function (response) {

@@ -702,6 +702,37 @@ i, em { font-style: italic }
     for you.
 */
 
+.item {
+    margin: 20px auto;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing:    border-box;
+    -ms-box-sizing:     border-box;
+    -o-box-sizing:      border-box;
+    box-sizing:         border-box;
+
+    font-family: 'Roboto', sans-serif;
+    font-size: .7em;
+    line-height: 1.5;
+    border: 1px solid white;
+}
+
+.item img {
+    max-width: 50px;
+}
+.item.title {
+    font-size: 1em;
+    color: green;
+}
+
+.item.default {
+    font-size: .7em;
+    font-style: italic;
+}
+.item.default:before, .item.default:after {
+    content: '"';
+}
+
 /* Start Template Styles */
 .step.title {
     font-size: 6em;
@@ -719,4 +750,8 @@ i, em { font-style: italic }
 nav {
     position: fixed;
     z-index: 999999;
+}
+
+.carousel-container {
+    pointer-events: auto;
 }

@@ -69,6 +69,7 @@
     "mongoose-types": "~1.0.3"
   },
   "devDependencies": {
+    "grunt-autoprefixer": "^0.8.2",
     "grunt-karma": "^0.8.2",
     "grunt-mocha-test": "^0.10.2",
     "jit-grunt": "^0.7.0",

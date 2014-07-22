@@ -88,9 +88,6 @@ body {
     background: rgb(215, 215, 215);
     background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(rgb(240, 240, 240)), to(rgb(190, 190, 190)));
     background: -webkit-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
-    background:    -moz-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
-    background:     -ms-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
-    background:      -o-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
     background:         radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
 }
 
@@ -112,9 +109,6 @@ i, em { font-style: italic }
     border-radius: 0.2em;
 
     -webkit-transition: 0.5s;
-    -moz-transition:    0.5s;
-    -ms-transition:     0.5s;
-    -o-transition:      0.5s;
     transition:         0.5s;
 }
 
@@ -190,9 +184,6 @@ i, em { font-style: italic }
     opacity: 0.3;
 
     -webkit-transition: opacity 1s;
-    -moz-transition:    opacity 1s;
-    -ms-transition:     opacity 1s;
-    -o-transition:      opacity 1s;
     transition:         opacity 1s;
 }
 
@@ -216,7 +207,8 @@ i, em { font-style: italic }
     background-color: white;
     border: 1px solid rgba(0, 0, 0, .3);
     border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+    -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
 
     color: rgb(102, 102, 102);
     text-shadow: 0 2px 2px rgba(0, 0, 0, .1);
@@ -261,9 +253,7 @@ i, em { font-style: italic }
     left: 1.5em;
 
     -webkit-transform: translateZ(20px);
-    -moz-transform:    translateZ(20px);
     -ms-transform:     translateZ(20px);
-    -o-transform:      translateZ(20px);
     transform:         translateZ(20px);
 }
 
@@ -271,9 +261,7 @@ i, em { font-style: italic }
     font-size: 190px;
 
     -webkit-transform: translateZ(50px);
-    -moz-transform:    translateZ(50px);
     -ms-transform:     translateZ(50px);
-    -o-transform:      translateZ(50px);
     transform:         translateZ(50px);
 }
 
@@ -325,9 +313,6 @@ i, em { font-style: italic }
 #ing b {
     display: inline-block;
     -webkit-transition: 0.5s;
-    -moz-transition:    0.5s;
-    -ms-transition:     0.5s;
-    -o-transition:      0.5s;
     transition:         0.5s;
 }
 
@@ -337,9 +322,7 @@ i, em { font-style: italic }
 */
 #ing.present .positioning {
     -webkit-transform: translateY(-10px);
-    -moz-transform:    translateY(-10px);
     -ms-transform:     translateY(-10px);
-    -o-transform:      translateY(-10px);
     transform:         translateY(-10px);
 }
 
@@ -348,15 +331,10 @@ i, em { font-style: italic }
 */
 #ing.present .rotating {
     -webkit-transform: rotate(-10deg);
-    -moz-transform:    rotate(-10deg);
     -ms-transform:     rotate(-10deg);
-    -o-transform:      rotate(-10deg);
     transform:         rotate(-10deg);
 
     -webkit-transition-delay: 0.25s;
-    -moz-transition-delay:    0.25s;
-    -ms-transition-delay:     0.25s;
-    -o-transition-delay:      0.25s;
     transition-delay:         0.25s;
 }
 
@@ -365,15 +343,10 @@ i, em { font-style: italic }
 */
 #ing.present .scaling {
     -webkit-transform: scale(0.7);
-    -moz-transform:    scale(0.7);
     -ms-transform:     scale(0.7);
-    -o-transform:      scale(0.7);
     transform:         scale(0.7);
 
     -webkit-transition-delay: 0.5s;
-    -moz-transition-delay:    0.5s;
-    -ms-transition-delay:     0.5s;
-    -o-transition-delay:      0.5s;
     transition-delay:         0.5s;
 }
 
@@ -422,10 +395,8 @@ i, em { font-style: italic }
     which behaviour is correct as 3D transforms spec is not very clear about it.
 */
 #its-in-3d p {
-    -webkit-transform-style: preserve-3d;
-    -moz-transform-style:    preserve-3d; /* Y U need this Firefox?! */
+    -webkit-transform-style: preserve-3d; /* Y U need this Firefox?! */
     -ms-transform-style:     preserve-3d;
-    -o-transform-style:      preserve-3d;
     transform-style:         preserve-3d;
 }
 
@@ -439,55 +410,40 @@ i, em { font-style: italic }
 #its-in-3d b {
     display: inline-block;
     -webkit-transform: translateZ(40px);
-    -moz-transform:    translateZ(40px);
     -ms-transform:     translateZ(40px);
-    -o-transform:      translateZ(40px);
      transform:        translateZ(40px);
 
     -webkit-transition: 0.5s;
-    -moz-transition:    0.5s;
-    -ms-transition:     0.5s;
-    -o-transition:      0.5s;
     transition:         0.5s;
 }
 
 #its-in-3d .have {
     -webkit-transform: translateZ(-40px);
-    -moz-transform:    translateZ(-40px);
     -ms-transform:     translateZ(-40px);
-    -o-transform:      translateZ(-40px);
     transform:         translateZ(-40px);
 }
 
 #its-in-3d .you {
     -webkit-transform: translateZ(20px);
-    -moz-transform:    translateZ(20px);
     -ms-transform:     translateZ(20px);
-    -o-transform:      translateZ(20px);
     transform:         translateZ(20px);
 }
 
 #its-in-3d .noticed {
     -webkit-transform: translateZ(-40px);
-    -moz-transform:    translateZ(-40px);
     -ms-transform:     translateZ(-40px);
-    -o-transform:      translateZ(-40px);
     transform:         translateZ(-40px);
 }
 
 #its-in-3d .its {
     -webkit-transform: translateZ(60px);
-    -moz-transform:    translateZ(60px);
     -ms-transform:     translateZ(60px);
-    -o-transform:      translateZ(60px);
     transform:         translateZ(60px);
 }
 
 #its-in-3d .in {
     -webkit-transform: translateZ(-10px);
-    -moz-transform:    translateZ(-10px);
     -ms-transform:     translateZ(-10px);
-    -o-transform:      translateZ(-10px);
     transform:         translateZ(-10px);
 }
 
@@ -495,18 +451,14 @@ i, em { font-style: italic }
     font-size: 32px;
 
     -webkit-transform: translateZ(-10px);
-    -moz-transform:    translateZ(-10px);
     -ms-transform:     translateZ(-10px);
-    -o-transform:      translateZ(-10px);
     transform:         translateZ(-10px);
 }
 
 #its-in-3d.present span,
 #its-in-3d.present b {
     -webkit-transform: translateZ(0px);
-    -moz-transform:    translateZ(0px);
     -ms-transform:     translateZ(0px);
-    -o-transform:      translateZ(0px);
     transform:         translateZ(0px);
 }
 
@@ -603,9 +555,7 @@ i, em { font-style: italic }
         ... and position it below the bottom of the screen (relative to it's fixed position)
     */
     -webkit-transform: translateY(400px);
-    -moz-transform:    translateY(400px);
     -ms-transform:     translateY(400px);
-    -o-transform:      translateY(400px);
     transform:         translateY(400px);
 
     /*
@@ -619,9 +569,6 @@ i, em { font-style: italic }
         This way user will not see the hint moving down.
     */
     -webkit-transition: opacity 1s, -webkit-transform 0.5s 1s;
-    -moz-transition:    opacity 1s,    -moz-transform 0.5s 1s;
-    -ms-transition:     opacity 1s,     -ms-transform 0.5s 1s;
-    -o-transition:      opacity 1s,      -o-transform 0.5s 1s;
     transition:         opacity 1s,         transform 0.5s 1s;
 }
 
@@ -641,9 +588,7 @@ i, em { font-style: italic }
     opacity: 1;
 
     -webkit-transform: translateY(0px);
-    -moz-transform:    translateY(0px);
     -ms-transform:     translateY(0px);
-    -o-transform:      translateY(0px);
     transform:         translateY(0px);
 
     /*
@@ -655,9 +600,6 @@ i, em { font-style: italic }
         transition.
     */
     -webkit-transition: opacity 1s 5s, -webkit-transform 0.5s 4.5s;
-    -moz-transition:    opacity 1s 5s,    -moz-transform 0.5s 4.5s;
-    -ms-transition:     opacity 1s 5s,     -ms-transform 0.5s 4.5s;
-    -o-transition:      opacity 1s 5s,      -o-transform 0.5s 4.5s;
     transition:         opacity 1s 5s,         transform 0.5s 4.5s;
 }
 
@@ -754,4 +696,5 @@ nav {
 
 .carousel-container {
     pointer-events: auto;
+    opacity: .5;
 }

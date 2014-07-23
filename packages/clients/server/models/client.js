@@ -6,7 +6,8 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     // load Email and URL type from npm package
-    mongooseTypes = require('mongoose-types');
+    mongooseTypes = require('mongoose-types'),
+    useTimestamps = mongooseTypes.useTimestamps;
     mongooseTypes.loadTypes(mongoose);
 
 var Email = mongoose.SchemaTypes.Email;
@@ -24,6 +25,14 @@ var ClientSchema = new Schema({
         type: String,
     required: true,
         trim: true
+    },
+    abbr: {
+        type: String,
+   uppercase: true,
+    required: true,
+        trim: true,
+      unique: true,
+   dropDupes: true
     },
     content: {
         type: String,
@@ -52,6 +61,11 @@ var ClientSchema = new Schema({
 });
 
 /**
+ * Plugins
+ */
+ClientSchema.plugin(useTimestamps);
+
+/**
  * Validations
  */
 ClientSchema.path('title').validate(function(title) {
@@ -61,6 +75,10 @@ ClientSchema.path('title').validate(function(title) {
 ClientSchema.path('content').validate(function(content) {
     return !!content;
 }, 'Content cannot be blank');
+
+ClientSchema.path('abbr').validate(function(abbr) {
+    return !!abbr;
+}, 'Abbr cannot be blank and has to be unique');
 
 
 /**

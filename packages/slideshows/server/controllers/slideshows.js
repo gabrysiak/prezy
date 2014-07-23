@@ -8,7 +8,11 @@ var mongoose = require('mongoose'),
     _ = require('lodash'),
     appUploadPath = '/public/uploads',
     uploadPath = process.cwd() + appUploadPath,
-    fs = require('fs');
+    fs = require('fs'),
+    api_key = 'key-3zip4qju2ns3t1cliicl3xwfb5rqk-f0',
+    domain = 'prezy.mailgun.org',
+    Mailgun = require('mailgun-js'),
+    mailgun = new Mailgun({apiKey: api_key, domain: domain});
 
 
 /**
@@ -73,6 +77,31 @@ exports.uploadSlideshowImage = function(req, res) {
 };
 
 /**
+ * Email Slideshow links
+ */
+exports.email = function(req, res) {
+    var data = {
+        from: 'No-Reply <prezy@mailgun.org>',
+        to: req.param('email'),
+        subject: 'Prezy Links',
+        text: req.param('links')
+    };
+
+    mailgun.messages().send(data, function (error, body) {
+        if (error) {
+            return res.jsonp(500,{
+                error: error,
+                detail: body
+            });
+        }
+        res.jsonp(200,{
+            error: false,
+            detail: body
+        });
+    });
+};
+
+/**
  * Create an slideshow
  */
 exports.create = function(req, res) {
@@ -81,9 +110,9 @@ exports.create = function(req, res) {
 
     slideshow.save(function(err) {
         if (err) {
-       return res.jsonp(500,{
-        error: 'Cannot save the slideshow',
-        detail: err
+            return res.jsonp(500,{
+                error: 'Cannot save the slideshow',
+                detail: err
             });
         }
     res.jsonp(slideshow);

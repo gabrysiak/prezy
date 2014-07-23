@@ -4,7 +4,10 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    mongooseTypes = require('mongoose-types'),
+    useTimestamps = mongooseTypes.useTimestamps;
+    mongooseTypes.loadTypes(mongoose);
 
 var Slides = new Schema({
     id: {
@@ -42,6 +45,7 @@ var Slides = new Schema({
         trim: true
     }
 });
+
 /**
  * Slideshow Schema
  */
@@ -66,11 +70,26 @@ var SlideshowSchema = new Schema({
          ref: 'Client',
     required: true
     },
+    project: {
+        type: Schema.ObjectId,
+         ref: 'Project',
+    required: true
+    },
+    round: {
+        type: String,
+    required: false,
+        trim: true
+    },
     user: {
         type: Schema.ObjectId,
          ref: 'User'
     }
 });
+
+/**
+ * Plugins
+ */
+SlideshowSchema.plugin(useTimestamps);
 
 /**
  * Validations
@@ -82,6 +101,10 @@ SlideshowSchema.path('title').validate(function(title) {
 SlideshowSchema.path('client').validate(function(client) {
     return !!client;
 }, 'Please select a client');
+
+SlideshowSchema.path('project').validate(function(project) {
+    return !!project;
+}, 'Please select a project');
 
 Slides.path('slideNumber').validate(function(slideNumber) {
     return !!slideNumber;

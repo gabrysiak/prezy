@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
     Client = mongoose.model('Client'),
     Slideshow = mongoose.model('Slideshow'),
+    Project = mongoose.model('Project'),
     _ = require('lodash'),
     appUploadPath = '/public/uploads',
     uploadPath = process.cwd() + appUploadPath,
@@ -69,7 +70,8 @@ exports.update = function(req, res) {
     client.save(function(err) {
         if (err) {
             return res.jsonp(500,{
-                error: 'Cannot update the client'
+                error: err.code === 11000 ? 'That abbr already exists, please try again.' : 'Cannot update the client',
+                status: 'danger'
             });
         }
         res.jsonp(client);
@@ -145,6 +147,22 @@ exports.clientSlideshows = function(req, res, next) {
             });
         }
         res.jsonp(slideshows);
+    });
+
+};
+
+/**
+ * Get Client Projects
+ */
+exports.clientProjects = function(req, res, next) {
+    var clientId = req.param('clientId');
+    Project.find({client: clientId}, function(err, projects){
+        if (err) {
+            return res.jsonp(500,{
+                error: 'Cannot find projects belonging to clientId: ' + clientId
+            });
+        }
+        res.jsonp(projects);
     });
 
 };

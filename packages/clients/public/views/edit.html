@@ -16,6 +16,17 @@
                 </div>
             </div>
 
+            <!-- Abbr -->
+            <div class="form-group" ng-class="{ 'has-error' : submitted && clientForm.abbr.$invalid }">
+                <label mean-token="'edit-abbr'" for="abbr" class="col-md-2 control-label">Abbr</label>
+                <div class="col-md-10">
+                    <input name="abbr" type="text" class="form-control" data-ng-model="client.abbr" id="abbr" placeholder="Abbr" required>
+                    <div ng-show="submitted && clientForm.abbr.$invalid" class="help-block">
+                        <p ng-show="clientForm.abbr.$error.required">Abbr is required</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Content -->
             <div class="form-group" ng-class="{ 'has-error' : submitted && clientForm.content.$invalid }">
                 <label mean-token="'edit-content'" for="content" class="col-md-2 control-label">Content</label>

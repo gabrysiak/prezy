@@ -1,0 +1,42 @@
+<div data-ng-include="'/public/system/views/misc-controls.html'"></div>
+<section data-ng-controller="ClientsController" data-ng-init="findProjects()">
+    <h1>{{client.title }} Projects</h1>
+    <a class="btn btn-success pull-right" data-ng-href="/#!/projects/create" >
+        <i class="fa fa-plus fa-lg"></i> New Project
+    </a>
+    <div data-ng-show="!projects || projects.length" class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th mean-token="'project-table-id'">#</th>
+                    <th mean-token="'project-table-name'">project</th>
+                    <th mean-token="'project-table-created'">Created</th>
+                    <th mean-token="'project-table-presentations'">Presentations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="project in projects">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ project.title }}</td>
+                    <td>{{project.created | date:'short'}}</td>
+                    <td data-ng-if="hasAuthorization(project)">
+                        <a class="btn btn-primary" data-ng-href="/#!/projects/{{project._id}}/slideshows" >
+                            <i class="fa fa-eye fa-lg"></i> View
+                        </a>
+                    </td>
+                    <td data-ng-if="hasAuthorization(project)">
+                        <a class="btn btn-warning" data-ng-href="/#!/projects/{{project._id}}/edit">
+                            <i class="fa fa-edit fa-lg"></i> Edit
+                        </a>
+                    </td>
+                    <td data-ng-if="hasAuthorization(project)">
+                        <a class="btn btn-danger" data-ng-click="removeProject(project);">
+                            <i class="fa fa-trash-o fa-lg"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h1 data-ng-hide="!projects || projects.length">No projects yet. <br> Why don't you <a href="/#!/projects/create">Create One</a>?</h1>
+</section>

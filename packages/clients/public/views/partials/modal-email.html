@@ -1,0 +1,52 @@
+<div class="modal-header">
+    <h3 class="modal-title">Email Links</h3>
+</div>
+<div class="modal-body">
+    <form name="emailForm" enctype="multipart/form-data" class="form-horizontal" role="form" data-ng-submit="ok(emailForm.$valid)" novalidate>
+        <!-- Name -->
+        <div class="form-group" ng-class="{ 'has-error' : submitted && emailForm.name.$invalid }">
+            <label mean-token="'emailForm-name'" for="name" class="col-md-2 control-label">Name</label>
+            <div class="col-md-10">
+                <input name="name" type="text" class="form-control" data-ng-model="send.name" id="name" placeholder="Name" required>
+                <div ng-show="submitted && emailForm.name.$invalid" class="help-block">
+                    <p ng-show="emailForm.name.$error.required">Name is required</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group" ng-class="{ 'has-error' : submitted && emailForm.email.$invalid }">
+            <label mean-token="'emailForm-email'" class="col-md-2 control-label">Email</label>
+            <div class="col-md-10">
+                <input name="email" type="email" class="form-control" data-ng-model="send.email" id="email" placeholder="Email">
+                <div ng-show="submitted && emailForm.email.$invalid" class="help-block">
+                    <p ng-show="emailForm.email.$error.required">Email is required</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Links -->
+        <div class="form-group">
+            <div class="col-md-10" data-ng-repeat="slideshow in slideshows">
+                <div class="row">
+                    <label>
+                        <input type="checkbox" checklist-model="send.links" checklist-value="slideshow.shortUrl"> {{slideshow.title}}
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-primary">OK</button>
+                    <button class="btn btn-warning" data-ng-click="cancel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    Selected: <b>{{ send.links }}</b>
+</div>
+<div class="modal-footer">
+
+</div>

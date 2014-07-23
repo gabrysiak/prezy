@@ -59,6 +59,13 @@ angular.module('mean').config(['$stateProvider',
                 resolve: {
                     loggedin: checkLoggedin
                 }
+            })
+            .state('client projects', {
+                url: '/clients/:clientId/projects',
+                templateUrl: 'clients/views/projects.html',
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             });
     }
 ]);

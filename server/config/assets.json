@@ -26,6 +26,7 @@
                 "public/system/lib/angular-hammer/angular-hammer.js",
                 "public/system/lib/impress/impress.js",
                 "public/system/lib/underscore/underscore.js",
+                "public/system/lib/checklist-model/checklist-model.js",
                 "public/system/lib/danialfarid-angular-file-upload/dist/angular-file-upload-shim.js",
                 "public/system/lib/danialfarid-angular-file-upload/dist/angular-file-upload.min.js",
                 "public/system/lib/owl.carousel2/owl.carousel.min.js",

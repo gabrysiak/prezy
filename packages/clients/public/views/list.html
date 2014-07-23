@@ -1,5 +1,9 @@
 <div data-ng-include="'/public/system/views/misc-controls.html'"></div>
 <section data-ng-controller="ClientsController" data-ng-init="find()">
+    <h1>All Clients</h1>
+    <a class="btn btn-success pull-right" data-ng-href="/#!/clients/create" >
+        <i class="fa fa-plus fa-lg"></i> New Client
+    </a>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -9,6 +13,7 @@
                     <th mean-token="'client-table-created'">Created</th>
                     <th mean-token="'client-table-created-by'">By User</th>
                     <th mean-token="'client-table-presentations'">Presentations</th>
+                    <th mean-token="'client-table-projects'">Projects</th>
                 </tr>
             </thead>
             <tbody>
@@ -18,7 +23,12 @@
                     <td>{{client.created | date:'short'}}</td>
                     <td>{{ client.user.name }}</td>
                     <td data-ng-if="hasAuthorization(client)">
-                        <a class="btn btn-success" data-ng-click="rememberClient(client)" data-ng-href="/#!/clients/{{client._id}}/slideshows" >
+                        <a class="btn btn-primary" data-ng-href="/#!/clients/{{client._id}}/slideshows" >
+                            <i class="fa fa-eye fa-lg"></i> View
+                        </a>
+                    </td>
+                    <td data-ng-if="hasAuthorization(client)">
+                        <a class="btn btn-primary" data-ng-href="/#!/clients/{{client._id}}/projects" >
                             <i class="fa fa-eye fa-lg"></i> View
                         </a>
                     </td>

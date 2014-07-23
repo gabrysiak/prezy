@@ -26,6 +26,28 @@
                     </div>
                 </div>
             </div>
+            <!-- Project -->
+            <div class="form-group" ng-class="{ 'has-error' : submitted && slideshowForm.project.$invalid }">
+                <label mean-token="'edit-project'" for="project" class="col-md-2 control-label">Project</label>
+                <div class="col-md-10">
+                    <select class="form-control" name="project" data-ng-model="project" data-ng-options="project.value as project.text for project in projects" required>
+                    </select>
+                    <div ng-show="submitted && slideshowForm.project.$invalid" class="help-block">
+                        <p ng-show="slideshowForm.project.$error.required">Project is required</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Round -->
+            <div class="form-group" ng-class="{ 'has-error' : submitted && slideshowForm.round.$invalid }">
+                <label mean-token="'edit-round'" for="round" class="col-md-2 control-label">Round</label>
+                <div class="col-md-10">
+                    <select class="form-control" name="round" data-ng-model="round" data-ng-options="round.value as round.text for round in rounds" required>
+                    </select>
+                    <div ng-show="submitted && slideshowForm.round.$invalid" class="help-block">
+                        <p ng-show="slideshowForm.round.$error.required">Round is required</p>
+                    </div>
+                </div>
+            </div>
 
             <!-- Select Template -->
             <hr>

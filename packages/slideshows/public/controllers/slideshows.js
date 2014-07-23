@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean').controller('SlideshowsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Slideshows', 'Shorturls', 'Templates', '$upload', '$sce', '$timeout',
-    function($scope, $stateParams, $location, $http, $log, Global, Clients, Slideshows, Shorturls, Templates, $upload, $sce, $timeout) {
+angular.module('mean').controller('SlideshowsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Projects', 'Slideshows', 'Shorturls', 'Rounds', 'Templates', '$upload', '$sce', '$timeout',
+    function($scope, $stateParams, $location, $http, $log, Global, Clients, Projects, Slideshows, Shorturls, Rounds, Templates, $upload, $sce, $timeout) {
         $scope.global = Global;
 
         // initial slide values
@@ -12,16 +12,27 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
         // populate templates from service
         $scope.templates = Templates.all();
 
-        // populate the clients dropdown
+        // populate rounds from service
+        $scope.rounds = Rounds.all();
+
+        // initially populate the clients dropdown
         Clients.query(function(clients) {
-            $scope.clients = [{
-                value: null,
-                text: 'None'
-            }];
+            $scope.clients = [];
             angular.forEach(clients, function(client) {
                 $scope.clients.push({
                     value: client._id,
                     text: client.title
+                });
+            });
+        });
+
+        // initially populate the projects dropdown
+        Projects.query(function(projects) {
+            $scope.projects = [];
+            angular.forEach(projects, function(project) {
+                $scope.projects.push({
+                    value: project._id,
+                    text: project.title
                 });
             });
         });
@@ -58,7 +69,7 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
         // angular.js function encodeUriQuery was modified to add replace(/%2F/gi, '/'). on line 1248
         // without this the impressjs navigation carousel wont work
         $scope.carouselNav = function(id, start){
-            if( start && start === true ) {
+            if (start && start === true) {
                 impress().goto('start');
             } else {
                 impress().goto(id);
@@ -82,6 +93,8 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                     title: this.title,
                     slides: this.slides,
                     client: this.client,
+                    project: this.project,
+                    round: this.round,
                     shortUrl: null
                 });
                 slideshow.$save(function(response) {
@@ -145,12 +158,32 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
             });
         };
 
+        $scope.updateProjects = function(client) {
+            if (typeof client === 'undefined') return;
+                Clients.projects({
+                    clientId: client
+                }, function(projects) {
+                    if (projects.length === 0) {
+                        $scope.slideshow.project = null;
+                    }
+                    $scope.projects = [];
+                    angular.forEach(projects, function(project) {
+                        $scope.projects.push({
+                            value: project._id,
+                            text: project.title
+                        });
+                    });
+                });
+        };
+
         $scope.duplicate = function(slideshow) {
             if (!slideshow) return;
             var slideshowDuplicate = new Slideshows({
                 title: slideshow.title,
                 slides: slideshow.slides,
                 client: slideshow.client,
+                project: slideshow.project,
+                round: slideshow.round,
                 shortUrl: null
             });
             slideshowDuplicate.$save(function(response) {
@@ -164,7 +197,7 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
         $scope.addSlide = function(slideshow) {
             // auto increment slide data x,y
             this.autoDataXY('add', function(){
-                if( !slideshow ) {
+                if (!slideshow) {
                     var newItemNo = $scope.slides.length+1;
                     $scope.slides.push({
                         id: newItemNo,
@@ -205,7 +238,7 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
             // auto adjust slide data data x,y
             this.autoDataXY('remove', function(){
                 // remove item from scope / model
-                if( $scope.slideshow && $scope.slideshow.slides ) {
+                if ($scope.slideshow && $scope.slideshow.slides) {
                     $scope.slideshow.slides = _.filter($scope.slideshow.slides, function (slideshowSlide) {
                         return (slide.id !== slideshowSlide.id);
                     });
@@ -235,7 +268,7 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
             $http.get('/bitly/' + slideshowId).then(function (response) {
                 $scope.slideshow.shortUrl = response.data.shortUrl;
                 $scope.slideshow.$update(function() {
-                    if( duplicate ) {
+                    if (duplicate) {
                         callback($scope.slideshow.shortUrl);
                     } else {
                         // $location.path('slideshows/' + slideshowId);
@@ -257,12 +290,12 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
         $scope.autoDataXY = function(action, callback) {
             
             // action is either add or remove
-            if( !action ) return;
+            if (!action) return;
             
             // check if we are editing exisiting slideshow and get current data x,y
             var checkSlideshowDataXY = function() {
                 // check current slideshow scope, then adjust data x,y value
-                if( $scope.slideshow && $scope.slideshow.slides ) {
+                if ($scope.slideshow && $scope.slideshow.slides) {
                     $scope.slideDataX = $scope.slideshow.slides[$scope.slideshow.slides.length-1].data_x;
                     $scope.slideDataY = $scope.slideshow.slides[$scope.slideshow.slides.length-1].data_y;
                 }
@@ -283,7 +316,7 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
             }
 
             // execute callback function if exists
-            if( callback ) callback();
+            if (callback) callback();
         };
     }
 ]);

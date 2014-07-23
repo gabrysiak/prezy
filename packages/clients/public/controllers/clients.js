@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean').controller('ClientsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Slideshows', 'FlashService', '$timeout', '$upload',
-    function($scope, $stateParams, $location, $http, $log, Global, Clients, Slideshows, FlashService, $timeout, $upload) {
+angular.module('mean').controller('ClientsController', ['$scope', '$stateParams', '$location', '$http', '$log', '$modal', 'Global', 'Clients', 'Slideshows', 'Projects', 'FlashService', '$timeout', '$upload',
+    function($scope, $stateParams, $location, $http, $log, $modal, Global, Clients, Slideshows, Projects, FlashService, $timeout, $upload) {
         $scope.global = Global;
 
         $scope.onFileSelect = function($files) {
@@ -66,13 +66,14 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
             if (isValid) {
                 var client = new Clients({
                     title: this.title,
+                    abbr: this.abbr,
                     content: this.content,
                     contactName: this.contactName,
                     contactEmail: this.contactEmail,
                     logo: $scope.client.logo
                 });
                 client.$save(function(response) {
-                    $location.path('clients/' + response._id);
+                    $location.path('clients');
                 });
 
             } else {
@@ -111,6 +112,13 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
                 client.$update(function() {
                     // $location.path('clients/' + client._id);
                     $location.path('clients');
+                }, function(err) {
+                    // error
+                    var error = {
+                        flash: err.data.error,
+                        status: err.data.status
+                      };
+                    FlashService.show(error);
                 });
             } else {
                 $scope.submitted = true;
@@ -121,11 +129,6 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
             Clients.query(function(clients) {         
                 $scope.clients = clients;
             });
-        };
-
-        // add client to global
-        $scope.rememberClient = function(client) {
-            $scope.global.client = client;
         };
 
         $scope.findOne = function() {
@@ -141,6 +144,7 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
                 clientId: $stateParams.clientId
             }, function(slideshows) {
                 $scope.slideshows = slideshows;
+                $scope.findOne();
             });
         };
 
@@ -151,6 +155,92 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
                 // remove slideshow from scope
                 $scope.slideshows = _.without($scope.slideshows, _.findWhere($scope.slideshows, {_id: slideshow._id}));
             });
+        };
+
+        $scope.findProjects= function() {
+            Clients.projects({
+                clientId: $stateParams.clientId
+            }, function(projects) {
+                $scope.projects = projects;
+                $scope.findOne();
+            });
+        };
+
+        $scope.removeProject = function(project) {
+            Projects.delete({
+                projectId: project._id
+            }, function(project){
+                // remove project from scope
+                $scope.projects = _.without($scope.projects, _.findWhere($scope.projects, {_id: project._id}));
+            });
+        };
+
+        $scope.email = function () {
+            Clients.slideshows({
+                clientId: $stateParams.clientId
+            }, function(slideshows) {
+                $scope.slideshows = slideshows;
+            });
+
+            var modalInstance = $modal.open({
+                templateUrl: 'clients/views/partials/modal-email.html',
+                controller: ModalInstanceController,
+                resolve: {
+                    slideshows: function () {
+                        return $scope.slideshows;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+
+        var ModalInstanceController = function ($scope, $modalInstance, slideshows) {
+            $scope.send = {
+                links: []
+            };
+
+            $scope.slideshows = slideshows;
+
+            $scope.ok = function (isValid) {
+                if (isValid) {
+                    // post request to email api
+                    $http.post('/email/slideshows', $scope.send)
+                        .success(function (data, status, headers, config) {
+                            if (status === 200) {
+                                //update the model
+                                var success = {
+                                    flash: 'Email has been sent',
+                                    status: 'success'
+                                };
+
+                                return $modalInstance.close(FlashService.show(success));
+                            }
+                            //update the model
+                            var error = {
+                                flash: 'Email not sent',
+                                status: 'danger'
+                            };
+
+                            $modalInstance.close(FlashService.show(error));
+                        }).error(function (data, status, headers, config) {
+                            console.log(data);
+                            return data;
+                    });
+
+                    
+                } else {
+                    $scope.submitted = true;
+                }
+            };
+
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
         };
     }
 ]);

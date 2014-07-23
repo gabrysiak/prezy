@@ -1,13 +1,16 @@
 <div data-ng-include="'/public/system/views/misc-controls.html'"></div>
 <section data-ng-controller="SlideshowsController" data-ng-init="find()">
-    <h1>{{ global.client.title }} Presentations</h1>
+    <h1>{{ client.title || 'All'}} Presentations</h1>
+    <a class="btn btn-success pull-right" data-ng-href="/#!/slideshows/create" >
+        <i class="fa fa-plus fa-lg"></i> New Presentation
+    </a>
     <div data-ng-show="!slideshows || slideshows.length" class="table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th mean-token="'slideshow-table-id'">#</th>
                     <th mean-token="'slideshow-table-name'">slideshow</th>
-                    <th mean-token="'slideshow-table-created'">Created</th>
+                    <th mean-token="'slideshow-table-updated'">updated</th>
                     <th mean-token="'slideshow-table-slide-count'"># slides</th>
                 </tr>
             </thead>
@@ -15,10 +18,10 @@
                 <tr data-ng-repeat="slideshow in slideshows">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ slideshow.title }}</td>
-                    <td>{{slideshow.created | date:'short'}}</td>
+                    <td>{{slideshow.updatedAt | date:'short'}}</td>
                     <td>{{ slideshow.slides.length }}</td>
                     <td data-ng-if="hasAuthorization(slideshow)">
-                        <a class="btn btn-success" data-ng-href="{{ slideshow.shortUrl }}" target="_blank">
+                        <a class="btn btn-primary" data-ng-href="{{ slideshow.shortUrl }}" target="_blank">
                             <i class="fa fa-eye fa-lg"></i> View
                         </a>
                     </td>

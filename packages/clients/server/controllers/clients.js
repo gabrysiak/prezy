@@ -3,8 +3,9 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-    Client = mongoose.model('Client'),
+var mongoose = require('mongoose');
+
+var Client = mongoose.model('Client'),
     Slideshow = mongoose.model('Slideshow'),
     Project = mongoose.model('Project'),
     _ = require('lodash'),

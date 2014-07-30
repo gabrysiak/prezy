@@ -84,7 +84,7 @@ exports.email = function(req, res) {
         from: 'No-Reply <prezy@mailgun.org>',
         to: req.param('email'),
         subject: 'Prezy Links',
-        text: req.param('links')
+        html: req.param('links')
     };
 
     mailgun.messages().send(data, function (error, body) {

@@ -7,7 +7,8 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     mongooseTypes = require('mongoose-types'),
     useTimestamps = mongooseTypes.useTimestamps;
-    mongooseTypes.loadTypes(mongoose);
+
+mongooseTypes.loadTypes(mongoose);
 
 /**
  * Project Schema

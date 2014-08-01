@@ -5,9 +5,7 @@
  */
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    mongooseTypes = require('mongoose-types'),
-    useTimestamps = mongooseTypes.useTimestamps;
-    mongooseTypes.loadTypes(mongoose);
+    timestamps = require('mongoose-timestamp');
 
 var Slides = new Schema({
     id: {
@@ -50,10 +48,6 @@ var Slides = new Schema({
  * Slideshow Schema
  */
 var SlideshowSchema = new Schema({
-    created: {
-        type: Date,
-        default: Date.now
-    },
     title: {
         type: String,
     required: true,
@@ -89,7 +83,9 @@ var SlideshowSchema = new Schema({
 /**
  * Plugins
  */
-SlideshowSchema.plugin(useTimestamps);
+SlideshowSchema.plugin(timestamps, {
+    createdAt: 'created'
+});
 
 /**
  * Validations

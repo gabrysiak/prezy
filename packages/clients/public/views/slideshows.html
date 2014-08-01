@@ -2,7 +2,7 @@
 <section data-ng-controller="ClientsController" data-ng-init="findSlideshows()">
     <h1>{{client.title }} Presentations</h1>
     <div class="pull-right">
-        <a class="btn btn-success" data-ng-href="/#!/slideshows/create" >
+        <a class="btn btn-success" data-ng-href="/#!/slideshows/create?client={{client._id}}" >
             <i class="fa fa-plus fa-lg"></i> New Presentation
         </a>
 

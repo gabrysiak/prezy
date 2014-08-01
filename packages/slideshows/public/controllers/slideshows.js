@@ -3,6 +3,9 @@
 angular.module('mean').controller('SlideshowsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Projects', 'Slideshows', 'Shorturls', 'Rounds', 'Templates', '$upload', '$sce', '$timeout',
     function($scope, $stateParams, $location, $http, $log, Global, Clients, Projects, Slideshows, Shorturls, Rounds, Templates, $upload, $sce, $timeout) {
         $scope.global = Global;
+        
+        // get client from query string
+        var searchClient = $location.search().client;
 
         // initial slide values
         $scope.slides = [];
@@ -24,6 +27,8 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                     text: client.title
                 });
             });
+            // check if client auto populated
+            if (searchClient) $scope.client = searchClient;
         });
 
         // initially populate the projects dropdown
@@ -141,8 +146,16 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
         };
 
         $scope.find = function() {
-            Slideshows.query(function(slideshows) {
-                $scope.slideshows = slideshows;
+            if (!searchClient) {
+                Slideshows.query(function(slideshows) {
+                    $scope.slideshows = slideshows;
+                    return;
+                });
+            }
+            Clients.projects({
+                clientId: searchClient
+            }, function(projects) {
+                $scope.projects = projects;
             });
         };
 

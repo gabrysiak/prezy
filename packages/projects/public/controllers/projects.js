@@ -4,6 +4,9 @@ angular.module('mean').controller('ProjectsController', ['$scope', '$stateParams
     function($scope, $stateParams, $location, $log, Global, Clients, Projects, Slideshows, FlashService, $timeout) {
         $scope.global = Global;
 
+        // get client from query string
+        var searchClient = $location.search().client;
+
         // populate the clients dropdown
         Clients.query(function(clients) {
             $scope.clients = [];
@@ -13,6 +16,9 @@ angular.module('mean').controller('ProjectsController', ['$scope', '$stateParams
                     text: client.title
                 });
             });
+
+            // check if client auto populated
+            if (searchClient) $scope.client = searchClient;
         });
 
         $scope.hasAuthorization = function(project) {
@@ -71,7 +77,15 @@ angular.module('mean').controller('ProjectsController', ['$scope', '$stateParams
         };
 
         $scope.find = function() {
-            Projects.query(function(projects) {         
+            if (!searchClient) {
+                Projects.query(function(projects) {         
+                    $scope.projects = projects;
+                    return;
+                });
+            }
+            Clients.projects({
+                clientId: searchClient
+            }, function(projects) {
                 $scope.projects = projects;
             });
         };

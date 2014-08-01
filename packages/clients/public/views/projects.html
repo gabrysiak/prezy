@@ -1,7 +1,7 @@
 <div data-ng-include="'/public/system/views/misc-controls.html'"></div>
 <section data-ng-controller="ClientsController" data-ng-init="findProjects()">
     <h1>{{client.title }} Projects</h1>
-    <a class="btn btn-success pull-right" data-ng-href="/#!/projects/create" >
+    <a class="btn btn-success pull-right" data-ng-href="/#!/projects/create?client={{client._id}}" >
         <i class="fa fa-plus fa-lg"></i> New Project
     </a>
     <div data-ng-show="!projects || projects.length" class="table-responsive">

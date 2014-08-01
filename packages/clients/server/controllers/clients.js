@@ -141,7 +141,7 @@ exports.all = function(req, res) {
  */
 exports.clientSlideshows = function(req, res, next) {
     var clientId = req.param('clientId');
-    Slideshow.find({client: clientId}, function(err, slideshows){
+    Slideshow.find({client: clientId}).populate('user', 'name username').exec(function(err, slideshows){
         if (err) {
             return res.jsonp(500,{
                 error: 'Cannot find slideshows belonging to clientId: ' + clientId
@@ -157,7 +157,7 @@ exports.clientSlideshows = function(req, res, next) {
  */
 exports.clientProjects = function(req, res, next) {
     var clientId = req.param('clientId');
-    Project.find({client: clientId}, function(err, projects){
+    Project.find({client: clientId}).populate('user', 'name username').exec(function(err, projects){
         if (err) {
             return res.jsonp(500,{
                 error: 'Cannot find projects belonging to clientId: ' + clientId

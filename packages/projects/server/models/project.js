@@ -5,19 +5,12 @@
  */
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    mongooseTypes = require('mongoose-types'),
-    useTimestamps = mongooseTypes.useTimestamps;
-
-mongooseTypes.loadTypes(mongoose);
+    timestamps = require('mongoose-timestamp');
 
 /**
  * Project Schema
  */
 var ProjectSchema = new Schema({
-    created: {
-        type: Date,
-        default: Date.now
-    },
     title: {
         type: String,
     required: true,
@@ -41,7 +34,9 @@ var ProjectSchema = new Schema({
 /**
  * Plugins
  */
-ProjectSchema.plugin(useTimestamps);
+ProjectSchema.plugin(timestamps, {
+    createdAt: 'created'
+});
 
 /**
  * Validations

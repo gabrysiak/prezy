@@ -4,23 +4,29 @@
 angular.module('mean').config(['$stateProvider',
     function($stateProvider) {
         // Check if the user is connected
-        var checkLoggedin = function($q, $timeout, $http, $location) {
+        var checkLoggedin = function($q, $timeout, $http, $location, $window) {
             // Initialize a new promise
-            var deferred = $q.defer();
+            var deferred = $q.defer(),
+                protect = $location.search().key; // get key param to check if protected slideshow
 
-            // Make an AJAX call to check if the user is logged in
-            $http.get('/loggedin').success(function(user) {
-                // Authenticated
-                if (user !== '0') $timeout(deferred.resolve);
+            // if key doesnt exist check if user logged in
+            if (!protect) {
+                // Make an AJAX call to check if the user is logged in
+                $http.get('/loggedin').success(function(user) {
+                    // Authenticated
+                    if (user !== '0') $timeout(deferred.resolve);
 
-                // Not Authenticated
-                else {
-                    $timeout(deferred.reject);
-                    $location.url('/login');
-                }
-            });
+                    // Not Authenticated
+                    else {
+                        $timeout(deferred.reject);
+                        $location.url('/login');
+                    }
+                });
 
-            return deferred.promise;
+                return deferred.promise;
+            }
+            // Protected route, redirect to verify key
+            $window.location = 'http://prezy.ycproduction1.com:3000/public/play?key=testing';
         };
 
         // states for my app
@@ -57,7 +63,7 @@ angular.module('mean').config(['$stateProvider',
                 url: '/slideshows/play/:slideshowId',
                 templateUrl: 'slideshows/views/play.html',
                 resolve: {
-                    // loggedin: checkLoggedin
+                    loggedin: checkLoggedin
                 }
             });
     }

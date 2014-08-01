@@ -27,7 +27,7 @@
                     <td>{{slideshow.updatedAt | date:'short'}}</td>
                     <td>{{ slideshow.slides.length }}</td>
                     <td data-ng-if="hasAuthorization(slideshow)">
-                        <a class="btn btn-primary" data-ng-href="{{ slideshow.shortUrl }}" target="_blank">
+                        <a class="btn btn-primary" data-ng-href="/#!/slideshows/play/{{slideshow._id}}" target="_blank">
                             <i class="fa fa-eye fa-lg"></i> View
                         </a>
                     </td>

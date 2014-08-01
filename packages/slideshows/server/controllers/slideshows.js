@@ -3,17 +3,37 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-    Slideshow = mongoose.model('Slideshow'),
+var mongoose = require('mongoose');
+
+var Slideshow = mongoose.model('Slideshow'),
+    Email = mongoose.model('Email'),
+    Base64 = require(process.cwd() + '/server/lib/base64'),
     _ = require('lodash'),
     appUploadPath = '/public/uploads',
     uploadPath = process.cwd() + appUploadPath,
+    // slidePlayUrl = '/public/play/',
     fs = require('fs'),
     api_key = 'key-3zip4qju2ns3t1cliicl3xwfb5rqk-f0',
     domain = 'prezy.mailgun.org',
     Mailgun = require('mailgun-js'),
     mailgun = new Mailgun({apiKey: api_key, domain: domain});
 
+
+// var appendKey = function(linkArray, key, appUrl) {
+//     var newLinks = [],
+//         playUrl = appUrl + slidePlayUrl;
+
+//     var append = function(link) {
+//         link = playUrl + link + '?key=' + key;
+//         newLinks.push(link);
+//     };
+
+//     _.each(linkArray, function(item) {
+//         append(item);
+//     });
+
+//     return newLinks;
+// };
 
 /**
  * Find slideshow by id
@@ -77,14 +97,41 @@ exports.uploadSlideshowImage = function(req, res) {
 };
 
 /**
+ * Show an slideshow
+ */
+exports.redirectPlay = function(req, res) {
+
+    console.log(req.query.key);
+    // Email.findOne({ 'key': req.query.key}).exec(function(err, email) {
+    //     if (err) {
+    //     return res.jsonp(500,{
+    //     error: 'Cannot find email'
+    //         });
+    // }
+    // res.jsonp(email);
+
+    // });
+};
+
+/**
  * Email Slideshow links
  */
 exports.email = function(req, res) {
+    // create initial email object
+    var emailData = req.body,
+        base64 = new Base64(),
+        date = new Date().toJSON();
+
+    // generate random key
+    var key = emailData.email + ':' + date;
+    emailData.key = base64.encode(key);
+
+    // email data
     var data = {
-        from: 'No-Reply <prezy@mailgun.org>',
-        to: req.param('email'),
-        subject: 'Prezy Links',
-        html: req.param('links')
+        from: 'Y&C Presentations <prezy@mailgun.org>',
+        to: emailData.email,
+        subject: 'Future subject',
+        html: emailData.links
     };
 
     mailgun.messages().send(data, function (error, body) {
@@ -94,9 +141,22 @@ exports.email = function(req, res) {
                 detail: body
             });
         }
-        res.jsonp(200,{
-            error: false,
-            detail: body
+
+        // save the email which was sent successfully
+        var email = new Email(email);
+        email.user = req.user;
+
+        email.save(function(err) {
+            if (err) {
+                return res.jsonp(500,{
+                    error: 'Cannot save the email data',
+                    detail: err
+                });
+            }
+            res.jsonp(200,{
+                error: false,
+                detail: body
+            });
         });
     });
 };

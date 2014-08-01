@@ -21,6 +21,8 @@ module.exports = function(Slideshows, app, auth) {
         .delete(auth.requiresLogin, hasAuthorization, slideshows.destroy);
     app.route('/slideshows/play/:slideshowId')
         .get(slideshows.show);
+    app.route('/public/play')
+        .get(slideshows.redirectPlay);
     app.route('/uploads/slideshows')
         .get(slideshows.allUploads)
         .post(auth.requiresLogin, slideshows.uploadSlideshowImage);

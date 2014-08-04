@@ -271,6 +271,11 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
             adjustData();
         };
 
+        $scope.duplicateSlide = function(slide) {
+            if (!slide) return;
+            $scope.slides.push(slide);
+        };
+
         $scope.createShortUrl = function(slideshowId, duplicate, callback) {
             Slideshows.get({
                 slideshowId: slideshowId

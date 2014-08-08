@@ -85,9 +85,11 @@ ClientSchema.path('abbr').validate(function(abbr) {
  * Statics
  */
 ClientSchema.statics.load = function(id, cb) {
-    this.findOne({
-        _id: id
-    }).populate('user', 'name username').exec(cb);
+    if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        this.findOne({
+            _id: id
+        }).populate('user', 'name username').exec(cb);
+    }
 };
 
 mongoose.model('Client', ClientSchema);

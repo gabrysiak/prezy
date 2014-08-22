@@ -218,8 +218,8 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                         slideNumber: newItemNo,
                         content: '',
                         contentRight: '',
-                        data_x: $scope.slideDataX,
-                        data_y: $scope.slideDataY
+                        dataX: $scope.slideDataX,
+                        dataY: $scope.slideDataY
                     });
                     return;
                 }
@@ -231,8 +231,8 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                     slideNumber: editItemNo,
                     content: '',
                     contentRight: '',
-                    data_x: $scope.slideDataX,
-                    data_y: $scope.slideDataY
+                    dataX: $scope.slideDataX,
+                    dataY: $scope.slideDataY
                 });
             });
         };
@@ -243,7 +243,7 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
             var adjustData = function() {
                 var dataX = 1500;
                 angular.forEach($scope.slides, function(slide) {
-                    slide.data_x = $scope.slideDataX = dataX;
+                    slide.dataX = $scope.slideDataX = dataX;
                     dataX += 1500;
                 });
             };
@@ -314,8 +314,8 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
             var checkSlideshowDataXY = function() {
                 // check current slideshow scope, then adjust data x,y value
                 if ($scope.slideshow && $scope.slideshow.slides) {
-                    $scope.slideDataX = $scope.slideshow.slides[$scope.slideshow.slides.length-1].data_x;
-                    $scope.slideDataY = $scope.slideshow.slides[$scope.slideshow.slides.length-1].data_y;
+                    $scope.slideDataX = $scope.slideshow.slides[$scope.slideshow.slides.length-1].dataX;
+                    $scope.slideDataY = $scope.slideshow.slides[$scope.slideshow.slides.length-1].dataY;
                 }
             };
             // check slide action and calculate data x,y

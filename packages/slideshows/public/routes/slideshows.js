@@ -63,7 +63,7 @@ angular.module('mean').config(['$stateProvider',
                 url: '/slideshows/play/:slideshowId',
                 templateUrl: 'slideshows/views/play.html',
                 resolve: {
-                    loggedin: checkLoggedin
+                    // voicloggedin: checkLoggedin
                 }
             });
     }

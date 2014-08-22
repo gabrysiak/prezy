@@ -32,16 +32,32 @@ var Slides = new Schema({
     required: false,
         trim: true
     },
-    data_x: {
+    dataX: {
         type: Number,
     required: false,
         trim: true
     },
-    data_y: {
+    dataY: {
+        type: Number,
+    required: false,
+        trim: true
+    },
+    dataZ: {
+        type: Number,
+    required: false,
+        trim: true
+    },
+    dataRotate: {
+        type: Number,
+    required: false,
+        trim: true
+    },
+    dataScale: {
         type: Number,
     required: false,
         trim: true
     }
+
 });
 
 /**

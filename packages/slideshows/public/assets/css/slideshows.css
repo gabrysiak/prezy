@@ -106,7 +106,7 @@ i, em { font-style: italic }
 .step {
     position: relative;
     width: 1300px;
-    padding: 100px;
+    padding: 0 150px;
     margin: 20px auto;
 
     -webkit-box-sizing: border-box;
@@ -573,23 +573,8 @@ i, em { font-style: italic }
 .impress-enabled          { pointer-events: none }
 .impress-enabled #impress { pointer-events: auto }
 
-/*
-    There is one funny thing I just realized.
 
-    Thanks to this workaround above everything except #impress element is invisible
-    for click events. That means that the hint element is also not clickable.
-    So basically all of this transforms and delayed transitions trickery was probably
-    not needed at all...
-
-    But it was fun to learn about it, wasn't it?
-*/
-
-/*
-    That's all I have for you in this file.
-    Thanks for reading. I hope you enjoyed it at least as much as I enjoyed writing it
-    for you.
-*/
-
+/* General Slide Styles Start */
 .item {
     margin: 20px auto;
 
@@ -598,13 +583,16 @@ i, em { font-style: italic }
     -ms-box-sizing:     border-box;
     -o-box-sizing:      border-box;
     box-sizing:         border-box;
-
+    padding: 0 150px;
     font-family: 'Roboto', sans-serif;
     font-size: .7em;
     line-height: 1.5;
     border: 1px solid white;
 }
 
+.item > div{
+    padding: 0 20px;
+}
 .item img iframe, .step img iframe{
     width: 100%;
     height: auto;
@@ -623,10 +611,13 @@ i, em { font-style: italic }
     content: '"';
 }
 
-/* Start Template Styles */
+/* General Slide Styles Stop */
+
+/* Template Styles Start */
 .step.title {
     font-size: 6em;
     color: green;
+    text-align: center;
 }
 
 .step.default {
@@ -646,3 +637,33 @@ nav {
     pointer-events: auto;
     opacity: .5;
 }
+
+/* Template Styles Stop */
+
+/* Misc Start */
+
+.version {
+    font-size: .75em;
+    position: fixed;
+    padding: 20px;
+    bottom: 0;
+    right: 0;
+}
+/* Misc Stop */
+
+@media (max-width:1000px){
+    .step, .item {
+        padding: 0 200px;
+    }
+}
+
+@media (max-width:1250px){
+    .step, .item {
+        text-align: center;
+    }
+
+    .item > div {
+        padding: 20px 0;
+    }
+}
+

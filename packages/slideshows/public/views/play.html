@@ -14,7 +14,7 @@
                     <p>{{ slideshow.title }}</p>
                 </div>
 
-                <div data-ng-repeat="slide in slideshow.slides" class="step {{ slide.template ? slide.template : 'default' }}" data-x="{{slide.data_x}}" data-y="{{slide.data_y}}" tg-initiate-impress="">
+                <div data-ng-repeat="slide in slideshow.slides" class="step {{ slide.template ? slide.template : 'default' }}" data-x="{{slide.dataX}}" data-y="{{slide.dataY}}" data-z="{{slide.dataZ}}" data-rotate="{{slide.dataRotate}}" data-scale="{{slide.dataScale}}" tg-initiate-impress="">
                     <tg-slideshows-template></tg-slideshows-template>
                 </div>
 
@@ -23,7 +23,7 @@
         </div><!-- /.impress-not-supported -->
     </div><!-- /.impress-container -->
     
-    <div class="carousel-container">
+    <div class="carousel-container hidden">
         <tg-owl-carousel class="owl-carousel" data-options="carousel" tg-initiate-impress="" watch="slideshow.slides">
             <div class="item" ng-click="carouselNav($index+1, true)">
                 <p>{{ slideshow.title }}</p>

@@ -3,10 +3,9 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose');
-
-var Slideshow = mongoose.model('Slideshow'),
+var mongoose = require('mongoose'),
     Email = mongoose.model('Email'),
+    Slideshow = mongoose.model('Slideshow'),
     Base64 = require(process.cwd() + '/server/lib/base64'),
     _ = require('lodash'),
     appUploadPath = '/public/uploads',
@@ -17,7 +16,6 @@ var Slideshow = mongoose.model('Slideshow'),
     domain = 'prezy.mailgun.org',
     Mailgun = require('mailgun-js'),
     mailgun = new Mailgun({apiKey: api_key, domain: domain});
-
 
 // var appendKey = function(linkArray, key, appUrl) {
 //     var newLinks = [],
@@ -200,13 +198,12 @@ exports.update = function(req, res) {
             if (err) {
                 return res.jsonp(500,{
                         error: 'Cannot populate client',
-                        data: slideshow,
                         detail: err
                             });
             }
         });
+        res.jsonp(slideshow);
     });
-    res.jsonp(slideshow);
 };
 
 /**

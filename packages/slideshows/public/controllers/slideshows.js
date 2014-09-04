@@ -131,11 +131,6 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
             if (isValid) {
                 var slideshow = $scope.slideshow;
 
-                if (!slideshow.updated) {
-                    slideshow.updated = [];
-                }
-                slideshow.updated.push(new Date().getTime());
-
                 slideshow.$update(function() {
                     // $location.path('slideshows/' + slideshow._id);
                     $location.path('slideshows');
@@ -253,7 +248,7 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                 // remove item from scope / model
                 if ($scope.slideshow && $scope.slideshow.slides) {
                     $scope.slideshow.slides = _.filter($scope.slideshow.slides, function (slideshowSlide) {
-                        return (slide.id !== slideshowSlide.id);
+                        return (slide._id !== slideshowSlide._id);
                     });
                     // sync up slides
                     $scope.slides = $scope.slideshow.slides;
@@ -261,7 +256,7 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
                     $scope.reorderSlides($scope.slideshow.slides);
                 } else {
                     $scope.slides = _.filter($scope.slides, function (slideshowSlide) {
-                        return (slide.id !== slideshowSlide.id);
+                        return (slide._id !== slideshowSlide._id);
                     });
                     // reorder slides
                     $scope.reorderSlides($scope.slides);
@@ -271,9 +266,39 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
             adjustData();
         };
 
-        $scope.duplicateSlide = function(slide) {
+        $scope.duplicateSlide = function(slideshow, slide) {
             if (!slide) return;
-            $scope.slides.push(slide);
+            // auto increment slide data x,y
+            this.autoDataXY('add', function(){
+                if (!slideshow) {
+                    var newItemNo = this.incrementSlideId($scope.slides, function(maxId) {
+                        return maxId + 1;
+                    });
+                    $scope.slides.push({
+                        id: newItemNo,
+                        template: slide.template,
+                        slideNumber: newItemNo,
+                        content: slide.content,
+                        contentRight: slide.contentRight,
+                        dataX: $scope.slideDataX,
+                        dataY: $scope.slideDataY
+                    });
+                    return;
+                }
+
+                var editItemNo = this.incrementSlideId(slideshow.slides, function(maxId) {
+                    return maxId + 1;
+                });
+                slideshow.slides.push({
+                    id: editItemNo,
+                    template: slide.template,
+                    slideNumber: editItemNo,
+                    content: slide.content,
+                    contentRight: slide.contentRight,
+                    dataX: $scope.slideDataX,
+                    dataY: $scope.slideDataY
+                });
+            });
         };
 
         $scope.createShortUrl = function(slideshowId, duplicate, callback) {
@@ -335,6 +360,21 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
 
             // execute callback function if exists
             if (callback) callback();
+        };
+
+        $scope.incrementSlideId = function(slides, callback) {
+
+            if (!slides) return;
+
+            // create array of ids from slides
+            var nums = _.pluck(slides, 'id');
+            
+            // get max id from array
+            var maxId = _.max(nums, function(item) {
+                return item;
+            });
+
+            callback(maxId);
         };
     }
 ]);

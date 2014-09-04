@@ -7,13 +7,13 @@ var mongoose = require('mongoose');
 
 var Client = mongoose.model('Client'),
     Slideshow = mongoose.model('Slideshow'),
-    Project = mongoose.model('Project'),
+    Project = require('../../../projects/server/models/project'),
     _ = require('lodash'),
     appUploadPath = '/public/uploads',
     uploadPath = process.cwd() + appUploadPath,
     fs = require('fs');
 
-
+mongoose.model('Project');
 /**
  * Find client by id
  */

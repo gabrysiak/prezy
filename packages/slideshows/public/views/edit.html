@@ -52,7 +52,7 @@
                 <a class="btn btn-success col-md-2" data-ng-click="addSlide(slideshow)"><i class="fa fa-plus fa-lg"></i> Slide</a>
                 <div class="col-md-10">
                     <select class="form-control" data-ng-model="slides.template" data-ng-options="template.value as template.text for template in templates">
-                        <option value="">-- Select Template --</option>
+                        <option value="">Default</option>
                     </select>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                 </tg-slide-template>
                 <div data-ng-hide="slideshow.slides.length === 1" class="form-group">
                     <a class="col-md-2 btn btn-danger" data-ng-click="removeSlide(slideshow.slides[$index])"><i class="fa fa-minus fa-lg"></i> Remove Slide</a>
-                    <a class="col-md-2 btn btn-info" data-ng-click="duplicateSlide(slideshow.slides[$index])"><i class="fa fa-refresh fa-spin fa-lg"></i> Duplicate Slide</a>
+                    <a class="col-md-2 btn btn-info" data-ng-click="duplicateSlide(slideshow, slideshow.slides[$index])"><i class="fa fa-refresh fa-spin fa-lg"></i> Duplicate Slide</a>
                     <div class="col-md-8">
                         
                     </div>

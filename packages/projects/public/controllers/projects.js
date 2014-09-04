@@ -61,11 +61,6 @@ angular.module('mean').controller('ProjectsController', ['$scope', '$stateParams
         $scope.update = function(isValid) {
             if (isValid) {
                 var project = $scope.project;
-  
-                if (!project.updated) {
-                    project.updated = [];
-                }
-                project.updated.push(new Date().getTime());
 
                 project.$update(function() {
                     // $location.path('projects/' + project._id);

@@ -19,7 +19,6 @@ var Slides = new Schema({
     },
     slideNumber: {
         type: Number,
-    required: true,
         trim: true
     },
     content: {
@@ -40,22 +39,26 @@ var Slides = new Schema({
     dataY: {
         type: Number,
     required: false,
-        trim: true
+        trim: true,
+     default: 0
     },
     dataZ: {
         type: Number,
     required: false,
-        trim: true
+        trim: true,
+     default: 1
     },
     dataRotate: {
         type: Number,
     required: false,
-        trim: true
+        trim: true,
+     default: 0
     },
     dataScale: {
         type: Number,
     required: false,
-        trim: true
+        trim: true,
+     default: 1
     }
 
 });
@@ -117,10 +120,6 @@ SlideshowSchema.path('client').validate(function(client) {
 SlideshowSchema.path('project').validate(function(project) {
     return !!project;
 }, 'Please select a project');
-
-Slides.path('slideNumber').validate(function(slideNumber) {
-    return !!slideNumber;
-}, 'Slide number cannot be blank');
 
 /**
  * Statics

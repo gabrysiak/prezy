@@ -4,7 +4,7 @@
 angular.module('mean')
 .factory('Clients', ['$resource',
     function($resource) {
-        return $resource('clients/:clientId/:projects/:slideshows', {
+        return $resource('clients/:clientId/:projects:slideshows', {
             clientId: '@_id',
             slideshows: '@slideshows',
             projects: '@projects'

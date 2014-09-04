@@ -141,16 +141,8 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
         };
 
         $scope.find = function() {
-            if (!searchClient) {
-                Slideshows.query(function(slideshows) {
-                    $scope.slideshows = slideshows;
-                    return;
-                });
-            }
-            Clients.projects({
-                clientId: searchClient
-            }, function(projects) {
-                $scope.projects = projects;
+            Slideshows.query(function(slideshows) {
+                $scope.slideshows = slideshows;
             });
         };
 

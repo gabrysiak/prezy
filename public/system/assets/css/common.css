@@ -61,6 +61,12 @@ h1 {
     padding: 20px 0;
 }
 
+h2 {
+    font-size: 1.2em;
+    text-transform: uppercase;
+    padding: 10px 0;
+}
+
 .page-header {
     padding-bottom: 0 !important;
     margin: 0 !important;
@@ -127,3 +133,73 @@ body .btn {
     user-select: none;
 }
 
+/*
+Home Page
+================================================================>
+*/
+.version-item > ul,
+.todos > ul,
+.bugs > ul {
+    padding: 0 30px;
+    list-style-type: square;
+}
+
+.version-item > ul > li,
+.todos > ul > li,
+.bugs > ul > li {
+    margin: 5px;
+}
+
+.versions span {
+    font-style: italic;
+}
+
+.version-item {
+    padding: 10px;
+}
+
+.version-item > span {
+  font-size: .8em;
+  background: #158cba;
+  color: #fff;
+  display: inline-block;
+  height: 20px;
+  line-height: 20px;
+  padding: 0 9px;
+  position: relative;
+}
+
+.version-item > span:before,
+.version-item > span:after {
+  content: "";
+  height: 0;
+  position: absolute;
+  width: 0;
+}
+
+.version-item > span:before {
+  border-bottom: 10px solid #158cba;
+  border-left: 10px solid transparent;
+  border-top: 10px solid #158cba;
+  left: -10px;
+}
+
+.version-item > span:after {
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid #158cba;
+  border-top: 10px solid transparent;
+  right: -10px;
+}
+
+.version-item > span:hover {
+  background: #75caeb;
+}
+
+.version-item > span:hover:before {
+  border-bottom: 10px solid #75caeb;
+  border-top: 10px solid #75caeb;
+}
+
+.version-item > span:hover:after {
+  border-left: 10px solid #75caeb;
+}

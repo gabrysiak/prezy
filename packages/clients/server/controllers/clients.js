@@ -13,7 +13,8 @@ var Client = mongoose.model('Client'),
     uploadPath = process.cwd() + appUploadPath,
     fs = require('fs');
 
-mongoose.model('Project');
+Project = mongoose.model('Project');
+
 /**
  * Find client by id
  */

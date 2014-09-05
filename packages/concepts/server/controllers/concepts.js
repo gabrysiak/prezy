@@ -234,6 +234,12 @@ exports.show = function(req, res) {
  * List of concepts
  */
 exports.all = function(req, res) {
+    var clientId = req.param('clientId'),
+        projectId = req.param('projectId'),
+        roundId = req.param('roundId');
+
+    // TODO:: Query Concepts with optional params
+    
     Concept.find().sort('-created').populate('user', 'name username').exec(function(err, concepts) {
         if (err) {
         return res.jsonp(500,{

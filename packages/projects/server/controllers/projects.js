@@ -114,10 +114,11 @@ exports.projectConcepts = function(req, res, next) {
  * Get Project Rounds
  */
 exports.projectRounds = function(req, res, next) {
-    var projectId = req.param('projectId');
-    var rounds = [];
+    var projectId = req.param('projectId'),
+        clientId = req.param('clientId'),
+        rounds = [];
 
-    Concept.find({project: projectId}, function(err, concepts){
+    Concept.find({project: projectId, client: clientId}, function(err, concepts){
         if (err) {
             return res.jsonp(500,{
                 error: 'Cannot find concepts belonging to projectId: ' + projectId

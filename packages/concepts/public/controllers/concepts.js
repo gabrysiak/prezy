@@ -5,7 +5,9 @@ angular.module('mean').controller('ConceptsController', ['$scope', '$stateParams
         $scope.global = Global;
         
         // get client from query string
-        var searchClient = $location.search().client;
+        var searchClient = $location.search().clientId;
+        // get project from query string
+        var searchProject = $location.search().projectId;
 
         // initial slide values
         $scope.slides = [];
@@ -46,6 +48,8 @@ angular.module('mean').controller('ConceptsController', ['$scope', '$stateParams
                     text: project.title
                 });
             });
+            // check if client auto populated
+            if (searchProject) $scope.project = searchProject;
         });
 
         //Event Listener for ng-repeat on concept slides.This is needed because impress tries to render the cards while ng-repeat is still populating the attributes in the template.  This works alongside the initiateImpress directive

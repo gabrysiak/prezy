@@ -19,7 +19,7 @@
                         <td>{{ round.title }}</td>
                         <td>{{ round.created | date:'short' }}</td>
                         <td data-ng-if="hasAuthorization(round)">
-                            <a class="btn btn-primary" data-ng-href="/#!/rounds/{{round._id}}/concepts">
+                            <a class="btn btn-primary" data-ng-href="/#!/rounds/{{round._id}}/concepts?clientId={{project.client._id}}&projectId={{project._id}}">
                                 <i class="fa fa-eye fa-lg"></i> View
                             </a>
                         </td>
@@ -33,5 +33,5 @@
             </table>
         </div>
     </div>
-    <h1 data-ng-hide="!rounds || rounds.length">No concepts yet. <br> Why don't you <a href="/#!/rounds/create">Create One</a>?</h1>
+    <h1 data-ng-hide="!rounds || rounds.length">No concepts yet. <br> Why don't you <a href="/#!/concepts/create?clientId={{project.client._id}}&projectId={{project._id}}">Create One</a>?</h1>
 </section>

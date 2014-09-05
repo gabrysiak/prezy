@@ -5,7 +5,7 @@ angular.module('mean').controller('ProjectsController', ['$scope', '$stateParams
         $scope.global = Global;
 
         // get client from query string
-        var searchClient = $location.search().client;
+        var searchClient = $location.search().clientId;
 
         // populate the clients dropdown
         Clients.query(function(clients) {
@@ -108,9 +108,13 @@ angular.module('mean').controller('ProjectsController', ['$scope', '$stateParams
 
         $scope.findRounds = function() {
             Projects.rounds({
-                projectId: $stateParams.projectId
+                projectId: $stateParams.projectId,
+                clientId: searchClient
             }, function(rounds) {
-                $scope.rounds = rounds;
+                var uniqRounds = _.uniq(rounds, function(item, key, _id) {
+                    return item._id;
+                });
+                $scope.rounds = uniqRounds;
                 $scope.findOne();
             });
         };

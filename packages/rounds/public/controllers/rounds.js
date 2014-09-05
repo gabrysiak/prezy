@@ -4,6 +4,11 @@ angular.module('mean').controller('RoundsController', ['$scope', '$stateParams',
     function($scope, $stateParams, $location, $log, Global, Rounds, Concepts, FlashService, $timeout) {
         $scope.global = Global;
 
+        // get client from query string
+        var searchClient = $location.search().clientId;
+        // get project from query string
+        var searchProject = $location.search().projectId;
+
         $scope.hasAuthorization = function(round) {
             if (!round || !round.user) return false;
             return $scope.global.isAdmin || round.user._id === $scope.global.user._id;
@@ -70,20 +75,39 @@ angular.module('mean').controller('RoundsController', ['$scope', '$stateParams',
 
         $scope.findConcepts = function() {
             Rounds.concepts({
-                roundId: $stateParams.roundId
+                roundId: $stateParams.roundId,
+                clientId: searchClient,
+                projectId: searchProject
             }, function(concepts) {
                 $scope.concepts = concepts;
                 $scope.findOne();
             });
         };
 
-        // $scope.removeConcept = function(concept) {
-        //     Concepts.delete({
-        //         conceptId: concept._id
-        //     }, function(concept){
-        //         // remove concept from scope
-        //         $scope.concepts = _.without($scope.concepts, _.findWhere($scope.concepts, {_id: concept._id}));
-        //     });
-        // };
+        $scope.duplicate = function(round) {
+            if (!round) return;
+
+            Concepts.query({
+                roundId: round._id,
+                clientId: searchClient,
+                projectId: searchProject
+            }, function(concepts) {
+                console.log(concepts);
+            });
+            // var conceptDuplicate = new Concepts({
+            //     title: concept.title,
+            //     slides: concept.slides,
+            //     client: concept.client,
+            //     project: concept.project,
+            //     round: concept.round,
+            //     shortUrl: null
+            // });
+            // conceptDuplicate.$save(function(response) {
+            //     $scope.createShortUrl(response._id, true, function(shortUrl){
+            //         response.shortUrl = shortUrl;
+            //         $scope.concepts.push(response);
+            //     });
+            // });
+        };
     }
 ]);

@@ -4,18 +4,18 @@
 angular.module('mean')
 .factory('Projects', ['$resource',
     function($resource) {
-        return $resource('projects/:projectId/:slideshows:rounds', {
+        return $resource('projects/:projectId/:concepts:rounds', {
             projectId: '@_id',
-            slideshows: '@slideshows',
+            concepts: '@concepts',
             rounds: '@rounds'
         }, {
             update: {
                 method: 'PUT'
             },
-            slideshows: {
+            concepts: {
                 method: 'GET',
                 params: {
-                    slideshows: 'slideshows'
+                    concepts: 'concepts'
                 },
                 isArray: true
             },

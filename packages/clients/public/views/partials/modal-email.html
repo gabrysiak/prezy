@@ -27,10 +27,10 @@
         
         <!-- Links -->
         <div class="form-group">
-            <div class="col-md-10" data-ng-repeat="slideshow in slideshows">
+            <div class="col-md-10" data-ng-repeat="concept in concepts">
                 <div class="row">
                     <label>
-                        <input type="checkbox" checklist-model="send.links" checklist-value="slideshow._id"> {{slideshow.title}}
+                        <input type="checkbox" checklist-model="send.links" checklist-value="concept._id"> {{concept.title}}
                     </label>
                 </div>
             </div>

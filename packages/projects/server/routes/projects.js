@@ -19,8 +19,8 @@ module.exports = function(Projects, app, auth) {
         .get(projects.show)
         .put(auth.requiresLogin, hasAuthorization, projects.update)
         .delete(auth.requiresLogin, hasAuthorization, projects.destroy);
-    app.route('/projects/:projectId/slideshows')
-        .get(projects.projectSlideshows);
+    app.route('/projects/:projectId/concepts')
+        .get(projects.projectConcepts);
     app.route('/projects/:projectId/rounds')
         .get(projects.projectRounds);
         

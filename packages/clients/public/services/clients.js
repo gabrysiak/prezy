@@ -4,9 +4,9 @@
 angular.module('mean')
 .factory('Clients', ['$resource',
     function($resource) {
-        return $resource('clients/:clientId/:projects:slideshows', {
+        return $resource('clients/:clientId/:projects:concepts', {
             clientId: '@_id',
-            slideshows: '@slideshows',
+            concepts: '@concepts',
             projects: '@projects'
         }, {
             update: {
@@ -19,10 +19,10 @@ angular.module('mean')
                 },
                 isArray: true
             },
-            slideshows: {
+            concepts: {
                 method: 'GET',
                 params: {
-                    slideshows: 'slideshows'
+                    concepts: 'concepts'
                 },
                 isArray: true
             }

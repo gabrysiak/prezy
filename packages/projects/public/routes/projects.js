@@ -53,9 +53,9 @@ angular.module('mean').config(['$stateProvider',
                     loggedin: checkLoggedin
                 }
             })
-            .state('project slideshows', {
-                url: '/projects/:projectId/slideshows',
-                templateUrl: 'projects/views/slideshows.html',
+            .state('project concepts', {
+                url: '/projects/:projectId/concepts',
+                templateUrl: 'projects/views/concepts.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }

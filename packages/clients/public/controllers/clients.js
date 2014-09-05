@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean').controller('ClientsController', ['$scope', '$stateParams', '$location', '$http', '$log', '$modal', 'Global', 'Clients', 'Slideshows', 'Projects', 'FlashService', '$timeout', '$upload',
-    function($scope, $stateParams, $location, $http, $log, $modal, Global, Clients, Slideshows, Projects, FlashService, $timeout, $upload) {
+angular.module('mean').controller('ClientsController', ['$scope', '$stateParams', '$location', '$http', '$log', '$modal', 'Global', 'Clients', 'Concepts', 'Projects', 'FlashService', '$timeout', '$upload',
+    function($scope, $stateParams, $location, $http, $log, $modal, Global, Clients, Concepts, Projects, FlashService, $timeout, $upload) {
         $scope.global = Global;
 
         $scope.onFileSelect = function($files) {
@@ -139,21 +139,21 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
             });
         };
 
-        $scope.findSlideshows = function() {
-            Clients.slideshows({
+        $scope.findConcepts = function() {
+            Clients.concepts({
                 clientId: $stateParams.clientId
-            }, function(slideshows) {
-                $scope.slideshows = slideshows;
+            }, function(concepts) {
+                $scope.concepts = concepts;
                 $scope.findOne();
             });
         };
 
-        $scope.removeSlideshow = function(slideshow) {
-            Slideshows.delete({
-                slideshowId: slideshow._id
-            }, function(slideshow){
-                // remove slideshow from scope
-                $scope.slideshows = _.without($scope.slideshows, _.findWhere($scope.slideshows, {_id: slideshow._id}));
+        $scope.removeConcept = function(concept) {
+            Concepts.delete({
+                conceptId: concept._id
+            }, function(concept){
+                // remove concept from scope
+                $scope.concepts = _.without($scope.concepts, _.findWhere($scope.concepts, {_id: concept._id}));
             });
         };
 
@@ -176,18 +176,18 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
         };
 
         $scope.email = function () {
-            Clients.slideshows({
+            Clients.concepts({
                 clientId: $stateParams.clientId
-            }, function(slideshows) {
-                $scope.slideshows = slideshows;
+            }, function(concepts) {
+                $scope.concepts = concepts;
             });
 
             var modalInstance = $modal.open({
                 templateUrl: 'clients/views/partials/modal-email.html',
                 controller: ModalInstanceController,
                 resolve: {
-                    slideshows: function () {
-                        return $scope.slideshows;
+                    concepts: function () {
+                        return $scope.concepts;
                     }
                 }
             });
@@ -199,17 +199,17 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
             });
         };
 
-        var ModalInstanceController = function ($scope, $modalInstance, slideshows) {
+        var ModalInstanceController = function ($scope, $modalInstance, concepts) {
             $scope.send = {
                 links: []
             };
 
-            $scope.slideshows = slideshows;
+            $scope.concepts = concepts;
 
             $scope.ok = function (isValid) {
                 if (isValid) {
                     // post request to email api
-                    $http.post('/email/slideshows', $scope.send)
+                    $http.post('/email/concepts', $scope.send)
                         .success(function (data, status, headers, config) {
                             if (status === 200) {
                                 //update the model

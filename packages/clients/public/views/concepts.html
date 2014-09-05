@@ -1,0 +1,58 @@
+<div data-ng-include="'/public/system/views/misc-controls.html'"></div>
+<section data-ng-controller="ClientsController" data-ng-init="findConcepts()">
+    <div data-ng-show="!concepts || concepts.length">
+        <div class="breadcrumbs">
+            <span data-ng-show="client.title">{{ client.title }}</span>  <span>Concepts</span>
+        </div>
+        <div class="pull-right">
+            <a class="btn btn-success" data-ng-href="/#!/concepts/create?client={{client._id}}" >
+                <i class="fa fa-plus fa-lg"></i> New Concept
+            </a>
+
+            <a class="btn btn-default" data-ng-click="email();">
+                <i class="fa fa-mail-forward fa-spin fa-lg"></i> Email Link
+            </a>
+        </div>        
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th mean-token="'concept-table-id'">#</th>
+                        <th mean-token="'concept-table-name'">concept</th>
+                        <th mean-token="'concept-table-updated'">updated</th>
+                        <th mean-token="'concept-table-slide-count'"># slides</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="concept in concepts">
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ concept.title }}</td>
+                        <td>{{concept.updatedAt | date:'short'}}</td>
+                        <td>{{ concept.slides.length }}</td>
+                        <td data-ng-if="hasAuthorization(concept)">
+                            <a class="btn btn-primary" data-ng-href="/#!/concepts/play/{{concept._id}}" target="_blank">
+                                <i class="fa fa-eye fa-lg"></i> View
+                            </a>
+                        </td>
+                        <td data-ng-if="hasAuthorization(concept)">
+                            <a class="btn btn-warning" data-ng-href="/#!/concepts/{{concept._id}}/edit">
+                                <i class="fa fa-edit fa-lg"></i> Edit
+                            </a>
+                        </td>
+                        <td data-ng-if="hasAuthorization(concept)" data-ng-controller="ConceptsController">
+                            <a class="btn btn-info" data-ng-click="duplicate(concept);">
+                                <i class="fa fa-refresh fa-spin fa-lg"></i> Duplicate
+                            </a>
+                        </td>
+                        <td data-ng-if="hasAuthorization(concept)">
+                            <a class="btn btn-danger" data-ng-click="removeConcept(concept);">
+                                <i class="fa fa-trash-o fa-lg"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <h1 data-ng-hide="!concepts || concepts.length">No concepts yet. <br> Why don't you <a href="/#!/concepts/create">Create One</a>?</h1>
+</section>

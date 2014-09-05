@@ -19,8 +19,8 @@ module.exports = function(Clients, app, auth) {
         .get(clients.show)
         .put(auth.requiresLogin, hasAuthorization, clients.update)
         .delete(auth.requiresLogin, hasAuthorization, clients.destroy);
-    app.route('/clients/:clientId/slideshows')
-        .get(clients.clientSlideshows);
+    app.route('/clients/:clientId/concepts')
+        .get(clients.clientConcepts);
     app.route('/clients/:clientId/projects')
         .get(clients.clientProjects);
     app.route('/uploads/logos')

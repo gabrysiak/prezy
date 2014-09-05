@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean').controller('RoundsController', ['$scope', '$stateParams', '$location', '$log', 'Global', 'Rounds', 'Slideshows', 'FlashService', '$timeout',
-    function($scope, $stateParams, $location, $log, Global, Rounds, Slideshows, FlashService, $timeout) {
+angular.module('mean').controller('RoundsController', ['$scope', '$stateParams', '$location', '$log', 'Global', 'Rounds', 'Concepts', 'FlashService', '$timeout',
+    function($scope, $stateParams, $location, $log, Global, Rounds, Concepts, FlashService, $timeout) {
         $scope.global = Global;
 
         $scope.hasAuthorization = function(round) {
@@ -68,21 +68,21 @@ angular.module('mean').controller('RoundsController', ['$scope', '$stateParams',
             });
         };
 
-        // $scope.findSlideshows = function() {
-        //     Rounds.slideshows({
-        //         roundId: $stateParams.roundId
-        //     }, function(slideshows) {
-        //         $scope.slideshows = slideshows;
-        //         $scope.findOne();
-        //     });
-        // };
+        $scope.findConcepts = function() {
+            Rounds.concepts({
+                roundId: $stateParams.roundId
+            }, function(concepts) {
+                $scope.concepts = concepts;
+                $scope.findOne();
+            });
+        };
 
-        // $scope.removeSlideshow = function(slideshow) {
-        //     Slideshows.delete({
-        //         slideshowId: slideshow._id
-        //     }, function(slideshow){
-        //         // remove slideshow from scope
-        //         $scope.slideshows = _.without($scope.slideshows, _.findWhere($scope.slideshows, {_id: slideshow._id}));
+        // $scope.removeConcept = function(concept) {
+        //     Concepts.delete({
+        //         conceptId: concept._id
+        //     }, function(concept){
+        //         // remove concept from scope
+        //         $scope.concepts = _.without($scope.concepts, _.findWhere($scope.concepts, {_id: concept._id}));
         //     });
         // };
     }

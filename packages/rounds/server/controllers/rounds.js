@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+    Concept = mongoose.model('Concept'),
     Round = mongoose.model('Round'),
     _ = require('lodash');
 
@@ -89,5 +90,20 @@ exports.all = function(req, res) {
             });
         }
         res.jsonp(rounds);
+    });
+};
+
+/**
+ * Get Round Concepts
+ */
+exports.roundConcepts = function(req, res, next) {
+    var roundId = req.param('roundId');
+    Concept.find({round: roundId}).sort('-created').populate('user', 'name username').populate('client', '_id title').populate('project', '_id title').exec(function(err, concepts) {
+        if (err) {
+            return res.jsonp(500,{
+                error: 'Cannot find concepts belonging to roundId: ' + roundId
+            });
+        }
+        res.jsonp(concepts);
     });
 };

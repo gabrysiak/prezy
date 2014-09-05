@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean').controller('ProjectsController', ['$scope', '$stateParams', '$location', '$log', 'Global', 'Clients', 'Projects', 'Rounds', 'Slideshows', 'FlashService', '$timeout',
-    function($scope, $stateParams, $location, $log, Global, Clients, Projects, Rounds, Slideshows, FlashService, $timeout) {
+angular.module('mean').controller('ProjectsController', ['$scope', '$stateParams', '$location', '$log', 'Global', 'Clients', 'Projects', 'Rounds', 'Concepts', 'FlashService', '$timeout',
+    function($scope, $stateParams, $location, $log, Global, Clients, Projects, Rounds, Concepts, FlashService, $timeout) {
         $scope.global = Global;
 
         // get client from query string
@@ -97,11 +97,11 @@ angular.module('mean').controller('ProjectsController', ['$scope', '$stateParams
             });
         };
 
-        $scope.findSlideshows = function() {
-            Projects.slideshows({
+        $scope.findConcepts = function() {
+            Projects.concepts({
                 projectId: $stateParams.projectId
-            }, function(slideshows) {
-                $scope.slideshows = slideshows;
+            }, function(concepts) {
+                $scope.concepts = concepts;
                 $scope.findOne();
             });
         };
@@ -115,12 +115,12 @@ angular.module('mean').controller('ProjectsController', ['$scope', '$stateParams
             });
         };
 
-        $scope.removeSlideshow = function(slideshow) {
-            Slideshows.delete({
-                slideshowId: slideshow._id
-            }, function(slideshow){
-                // remove slideshow from scope
-                $scope.slideshows = _.without($scope.slideshows, _.findWhere($scope.slideshows, {_id: slideshow._id}));
+        $scope.removeConcept = function(concept) {
+            Concepts.delete({
+                conceptId: concept._id
+            }, function(concept){
+                // remove concept from scope
+                $scope.concepts = _.without($scope.concepts, _.findWhere($scope.concepts, {_id: concept._id}));
             });
         };
     }

@@ -13,7 +13,7 @@ var Bitly = new BitlyAPI({
 Bitly.setAccessToken(config.bitly.accessToken); 
 
 exports.bitly = function(req, res) {
-    var url = 'http://' + req.headers.host + '/#!/slideshows/play/' + req.params.slideshowId;
+    var url = 'http://' + req.headers.host + '/#!/concepts/play/' + req.params.conceptId;
 
     Bitly.shorten({longUrl:url}, function(err, results) {
         if (err) throw err;

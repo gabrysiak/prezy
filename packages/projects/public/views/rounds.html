@@ -19,13 +19,8 @@
                         <td>{{ round.title }}</td>
                         <td>{{ round.created | date:'short' }}</td>
                         <td data-ng-if="hasAuthorization(round)">
-                            <a class="btn btn-primary" data-ng-href="/#!/rounds/{{round._id}}/slideshows" target="_blank">
+                            <a class="btn btn-primary" data-ng-href="/#!/rounds/{{round._id}}/concepts">
                                 <i class="fa fa-eye fa-lg"></i> View
-                            </a>
-                        </td>
-                        <td data-ng-if="hasAuthorization(round)">
-                            <a class="btn btn-warning" data-ng-href="/#!/rounds/{{round._id}}/edit">
-                                <i class="fa fa-edit fa-lg"></i> Edit
                             </a>
                         </td>
                         <td data-ng-if="hasAuthorization(round)" data-ng-controller="RoundsController">
@@ -33,15 +28,10 @@
                                 <i class="fa fa-refresh fa-spin fa-lg"></i> Duplicate
                             </a>
                         </td>
-                        <td data-ng-if="hasAuthorization(round)">
-                            <a class="btn btn-danger" data-ng-click="removeRound(round);">
-                                <i class="fa fa-trash-o fa-lg"></i> Delete
-                            </a>
-                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <h1 data-ng-hide="!rounds || rounds.length">No presentations yet. <br> Why don't you <a href="/#!/rounds/create">Create One</a>?</h1>
+    <h1 data-ng-hide="!rounds || rounds.length">No concepts yet. <br> Why don't you <a href="/#!/rounds/create">Create One</a>?</h1>
 </section>

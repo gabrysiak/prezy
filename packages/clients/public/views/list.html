@@ -15,7 +15,7 @@
                         <th mean-token="'client-table-name'">Client</th>
                         <th mean-token="'client-table-created'">Created</th>
                         <th mean-token="'client-table-created-by'">By User</th>
-                        <!-- <th mean-token="'client-table-presentations'">Presentations</th> -->
+                        <!-- <th mean-token="'client-table-concepts'">Concepts</th> -->
                         <th mean-token="'client-table-projects'">Projects</th>
                     </tr>
                 </thead>
@@ -26,7 +26,7 @@
                         <td>{{client.created | date:'short'}}</td>
                         <td>{{ client.user.name }}</td>
 <!--                         <td data-ng-if="hasAuthorization(client)">
-                            <a class="btn btn-primary" data-ng-href="/#!/clients/{{client._id}}/slideshows" >
+                            <a class="btn btn-primary" data-ng-href="/#!/clients/{{client._id}}/concepts" >
                                 <i class="fa fa-eye fa-lg"></i> View
                             </a>
                         </td> -->

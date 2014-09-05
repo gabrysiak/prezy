@@ -19,7 +19,8 @@ module.exports = function(Rounds, app, auth) {
         .get(rounds.show)
         .put(auth.requiresLogin, hasAuthorization, rounds.update)
         .delete(auth.requiresLogin, hasAuthorization, rounds.destroy);
-        
+    app.route('/rounds/:roundId/concepts')
+        .get(rounds.roundConcepts);    
     // Finish with setting up the roundId param
     app.param('roundId', rounds.round);
 };

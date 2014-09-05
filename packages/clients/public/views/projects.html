@@ -14,7 +14,7 @@
                         <th mean-token="'project-table-id'">#</th>
                         <th mean-token="'project-table-name'">project</th>
                         <th mean-token="'project-table-created'">Created</th>
-                        <!-- <th mean-token="'project-table-presentations'">Presentations</th> -->
+                        <!-- <th mean-token="'project-table-concepts'">Concepts</th> -->
                         <th mean-token="'project-table-rounds'">Rounds</th>
                     </tr>
                 </thead>
@@ -24,7 +24,7 @@
                         <td>{{ project.title }}</td>
                         <td> {{project.created | date:'short'}} </td>
                         <td data-ng-if="hasAuthorization(project)">
-                            <a class="btn btn-primary" data-ng-href="/#!/projects/{{project._id}}/slideshows" >
+                            <a class="btn btn-primary" data-ng-href="/#!/projects/{{project._id}}/rounds" >
                                 <i class="fa fa-eye fa-lg"></i> View
                             </a>
                         </td>

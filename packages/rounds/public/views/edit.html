@@ -20,7 +20,7 @@
             <div class="form-group" ng-class="{ 'has-error' : submitted && roundForm.content.$invalid }">
                 <label mean-token="'edit-content'" for="content" class="col-md-2 control-label">Content</label>
                 <div class="col-md-10">
-                    <textarea name="content" data-ng-model="round.content" id="content" cols="30" rows="10" placeholder="Content" class="form-control" required></textarea>
+                    <textarea name="content" data-ng-model="round.content" id="content" cols="30" rows="10" placeholder="Content" class="form-control"></textarea>
                     <div ng-show="submitted && roundForm.content.$invalid" class="help-block">
                         <p ng-show="roundForm.content.$error.required">Content is required</p>
                     </div>

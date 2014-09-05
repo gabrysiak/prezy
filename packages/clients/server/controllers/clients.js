@@ -6,7 +6,7 @@
 var mongoose = require('mongoose');
 
 var Client = mongoose.model('Client'),
-    Slideshow = mongoose.model('Slideshow'),
+    Concept = mongoose.model('Concept'),
     Project = require('../../../projects/server/models/project'),
     _ = require('lodash'),
     appUploadPath = '/public/uploads',
@@ -138,17 +138,17 @@ exports.all = function(req, res) {
 };
 
 /**
- * Get Client Slideshows
+ * Get Client Concepts
  */
-exports.clientSlideshows = function(req, res, next) {
+exports.clientConcepts = function(req, res, next) {
     var clientId = req.param('clientId');
-    Slideshow.find({client: clientId}).populate('user', 'name username').exec(function(err, slideshows){
+    Concept.find({client: clientId}).populate('user', 'name username').exec(function(err, concepts){
         if (err) {
             return res.jsonp(500,{
-                error: 'Cannot find slideshows belonging to clientId: ' + clientId
+                error: 'Cannot find concepts belonging to clientId: ' + clientId
             });
         }
-        res.jsonp(slideshows);
+        res.jsonp(concepts);
     });
 
 };

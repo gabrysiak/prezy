@@ -1,74 +1,54 @@
 <div data-ng-include="'/public/system/views/misc-controls.html'"></div>
 <section data-ng-controller="ClientsController" data-ng-init="find()">
-    <h1>All Clients</h1>
-    <a class="btn btn-success pull-right" data-ng-href="/#!/clients/create" >
-        <i class="fa fa-plus fa-lg"></i> New Client
-    </a>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th mean-token="'client-table-id'">#</th>
-                    <th mean-token="'client-table-name'">Client</th>
-                    <th mean-token="'client-table-created'">Created</th>
-                    <th mean-token="'client-table-created-by'">By User</th>
-                    <th mean-token="'client-table-presentations'">Presentations</th>
-                    <th mean-token="'client-table-projects'">Projects</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr data-ng-repeat="client in clients">
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ client.title }}</td>
-                    <td>{{client.created | date:'short'}}</td>
-                    <td>{{ client.user.name }}</td>
-                    <td data-ng-if="hasAuthorization(client)">
-                        <a class="btn btn-primary" data-ng-href="/#!/clients/{{client._id}}/slideshows" >
-                            <i class="fa fa-eye fa-lg"></i> View
-                        </a>
-                    </td>
-                    <td data-ng-if="hasAuthorization(client)">
-                        <a class="btn btn-primary" data-ng-href="/#!/clients/{{client._id}}/projects" >
-                            <i class="fa fa-eye fa-lg"></i> View
-                        </a>
-                    </td>
-                    <td data-ng-if="hasAuthorization(client)">
-                        <a class="btn btn-warning" data-ng-href="/#!/clients/{{client._id}}/edit">
-                            <i class="fa fa-edit fa-lg"></i> Edit
-                        </a>
-                    </td>
-                    <td data-ng-if="hasAuthorization(client)">
-                        <a class="btn btn-danger" data-ng-click="remove(client);">
-                            <i class="fa fa-trash-o fa-lg"></i> Delete
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div data-ng-show="!clients || clients.length"> 
+        <div class="breadcrumbs">
+            <span>All Clients</span>
+        </div>
+        <a class="btn btn-success pull-right" data-ng-href="/#!/clients/create" >
+            <i class="fa fa-plus fa-lg"></i> New Client
+        </a>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th mean-token="'client-table-id'">#</th>
+                        <th mean-token="'client-table-name'">Client</th>
+                        <th mean-token="'client-table-created'">Created</th>
+                        <th mean-token="'client-table-created-by'">By User</th>
+                        <!-- <th mean-token="'client-table-presentations'">Presentations</th> -->
+                        <th mean-token="'client-table-projects'">Projects</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="client in clients">
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ client.title }}</td>
+                        <td>{{client.created | date:'short'}}</td>
+                        <td>{{ client.user.name }}</td>
+<!--                         <td data-ng-if="hasAuthorization(client)">
+                            <a class="btn btn-primary" data-ng-href="/#!/clients/{{client._id}}/slideshows" >
+                                <i class="fa fa-eye fa-lg"></i> View
+                            </a>
+                        </td> -->
+                        <td data-ng-if="hasAuthorization(client)">
+                            <a class="btn btn-primary" data-ng-href="/#!/clients/{{client._id}}/projects" >
+                                <i class="fa fa-eye fa-lg"></i> View
+                            </a>
+                        </td>
+                        <td data-ng-if="hasAuthorization(client)">
+                            <a class="btn btn-warning" data-ng-href="/#!/clients/{{client._id}}/edit">
+                                <i class="fa fa-edit fa-lg"></i> Edit
+                            </a>
+                        </td>
+                        <td data-ng-if="hasAuthorization(client)">
+                            <a class="btn btn-danger" data-ng-click="remove(client);">
+                                <i class="fa fa-trash-o fa-lg"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-<!--     <ul class="clients unstyled">
-        <li data-ng-repeat="client in clients">
-            <span>{{client.created | date:'medium'}}</span> /
-            <span>{{client.user.name}}</span>
-            <h2>
-                <a data-ng-href="#!/clients/{{client._id}}">{{client.title}}</a>
-                <span data-ng-if="hasAuthorization(client)">
-                    <a class="btn" data-ng-href="/#!/clients/{{client._id}}/edit">
-                        <i class="glyphicon glyphicon-edit"></i>
-                    </a>
-                    <a class="btn" data-ng-click="remove(client);">
-                        <i class="glyphicon glyphicon-trash"></i>
-                    </a>
-                </span>
-            </h2>
-            <div>{{client.content}}</div>
-            <div data-ng-if="client.slideshows">
-                <h1>Slideshows</h1>
-                <ul data-ng-repeat="slideshow in client.slideshows">
-                    <li><a data-ng-href="#!/slideshows/{{slideshow._id}}">{{ slideshow.title }}</a></li>
-                </ul>
-            </div>
-        </li>
-    </ul> -->
     <h1 data-ng-hide="!clients || clients.length">No clients yet. <br> Why don't you <a href="/#!/clients/create">Create One</a>?</h1>
 </section>

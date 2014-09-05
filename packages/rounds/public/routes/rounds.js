@@ -25,44 +25,37 @@ angular.module('mean').config(['$stateProvider',
 
         // states for my app
         $stateProvider
-            .state('all projects', {
-                url: '/projects',
-                templateUrl: 'projects/views/list.html',
+            .state('all rounds', {
+                url: '/rounds',
+                templateUrl: 'rounds/views/list.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }
             })
-            .state('create project', {
-                url: '/projects/create',
-                templateUrl: 'projects/views/create.html',
+            .state('create round', {
+                url: '/rounds/create',
+                templateUrl: 'rounds/views/create.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }
             })
-            .state('edit project', {
-                url: '/projects/:projectId/edit',
-                templateUrl: 'projects/views/edit.html',
+            .state('edit round', {
+                url: '/rounds/:roundId/edit',
+                templateUrl: 'rounds/views/edit.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }
             })
-            .state('project by id', {
-                url: '/projects/:projectId',
-                templateUrl: 'projects/views/view.html',
+            .state('round by id', {
+                url: '/rounds/:roundId',
+                templateUrl: 'rounds/views/view.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }
             })
-            .state('project slideshows', {
-                url: '/projects/:projectId/slideshows',
-                templateUrl: 'projects/views/slideshows.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
-            })
-            .state('project rounds', {
-                url: '/projects/:projectId/rounds',
-                templateUrl: 'projects/views/rounds.html',
+            .state('round slideshows', {
+                url: '/rounds/:roundId/slideshows',
+                templateUrl: 'rounds/views/slideshows.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }

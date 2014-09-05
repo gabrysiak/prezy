@@ -24,9 +24,6 @@ modules = modules.concat(packageModules);
 angular.module('mean', modules).run(['$rootScope','$location', 
     function ($rootScope,$location) {
 
-        // version
-        $rootScope.version = 'Beta v.0.5.3';
-
         // check current url
         $rootScope.currentLocation = function (url) {
             var re = new RegExp('^.*'+url+'.*','gi'); 

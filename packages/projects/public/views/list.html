@@ -1,38 +1,42 @@
 <div data-ng-include="'/public/system/views/misc-controls.html'"></div>
 <section data-ng-controller="ProjectsController" data-ng-init="find()">
-    <h1>All Projects</h1>
-    <a class="btn btn-success pull-right" data-ng-href="/#!/projects/create" >
-        <i class="fa fa-plus fa-lg"></i> New Project
-    </a>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th mean-token="'project-table-id'">#</th>
-                    <th mean-token="'project-table-name'">Project</th>
-                    <th mean-token="'project-table-created'">Created</th>
-                    <th mean-token="'project-table-created-by'">By User</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr data-ng-repeat="project in projects">
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ project.title }}</td>
-                    <td>{{project.created | date:'short'}}</td>
-                    <td>{{ project.user.name }}</td>
-                    <td data-ng-if="hasAuthorization(project)">
-                        <a class="btn btn-warning" data-ng-href="/#!/projects/{{project._id}}/edit">
-                            <i class="fa fa-edit fa-lg"></i> Edit
-                        </a>
-                    </td>
-                    <td data-ng-if="hasAuthorization(project)">
-                        <a class="btn btn-danger" data-ng-click="remove(project);">
-                            <i class="fa fa-trash-o fa-lg"></i> Delete
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div data-ng-show="!projects || projects.length"> 
+        <div class="breadcrumbs">
+            <span>All Projects</span>
+        </div>
+        <a class="btn btn-success pull-right" data-ng-href="/#!/projects/create" >
+            <i class="fa fa-plus fa-lg"></i> New Project
+        </a>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th mean-token="'project-table-id'">#</th>
+                        <th mean-token="'project-table-name'">Project</th>
+                        <th mean-token="'project-table-created'">Created</th>
+                        <th mean-token="'project-table-created-by'">By User</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="project in projects">
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ project.title }}</td>
+                        <td>{{project.created | date:'short'}}</td>
+                        <td>{{ project.user.name }}</td>
+                        <td data-ng-if="hasAuthorization(project)">
+                            <a class="btn btn-warning" data-ng-href="/#!/projects/{{project._id}}/edit">
+                                <i class="fa fa-edit fa-lg"></i> Edit
+                            </a>
+                        </td>
+                        <td data-ng-if="hasAuthorization(project)">
+                            <a class="btn btn-danger" data-ng-click="remove(project);">
+                                <i class="fa fa-trash-o fa-lg"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <h1 data-ng-hide="!projects || projects.length">No projects yet. <br> Why don't you <a href="/#!/projects/create">Create One</a>?</h1>
 </section>

@@ -203,3 +203,50 @@ Home Page
 .version-item > span:hover:after {
   border-left: 10px solid #75caeb;
 }
+
+.breadcrumbs > span {
+  margin: 15px 20px;
+  font-size: 1em;
+  background: #158cba;
+  color: #fff;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 9px;
+  position: relative;
+}
+
+.breadcrumbs > span:before,
+.breadcrumbs > span:after {
+  content: "";
+  height: 0;
+  position: absolute;
+  width: 0;
+}
+
+.breadcrumbs > span:before {
+  border-bottom: 15px solid #158cba;
+  border-left: 15px solid transparent;
+  border-top: 15px solid #158cba;
+  left: -15px;
+}
+
+.breadcrumbs > span:after {
+  border-bottom: 15px solid transparent;
+  border-left: 15px solid #158cba;
+  border-top: 15px solid transparent;
+  right: -15px;
+}
+
+.breadcrumbs > span:hover {
+  background: #75caeb;
+}
+
+.breadcrumbs > span:hover:before {
+  border-bottom: 15px solid #75caeb;
+  border-top: 15px solid #75caeb;
+}
+
+.breadcrumbs > span:hover:after {
+  border-left: 15px solid #75caeb;
+}

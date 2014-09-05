@@ -1,0 +1,40 @@
+<div data-ng-include="'/public/system/views/misc-controls.html'"></div>
+<section data-ng-controller="RoundsController">
+    <div class="row">
+        <form name="roundForm" enctype="multipart/form-data" class="form-horizontal" role="form" data-ng-submit="create(roundForm.$valid)" novalidate>
+            <!-- Form Name -->
+            <h1>Rounds New</h1>
+            
+            <!-- Title -->
+            <div class="form-group" ng-class="{ 'has-error' : submitted && roundForm.title.$invalid }">
+                <label mean-token="'create-title'" class="col-md-2 control-label">Title</label>
+                <div class="col-md-10">
+                    <input name="title" type="text" class="form-control" data-ng-model="title" id="title" placeholder="Title" required>
+                    <div ng-show="submitted && roundForm.title.$invalid" class="help-block">
+                        <p ng-show="roundForm.title.$error.required">Title is required</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="form-group" ng-class="{ 'has-error' : submitted && roundForm.content.$invalid }">
+                <label mean-token="'create-content'" for="content" class="col-md-2 control-label">Content</label>
+                <div class="col-md-10">
+                    <textarea name="content" data-ng-model="content" id="content" cols="30" rows="10" placeholder="Content" class="form-control"></textarea>
+                    <div ng-show="submitted && roundForm.content.$invalid" class="help-block">
+                        <p ng-show="roundForm.content.$error.required">Content is required</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="pull-right">
+                        <a mean-token="'create-cancel'" class="btn btn-default" ui-sref="all rounds">Cancel</a>
+                        <button mean-token="'create-submit'" type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div><!-- /.row -->
+</section>

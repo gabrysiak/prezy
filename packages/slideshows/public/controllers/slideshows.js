@@ -16,7 +16,13 @@ angular.module('mean').controller('SlideshowsController', ['$scope', '$statePara
         $scope.templates = Templates.all();
 
         // populate rounds from service
-        $scope.rounds = Rounds.all();
+        Rounds.query(function(rounds) {
+            $scope.rounds = [];
+            angular.forEach(rounds, function(round) {
+                $scope.rounds.push({ text: round.title, value: round._id });
+            });
+            console.log($scope.rounds);
+        });
 
         // initially populate the clients dropdown
         Clients.query(function(clients) {

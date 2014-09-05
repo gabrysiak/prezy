@@ -8,9 +8,9 @@ var mongoose = require('mongoose'),
     timestamps = require('mongoose-timestamp');
 
 /**
- * Project Schema
+ * Round Schema
  */
-var ProjectSchema = new Schema({
+var RoundSchema = new Schema({
     title: {
         type: String,
     required: true,
@@ -21,10 +21,6 @@ var ProjectSchema = new Schema({
     required: false,
         trim: true
     },
-    client: {
-        type: Schema.ObjectId,
-         ref: 'Client'
-    },
     user: {
         type: Schema.ObjectId,
         ref: 'User'
@@ -34,14 +30,14 @@ var ProjectSchema = new Schema({
 /**
  * Plugins
  */
-ProjectSchema.plugin(timestamps, {
+RoundSchema.plugin(timestamps, {
     createdAt: 'created'
 });
 
 /**
  * Validations
  */
-ProjectSchema.path('title').validate(function(title) {
+RoundSchema.path('title').validate(function(title) {
     return !!title;
 }, 'Title cannot be blank');
 
@@ -49,10 +45,10 @@ ProjectSchema.path('title').validate(function(title) {
 /**
  * Statics
  */
-ProjectSchema.statics.load = function(id, cb) {
+RoundSchema.statics.load = function(id, cb) {
     this.findOne({
         _id: id
-    }).populate('user', 'name username').populate('client', '_id title').exec(cb);
+    }).populate('user', 'name username').exec(cb);
 };
 
-mongoose.model('Project', ProjectSchema);
+mongoose.model('Round', RoundSchema);

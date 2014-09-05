@@ -21,6 +21,8 @@ module.exports = function(Projects, app, auth) {
         .delete(auth.requiresLogin, hasAuthorization, projects.destroy);
     app.route('/projects/:projectId/slideshows')
         .get(projects.projectSlideshows);
+    app.route('/projects/:projectId/rounds')
+        .get(projects.projectRounds);
         
     // Finish with setting up the projectId param
     app.param('projectId', projects.project);

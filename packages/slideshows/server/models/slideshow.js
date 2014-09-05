@@ -89,9 +89,8 @@ var SlideshowSchema = new Schema({
     required: true
     },
     round: {
-        type: String,
-    required: false,
-        trim: true
+        type: Schema.ObjectId,
+         ref: 'Round'
     },
     user: {
         type: Schema.ObjectId,

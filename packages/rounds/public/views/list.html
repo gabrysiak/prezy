@@ -1,0 +1,42 @@
+<div data-ng-include="'/public/system/views/misc-controls.html'"></div>
+<section data-ng-controller="RoundsController" data-ng-init="find()">
+    <div data-ng-show="!rounds || rounds.length">
+        <div class="breadcrumbs">
+            <span>All rounds</span>
+        </div>
+        <a class="btn btn-success pull-right" data-ng-href="/#!/rounds/create" >
+            <i class="fa fa-plus fa-lg"></i> New Round
+        </a>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th mean-token="'round-table-id'">#</th>
+                        <th mean-token="'round-table-name'">Round</th>
+                        <th mean-token="'round-table-created'">Created</th>
+                        <th mean-token="'round-table-created-by'">By User</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="round in rounds">
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ round.title }}</td>
+                        <td>{{ round.created | date:'short' }}</td>
+                        <td>{{ round.user.name }}</td>
+                        <td data-ng-if="hasAuthorization(round)">
+                            <a class="btn btn-warning" data-ng-href="/#!/rounds/{{round._id}}/edit">
+                                <i class="fa fa-edit fa-lg"></i> Edit
+                            </a>
+                        </td>
+                        <td data-ng-if="hasAuthorization(round)">
+                            <a class="btn btn-danger" data-ng-click="remove(round);">
+                                <i class="fa fa-trash-o fa-lg"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <h1 data-ng-hide="!rounds || rounds.length">No rounds yet. <br> Why don't you <a href="/#!/rounds/create">Create One</a>?</h1>
+</section>

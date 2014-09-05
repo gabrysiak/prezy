@@ -4,11 +4,13 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+    async = require('async'),
     Project = mongoose.model('Project'),
+    Round = require('../../../rounds/server/models/round'),
     Slideshow = mongoose.model('Slideshow'),
     _ = require('lodash');
 
-
+Round = mongoose.model('Round');
 /**
  * Find project by id
  */
@@ -98,12 +100,51 @@ exports.all = function(req, res) {
  */
 exports.projectSlideshows = function(req, res, next) {
     var projectId = req.param('projectId');
-    Slideshow.find({project: projectId}, function(err, slideshows){
+    Slideshow.find({project: projectId}).sort('-created').populate('user', 'name username').exec(function(err, slideshows) {
         if (err) {
             return res.jsonp(500,{
                 error: 'Cannot find slideshows belonging to projectId: ' + projectId
             });
         }
         res.jsonp(slideshows);
+    });
+};
+
+/**
+ * Get Project Slideshows
+ */
+exports.projectRounds = function(req, res, next) {
+    var projectId = req.param('projectId');
+    var rounds = [];
+
+    Slideshow.find({project: projectId}, function(err, slideshows){
+        if (err) {
+            return res.jsonp(500,{
+                error: 'Cannot find slideshows belonging to projectId: ' + projectId
+            });
+        }
+
+        async.each(slideshows, function(slideshow, callback) {
+            if (!slideshow) return;
+
+            Round.find({_id: slideshow.round}, function(err, round){
+                if (err) {
+                    return res.jsonp(500,{
+                        error: 'Cannot find round belonging to slideshow: ' + slideshow._id
+                    });
+                }
+                rounds.push(round[0]);
+                callback();
+            });
+
+        }, function(err) {
+            if (err) {
+                return res.jsonp(500,{
+                    error: 'Something went wrong with async function'
+                });
+            }
+            console.log(rounds);
+            res.jsonp(rounds);
+        });
     });
 };

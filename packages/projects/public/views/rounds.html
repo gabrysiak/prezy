@@ -1,0 +1,47 @@
+<div data-ng-include="'/public/system/views/misc-controls.html'"></div>
+<section data-ng-controller="ProjectsController" data-ng-init="findRounds()">
+    <div data-ng-show="!rounds || rounds.length">
+        <div class="breadcrumbs">
+            <span data-ng-show="project.client.title">{{ project.client.title }}</span>  <span data-ng-show="project.title">{{ project.title }}</span>  <span>Rounds</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th mean-token="'round-table-id'">#</th>
+                        <th mean-token="'round-table-name'">round</th>
+                        <th mean-token="'round-table-created'">Created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="round in rounds">
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ round.title }}</td>
+                        <td>{{ round.created | date:'short' }}</td>
+                        <td data-ng-if="hasAuthorization(round)">
+                            <a class="btn btn-primary" data-ng-href="/#!/rounds/{{round._id}}/slideshows" target="_blank">
+                                <i class="fa fa-eye fa-lg"></i> View
+                            </a>
+                        </td>
+                        <td data-ng-if="hasAuthorization(round)">
+                            <a class="btn btn-warning" data-ng-href="/#!/rounds/{{round._id}}/edit">
+                                <i class="fa fa-edit fa-lg"></i> Edit
+                            </a>
+                        </td>
+                        <td data-ng-if="hasAuthorization(round)" data-ng-controller="RoundsController">
+                            <a class="btn btn-info" data-ng-click="duplicate(round);">
+                                <i class="fa fa-refresh fa-spin fa-lg"></i> Duplicate
+                            </a>
+                        </td>
+                        <td data-ng-if="hasAuthorization(round)">
+                            <a class="btn btn-danger" data-ng-click="removeRound(round);">
+                                <i class="fa fa-trash-o fa-lg"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <h1 data-ng-hide="!rounds || rounds.length">No presentations yet. <br> Why don't you <a href="/#!/rounds/create">Create One</a>?</h1>
+</section>

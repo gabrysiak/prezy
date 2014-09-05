@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean').controller('ProjectsController', ['$scope', '$stateParams', '$location', '$log', 'Global', 'Clients', 'Projects', 'Slideshows', 'FlashService', '$timeout',
-    function($scope, $stateParams, $location, $log, Global, Clients, Projects, Slideshows, FlashService, $timeout) {
+angular.module('mean').controller('ProjectsController', ['$scope', '$stateParams', '$location', '$log', 'Global', 'Clients', 'Projects', 'Rounds', 'Slideshows', 'FlashService', '$timeout',
+    function($scope, $stateParams, $location, $log, Global, Clients, Projects, Rounds, Slideshows, FlashService, $timeout) {
         $scope.global = Global;
 
         // get client from query string
@@ -102,6 +102,15 @@ angular.module('mean').controller('ProjectsController', ['$scope', '$stateParams
                 projectId: $stateParams.projectId
             }, function(slideshows) {
                 $scope.slideshows = slideshows;
+                $scope.findOne();
+            });
+        };
+
+        $scope.findRounds = function() {
+            Projects.rounds({
+                projectId: $stateParams.projectId
+            }, function(rounds) {
+                $scope.rounds = rounds;
                 $scope.findOne();
             });
         };

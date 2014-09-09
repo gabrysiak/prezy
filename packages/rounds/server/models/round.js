@@ -21,6 +21,19 @@ var RoundSchema = new Schema({
     required: false,
         trim: true
     },
+    round: {
+        type: Number,
+    required: false,
+        trim: true
+    },
+    client: {
+        type: Schema.ObjectId,
+        ref: 'Client'
+    },
+    project: {
+        type: Schema.ObjectId,
+        ref: 'Project'
+    },
     user: {
         type: Schema.ObjectId,
         ref: 'User'

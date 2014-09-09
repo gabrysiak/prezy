@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean').controller('ProjectsController', ['$scope', '$stateParams', '$location', '$log', 'Global', 'Clients', 'Projects', 'Rounds', 'Concepts', 'FlashService', '$timeout',
-    function($scope, $stateParams, $location, $log, Global, Clients, Projects, Rounds, Concepts, FlashService, $timeout) {
+angular.module('mean').controller('ProjectsController', ['$scope', '$q', '$rootScope', '$stateParams', '$location', '$log', '$modal', 'Global', 'Clients', 'Projects', 'Rounds', 'Concepts', 'ShortUrl', 'FlashService', '$timeout',
+    function($scope, $q, $rootScope, $stateParams, $location, $log, $modal, Global, Clients, Projects, Rounds, Concepts, ShortUrl, FlashService, $timeout) {
         $scope.global = Global;
 
         // get client from query string
@@ -119,6 +119,49 @@ angular.module('mean').controller('ProjectsController', ['$scope', '$stateParams
             });
         };
 
+        $scope.duplicateRound = function(round) {
+            if (!round) return;
+
+            var duplicateRound = new Rounds({
+                title: round.title,
+                content: round.content,
+                round: round.round,
+                client: round.client,
+                project: round.project
+            });
+
+            duplicateRound.$save(function(newRound) {
+                // push new round into scope
+                $scope.rounds.push(newRound);
+
+                // find and duplicate scopes
+                Concepts.query({
+                    round: round._id,
+                    client: searchClient,
+                    project: $scope.project._id
+                }, function(concepts) {
+                    angular.forEach(concepts, function(concept) {
+                        ShortUrl.getBitlyUrl(concept._id)
+                            .then(function(url) {
+                                var conceptDuplicate = new Concepts({
+                                    title: concept.title,
+                                    slides: concept.slides,
+                                    client: concept.client._id,
+                                    project: concept.project._id,
+                                    round: newRound._id,
+                                    shortUrl: url
+                                });
+                                conceptDuplicate.$save(function(newConcept) {
+                                    // do something on success
+                                });
+                            }, function (err) {
+                                console.log(err);
+                            });
+                    }); 
+                }); 
+            });
+        };
+
         $scope.removeConcept = function(concept) {
             Concepts.delete({
                 conceptId: concept._id
@@ -126,6 +169,56 @@ angular.module('mean').controller('ProjectsController', ['$scope', '$stateParams
                 // remove concept from scope
                 $scope.concepts = _.without($scope.concepts, _.findWhere($scope.concepts, {_id: concept._id}));
             });
+        };
+
+        $scope.removeRound = function(round) {
+            
+            var modalInstance = $modal.open({
+                templateUrl: 'projects/views/partials/modal-confirm.html',
+                controller: ModalInstanceController,
+                resolve: {
+                    round: function () {
+                        return round;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (concepts) {
+
+                $scope.selected = concepts;
+
+                Rounds.delete({
+                    roundId: round._id
+                }, function(round){
+                    // remove round from scope
+                    $scope.rounds = _.without($scope.rounds, _.findWhere($scope.rounds, {_id: round._id}));
+
+                    angular.forEach(concepts, function(concept) {
+                        $scope.removeConcept(concept);
+                    });
+                });
+
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+
+        var ModalInstanceController = function ($scope, $modalInstance, round) {
+            $scope.round = round;
+            
+            Concepts.query({
+                round: round._id
+            }, function(concepts) {
+                $scope.concepts = concepts;
+            });
+
+            $scope.ok = function () {
+                $modalInstance.close($scope.concepts);
+            };
+
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
         };
     }
 ]);

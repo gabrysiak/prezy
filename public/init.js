@@ -24,6 +24,19 @@ modules = modules.concat(packageModules);
 angular.module('mean', modules).run(['$rootScope','$location', 
     function ($rootScope,$location) {
 
+        $rootScope.$on('$locationChangeStart', function ( ev, newPath, oldPath ) {
+            // The down side of this method is that we get the whole url, but we are only interested in the
+            // path part. So we have to parse it.
+            var path = /^([^\?#]*)?(\?([^#]*))?(#(.*))?$/.exec(oldPath);
+            if( path[5] ) {
+                path = path[5].substr(path[5].indexOf('\/'));
+            } else {
+                path = '/';
+            }
+
+            $rootScope.referrerUrl = '#!' + path;
+        });
+
         // check current url
         $rootScope.currentLocation = function (url) {
             var re = new RegExp('^.*'+url+'.*','gi'); 

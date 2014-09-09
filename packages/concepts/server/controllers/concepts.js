@@ -189,17 +189,17 @@ exports.update = function(req, res) {
     concept.save(function(err) {
         if (err) {
             return res.jsonp(500,{
-            error: 'Cannot update the concept',
-            detail: err
-                });
+                error: 'Cannot update the concept',
+                detail: err
+            });
         }
 
         Concept.saveClient(concept.client, function(err, concept) {
             if (err) {
                 return res.jsonp(500,{
-                        error: 'Cannot populate client',
-                        detail: err
-                            });
+                    error: 'Cannot populate client',
+                    detail: err
+                });
             }
         });
         res.jsonp(concept);
@@ -214,10 +214,10 @@ exports.destroy = function(req, res) {
 
     concept.remove(function(err) {
         if (err) {
-        return res.jsonp(500,{
-        error: 'Cannot delete the concept'
+            return res.jsonp(500,{
+                error: 'Cannot delete the concept'
             });
-    }
+        }
     res.jsonp(concept);
 
     });
@@ -231,21 +231,27 @@ exports.show = function(req, res) {
 };
 
 /**
- * List of concepts
+ * List of concepts with optional query string
  */
 exports.all = function(req, res) {
-    var clientId = req.param('clientId'),
-        projectId = req.param('projectId'),
-        roundId = req.param('roundId');
+    var acceptedFields = ['client', 'project', 'round'],
+        queryString = req.originalUrl.replace('/concepts', ''),
+        query = Concept.find();
 
-    // TODO:: Query Concepts with optional params
-    
-    Concept.find().sort('-created').populate('user', 'name username').exec(function(err, concepts) {
-        if (err) {
-        return res.jsonp(500,{
-        error: 'Cannot list the concepts'
-            });
+    if (queryString) {
+        _.each(acceptedFields, function(key) {
+            if (req.param(key)) {
+                query.where(key).equals(req.param(key));
+            }
+        });
     }
+
+    query.sort('-created').populate('user', 'name username').populate('client', '_id title').populate('project', '_id title').exec(function(err, concepts) {
+        if (err) {
+            return res.jsonp(500,{
+                error: 'Cannot list the concepts'
+            });
+        }
     res.jsonp(concepts);
 
     });

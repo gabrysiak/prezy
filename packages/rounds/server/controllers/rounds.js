@@ -5,9 +5,10 @@
  */
 var mongoose = require('mongoose'),
     Concept = mongoose.model('Concept'),
-    Round = mongoose.model('Round'),
+    Round = require('../models/round'),
     _ = require('lodash');
 
+Round = mongoose.model('Round');
 
 /**
  * Find round by id
@@ -97,16 +98,23 @@ exports.all = function(req, res) {
  * Get Round Concepts
  */
 exports.roundConcepts = function(req, res, next) {
-    var roundId = req.param('roundId'),
-        clientId = req.param('clientId'),
-        projectId = req.param('projectId');
-
-    Concept.find({round: roundId, client: clientId, project: projectId}).sort('-created').populate('user', 'name username').populate('client', '_id title').populate('project', '_id title').exec(function(err, concepts) {
-        if (err) {
-            return res.jsonp(500,{
-                error: 'Cannot find concepts belonging to roundId: ' + roundId
-            });
-        }
-        res.jsonp(concepts);
-    });
+    var clientId = req.param('clientId'),
+        projectId = req.param('projectId'),
+        roundId = req.param('roundId');
+    Concept
+        .find({project: projectId})
+        .where('client').equals(clientId)
+        .where('round').equals(roundId)
+        .sort('-created')
+        .populate('user', 'name username')
+        .populate('client', '_id title')
+        .populate('project', '_id title')
+        .exec(function(err, concepts) {
+            if (err) {
+                return res.jsonp(500,{
+                    error: 'Cannot find concepts belonging to roundId: ' + roundId
+                });
+            }
+            res.jsonp(concepts);
+        });
 };

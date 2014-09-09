@@ -11,6 +11,7 @@
                         <th mean-token="'round-table-id'">#</th>
                         <th mean-token="'round-table-name'">round</th>
                         <th mean-token="'round-table-created'">Created</th>
+                        <th mean-token="'round-table-concepts'">Concepts</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,8 +25,18 @@
                             </a>
                         </td>
                         <td data-ng-if="hasAuthorization(round)" data-ng-controller="RoundsController">
-                            <a class="btn btn-info" data-ng-click="duplicate(round);">
+                            <a class="btn btn-warning" data-ng-href="/#!/rounds/{{round._id}}/edit">
+                                <i class="fa fa-edit fa-lg"></i> Edit
+                            </a>
+                        </td>
+                        <td data-ng-if="hasAuthorization(round)">
+                            <a class="btn btn-info" data-ng-click="duplicateRound(round);">
                                 <i class="fa fa-refresh fa-spin fa-lg"></i> Duplicate
+                            </a>
+                        </td>
+                        <td data-ng-if="hasAuthorization(round)">
+                            <a class="btn btn-danger" data-ng-click="removeRound(round);">
+                                <i class="fa fa-trash-o fa-lg"></i> Delete
                             </a>
                         </td>
                     </tr>

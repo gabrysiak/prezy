@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean').controller('ConceptsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Projects', 'Concepts', 'Shorturls', 'Rounds', 'Templates', '$upload', '$sce', '$timeout',
-    function($scope, $stateParams, $location, $http, $log, Global, Clients, Projects, Concepts, Shorturls, Rounds, Templates, $upload, $sce, $timeout) {
+angular.module('mean').controller('ConceptsController', ['$scope', '$rootScope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Projects', 'Concepts', 'ShortUrl', 'Rounds', 'ClientProjects', 'Templates', '$upload', '$sce', '$timeout',
+    function($scope, $rootScope, $stateParams, $location, $http, $log, Global, Clients, Projects, Concepts, ShortUrl, Rounds, ClientProjects, Templates, $upload, $sce, $timeout) {
         $scope.global = Global;
         
         // get client from query string
@@ -143,7 +143,7 @@ angular.module('mean').controller('ConceptsController', ['$scope', '$stateParams
 
                 concept.$update(function() {
                     // $location.path('concepts/' + concept._id);
-                    $location.path('concepts');
+                    window.location.href = $rootScope.referrerUrl;
                 });
             } else {
                 $scope.submitted = true;
@@ -168,21 +168,12 @@ angular.module('mean').controller('ConceptsController', ['$scope', '$stateParams
             });
         };
 
-        $scope.updateProjects = function(client) {
-            if (typeof client === 'undefined') return;
-                Clients.projects({
-                    clientId: client
-                }, function(projects) {
-                    if (projects.length === 0) {
-                        $scope.concept.project = null;
-                    }
-                    $scope.projects = [];
-                    angular.forEach(projects, function(project) {
-                        $scope.projects.push({
-                            value: project._id,
-                            text: project.title
-                        });
-                    });
+        $scope.updateProjects = function(clientId) {
+            ClientProjects.populateDropdown(clientId)
+                .then(function(dropdown) {
+                    $scope.projects = dropdown;
+                }, function (err) {
+                    console.log(err);
                 });
         };
 
@@ -191,8 +182,8 @@ angular.module('mean').controller('ConceptsController', ['$scope', '$stateParams
             var conceptDuplicate = new Concepts({
                 title: concept.title,
                 slides: concept.slides,
-                client: concept.client,
-                project: concept.project,
+                client: concept.client._id,
+                project: concept.project._id,
                 round: concept.round,
                 shortUrl: null
             });
@@ -310,19 +301,21 @@ angular.module('mean').controller('ConceptsController', ['$scope', '$stateParams
                 $scope.concept = concept;
             });
 
-            $http.get('/bitly/' + conceptId).then(function (response) {
-                $scope.concept.shortUrl = response.data.shortUrl;
-                $scope.concept.$update(function() {
-                    if (duplicate) {
-                        callback($scope.concept.shortUrl);
-                    } else {
-                        // $location.path('concepts/' + conceptId);
-                        $location.path('concepts');
-                    }
+            ShortUrl.getBitlyUrl(conceptId)
+                .then(function(url) {
+                    $scope.concept.shortUrl = url;
+                    $scope.concept.$update(function() {
+                        if (duplicate) {
+                            callback($scope.concept.shortUrl);
+                        } else {
+                            // $location.path('concepts/' + conceptId);
+                            $location.path('concepts');
+                        }
+                    });
+                    console.log(url);
+                }, function (err) {
+                    console.log(err);
                 });
-            }).catch(function (response, status, headers, config) {
-                $log.error(response);  //error occured
-            });
         };
 
         $scope.reorderSlides = function(slides) {

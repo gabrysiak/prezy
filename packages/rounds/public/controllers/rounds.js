@@ -1,13 +1,41 @@
 'use strict';
 
-angular.module('mean').controller('RoundsController', ['$scope', '$stateParams', '$location', '$log', 'Global', 'Rounds', 'Concepts', 'FlashService', '$timeout',
-    function($scope, $stateParams, $location, $log, Global, Rounds, Concepts, FlashService, $timeout) {
+angular.module('mean').controller('RoundsController', ['$scope', '$rootScope', '$stateParams', '$location', '$log', 'Global', 'DefaultRounds', 'Rounds', 'Clients', 'Projects', 'Concepts', 'ClientProjects', 'ShortUrl', 'FlashService', '$timeout',
+    function($scope, $rootScope, $stateParams, $location, $log, Global, DefaultRounds, Rounds, Clients, Projects, Concepts, ClientProjects, ShortUrl, FlashService, $timeout) {
         $scope.global = Global;
 
-        // get client from query string
+        // get client from qu;ery string
         var searchClient = $location.search().clientId;
         // get project from query string
-        var searchProject = $location.search().projectId;
+        var searchProject = $location.search().projectId || $stateParams.projectId;
+
+        $scope.rounds = DefaultRounds.all();
+
+        // initially populate the clients dropdown
+        Clients.query(function(clients) {
+            $scope.clients = [];
+            angular.forEach(clients, function(client) {
+                $scope.clients.push({
+                    value: client._id,
+                    text: client.title
+                });
+            });
+            // check if client auto populated
+            if (searchClient) $scope.client = searchClient;
+        });
+
+        // initially populate the projects dropdown
+        Projects.query(function(projects) {
+            $scope.projects = [];
+            angular.forEach(projects, function(project) {
+                $scope.projects.push({
+                    value: project._id,
+                    text: project.title
+                });
+            });
+            // check if client auto populated
+            if (searchProject) $scope.project = searchProject;
+        });
 
         $scope.hasAuthorization = function(round) {
             if (!round || !round.user) return false;
@@ -18,7 +46,10 @@ angular.module('mean').controller('RoundsController', ['$scope', '$stateParams',
             if (isValid) {
                 var round = new Rounds({
                     title: this.title,
-                    content: this.content
+                    content: this.content,
+                    round: this.round,
+                    client: this.client,
+                    project: this.project
                 });
                 round.$save(function(response) {
                     $location.path('rounds');
@@ -51,7 +82,7 @@ angular.module('mean').controller('RoundsController', ['$scope', '$stateParams',
 
                 round.$update(function() {
                     // $location.path('rounds/' + round._id);
-                    $location.path('rounds');
+                    window.location.href = $rootScope.referrerUrl;
                 });
             } else {
                 $scope.submitted = true;
@@ -69,8 +100,20 @@ angular.module('mean').controller('RoundsController', ['$scope', '$stateParams',
             Rounds.get({
                 roundId: $stateParams.roundId
             }, function(round) {
-                $scope.round = round;
+                $scope.$watch('clients', function(clients){
+                    if (!clients) return;
+                    $scope.round = round;
+                }, true);
             });
+        };
+
+        $scope.updateProjects = function(clientId) {
+            ClientProjects.populateDropdown(clientId)
+                .then(function(dropdown) {
+                    $scope.projects = dropdown;
+                }, function (err) {
+                    console.log(err);
+                });
         };
 
         $scope.findConcepts = function() {
@@ -84,30 +127,13 @@ angular.module('mean').controller('RoundsController', ['$scope', '$stateParams',
             });
         };
 
-        $scope.duplicate = function(round) {
-            if (!round) return;
-
-            Concepts.query({
-                roundId: round._id,
-                clientId: searchClient,
-                projectId: searchProject
-            }, function(concepts) {
-                console.log(concepts);
+        $scope.removeConcept = function(concept) {
+            Concepts.delete({
+                conceptId: concept._id
+            }, function(concept){
+                // remove concept from scope
+                $scope.concepts = _.without($scope.concepts, _.findWhere($scope.concepts, {_id: concept._id}));
             });
-            // var conceptDuplicate = new Concepts({
-            //     title: concept.title,
-            //     slides: concept.slides,
-            //     client: concept.client,
-            //     project: concept.project,
-            //     round: concept.round,
-            //     shortUrl: null
-            // });
-            // conceptDuplicate.$save(function(response) {
-            //     $scope.createShortUrl(response._id, true, function(shortUrl){
-            //         response.shortUrl = shortUrl;
-            //         $scope.concepts.push(response);
-            //     });
-            // });
         };
     }
 ]);

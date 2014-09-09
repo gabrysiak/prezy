@@ -4,13 +4,14 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    async = require('async'),
-    Project = mongoose.model('Project'),
+    // async = require('async'),
+    Project = require('../models/project'),
     Round = require('../../../rounds/server/models/round'),
     Concept = mongoose.model('Concept'),
     _ = require('lodash');
 
 Round = mongoose.model('Round');
+Project = mongoose.model('Project');
 /**
  * Find project by id
  */
@@ -115,36 +116,36 @@ exports.projectConcepts = function(req, res, next) {
  */
 exports.projectRounds = function(req, res, next) {
     var projectId = req.param('projectId'),
-        clientId = req.param('clientId'),
-        rounds = [];
+        clientId = req.param('clientId');
+        // roundsArray = [];
 
-    Concept.find({project: projectId, client: clientId}, function(err, concepts){
+    Round.find({project: projectId, client: clientId}, function(err, rounds){
         if (err) {
             return res.jsonp(500,{
-                error: 'Cannot find concepts belonging to projectId: ' + projectId
+                error: 'Cannot find rounds belonging to projectId: ' + projectId
             });
         }
+        res.jsonp(rounds);
+        // async.each(rounds, function(concept, callback) {
+        //     if (!concept) return;
 
-        async.each(concepts, function(concept, callback) {
-            if (!concept) return;
+        //     Round.find({_id: concept.round}, function(err, round){
+        //         if (err) {
+        //             return res.jsonp(500,{
+        //                 error: 'Cannot find round belonging to concept: ' + concept._id
+        //             });
+        //         }
+        //         roundsArray.push(round[0]);
+        //         callback();
+        //     });
 
-            Round.find({_id: concept.round}, function(err, round){
-                if (err) {
-                    return res.jsonp(500,{
-                        error: 'Cannot find round belonging to concept: ' + concept._id
-                    });
-                }
-                rounds.push(round[0]);
-                callback();
-            });
-
-        }, function(err) {
-            if (err) {
-                return res.jsonp(500,{
-                    error: 'Something went wrong with async function'
-                });
-            }
-            res.jsonp(rounds);
-        });
+        // }, function(err) {
+        //     if (err) {
+        //         return res.jsonp(500,{
+        //             error: 'Something went wrong with async function'
+        //         });
+        //     }
+        //     res.jsonp(roundsArray);
+        // });
     });
 };

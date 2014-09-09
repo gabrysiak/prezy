@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h3 class="modal-title btn-danger"> <i class="fa fa-exclamation-circle fa-lg"></i> Confirm action</h3>
+</div>
+<div class="modal-body">
+    <p>Do you really want to delete <em>{{ round.title }}</em> ? Doing so will also remove the following concepts associated with it.</p>
+    <div class="container">
+        <ul data-ng-repeat="concept in concepts">
+            <li><em>{{ concept.title }}</em></li>
+        </ul>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="pull-right">
+                <button class="btn btn-primary" data-ng-click="ok()">OK</button>
+                <button class="btn btn-warning" data-ng-click="cancel()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

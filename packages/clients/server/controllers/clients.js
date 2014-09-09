@@ -6,7 +6,7 @@
 var mongoose = require('mongoose');
 
 var Client = mongoose.model('Client'),
-    Concept = mongoose.model('Concept'),
+    Concept = require('../../../concepts/server/models/concept'),
     Project = require('../../../projects/server/models/project'),
     _ = require('lodash'),
     appUploadPath = '/public/uploads',
@@ -14,6 +14,7 @@ var Client = mongoose.model('Client'),
     fs = require('fs');
 
 Project = mongoose.model('Project');
+Concept = mongoose.model('Concept');
 
 /**
  * Find client by id

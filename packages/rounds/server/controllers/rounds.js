@@ -4,10 +4,11 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    Concept = mongoose.model('Concept'),
+    Concept = require('../../../concepts/server/models/concept'),
     Round = require('../models/round'),
     _ = require('lodash');
 
+Concept = mongoose.model('Concept');
 Round = mongoose.model('Round');
 
 /**

@@ -1,8 +1,15 @@
 'use strict';
 
-angular.module('mean').controller('ClientsController', ['$scope', '$stateParams', '$location', '$http', '$log', '$modal', 'Global', 'Clients', 'Concepts', 'Projects', 'FlashService', '$timeout', '$upload',
-    function($scope, $stateParams, $location, $http, $log, $modal, Global, Clients, Concepts, Projects, FlashService, $timeout, $upload) {
+angular.module('mean').controller('ClientsController', ['$scope', '$stateParams', '$location', '$http', '$log', '$modal', 'Global', 'Clients', 'Concepts', 'Projects', 'FlashService', 'Tooltips', '$timeout', '$upload',
+    function($scope, $stateParams, $location, $http, $log, $modal, Global, Clients, Concepts, Projects, FlashService, Tooltips, $timeout, $upload) {
         $scope.global = Global;
+
+        // get tooltips
+        Tooltips.getTooltips('Clients').then(function(tooltips) {
+            $scope.tooltips = tooltips;
+        }, function(err) {
+            console.log(err);
+        });
 
         $scope.onFileSelect = function($files) {
         //$files: an array of files selected, each file has name, size, and type.

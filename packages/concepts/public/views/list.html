@@ -24,8 +24,8 @@
                         <td>{{ concept.updatedAt | date:'short' }}</td>
                         <td>{{ concept.slides.length }}</td>
                         <td data-ng-if="hasAuthorization(concept)">
-                            <a class="btn btn-primary" data-ng-href="/#!/concepts/play/{{concept._id}}" target="_blank">
-                                <i class="fa fa-eye fa-lg"></i> View
+                            <a class="btn btn-default" data-ng-href="/#!/concepts/play/{{concept._id}}" target="_blank">
+                                <i class="fa fa-play fa-lg"></i> Play
                             </a>
                         </td>
                         <td data-ng-if="hasAuthorization(concept)">

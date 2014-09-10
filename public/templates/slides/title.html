@@ -6,7 +6,7 @@
 <!-- Slide Number -->
 <div class="form-group" ng-class="{ 'has-error' : submitted && slidemodel.slideNumber.$invalid }" >
     <label mean-token="'create-slideNumber'" class="col-md-2 control-label">Slide Number</label>
-    <div class="col-md-9">
+    <div class="col-md-9" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.slideNumber">
         <input type="number" class="form-control" data-ng-model="slidemodel.slideNumber" id="slideNumber" min="1" max="99" required>
         <div ng-show="submitted && conceptForm.slideNumber.$invalid" class="help-block">
             <p ng-show="conceptForm.slideNumber.$error.required">Slide Number is required</p>
@@ -17,7 +17,7 @@
 <div class="form-group">
     <label mean-token="'create-content'" for="content" class="col-md-2 control-label">Content</label>
     <div class="col-md-9">
-        <redactor data-ng-model="slidemodel.content" id="content" class="form-control"></redactor>
+        <redactor data-ng-model="slidemodel.content" id="content" class="form-control" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.content"></redactor>
     </div>
 </div>
 <!-- TODO::
@@ -26,7 +26,7 @@
 <div data-ng-show="slidemodel.template === '2-col'" class="form-group">
     <label mean-token="'create-content-right'" for="contentRight" class="col-md-2 control-label">Content Right</label>
     <div class="col-md-9">
-        <redactor data-ng-model="slidemodel.contentRight" id="contentRight" class="form-control"></redactor>
+        <redactor data-ng-model="slidemodel.contentRight" id="contentRight" class="form-control" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.contentRight"></redactor>
     </div>
 </div>
 
@@ -34,7 +34,7 @@
 <div class="form-group">
     <label mean-token="'create-dataX'" class="col-md-2 control-label">Data-X</label>
     <div class="col-md-9">
-        <input name="dataX" type="number" class="form-control" data-ng-model="slidemodel.dataX" id="dataX" placeholder="Data-X">
+        <input name="dataX" type="number" class="form-control" data-ng-model="slidemodel.dataX" id="dataX" placeholder="Data-X" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.dataX">
     </div>
 </div>
 
@@ -42,7 +42,7 @@
 <div class="form-group">
     <label mean-token="'create-dataY'" class="col-md-2 control-label">Data-Y</label>
     <div class="col-md-9">
-        <input name="dataY" type="number" class="form-control" data-ng-model="slidemodel.dataY" id="dataY" placeholder="Data-Y">
+        <input name="dataY" type="number" class="form-control" data-ng-model="slidemodel.dataY" id="dataY" placeholder="Data-Y" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.dataY">
     </div>
 </div>
 
@@ -50,7 +50,7 @@
 <div class="form-group">
     <label mean-token="'create-dataZ'" class="col-md-2 control-label">Data-Z</label>
     <div class="col-md-9">
-        <input name="dataZ" type="number" class="form-control" data-ng-model="slidemodel.dataZ" id="dataZ" placeholder="Data-Z">
+        <input name="dataZ" type="number" class="form-control" data-ng-model="slidemodel.dataZ" id="dataZ" placeholder="Data-Z" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.dataZ">
     </div>
 </div>
 
@@ -58,7 +58,7 @@
 <div class="form-group">
     <label mean-token="'create-dataRotate'" class="col-md-2 control-label">Data-Rotate</label>
     <div class="col-md-9">
-        <input name="dataRotate" type="number" class="form-control" data-ng-model="slidemodel.dataRotate" id="dataRotate" placeholder="Data-Rotate">
+        <input name="dataRotate" type="number" class="form-control" data-ng-model="slidemodel.dataRotate" id="dataRotate" placeholder="Data-Rotate" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.dataRotate">
     </div>
 </div>
 
@@ -66,6 +66,6 @@
 <div class="form-group">
     <label mean-token="'create-dataScale'" class="col-md-2 control-label">Data-Scale</label>
     <div class="col-md-9">
-        <input name="dataScale" type="number" class="form-control" data-ng-model="slidemodel.dataScale" id="dataScale" placeholder="Data-Scale">
+        <input name="dataScale" type="number" class="form-control" data-ng-model="slidemodel.dataScale" id="dataScale" placeholder="Data-Scale" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.dataScale">
     </div>
 </div>

@@ -17,7 +17,7 @@ for (var index in window.modules) {
 }
 
 // Default modules
-var modules = ['ngSanitize', 'ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'mean.system', 'mean.auth', 'checklist-model', 'angularFileUpload', 'hmTouchEvents', 'ngRepeatReorder'];
+var modules = ['ngAnimate', 'ngSanitize', 'ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'mean.system', 'mean.auth', 'checklist-model', 'angularFileUpload', 'hmTouchEvents', 'ngRepeatReorder', 'mgcrea.ngStrap'];
 modules = modules.concat(packageModules);
 
 // Combined modules
@@ -43,4 +43,10 @@ angular.module('mean', modules).run(['$rootScope','$location',
             return re.test(location.hash);
         };
     }
-]);
+])
+// This is required for AngularStrap Tooltips
+.config(function($tooltipProvider) {
+  angular.extend($tooltipProvider.defaults, {
+    html: true
+  });
+});

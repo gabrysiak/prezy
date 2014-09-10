@@ -20,9 +20,9 @@
     </div>
  -->
     <div class="left pull-left">
-        <ul class="navbar-nav nav">
+        <ul class="navbar-nav nav" data-ng-show="global.authenticated">
             <li data-ng-repeat="item in menus.main" ui-route="/{{item.link}}" class="dropdown" ng-class="{active: $uiRoute}">
-                <a mean-token="item.title" ng-show="item.dropdown" class="dropdown-toggle" href>
+                <a ng-show="item.dropdown" class="dropdown-toggle" data-toggle="dropdown" href>
                     {{item.title}} <b class="caret"></b>
                 </a>
                 <ul ng-show="item.dropdown" class="dropdown-menu">

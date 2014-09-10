@@ -9,7 +9,7 @@
             <div class="form-group" ng-class="{ 'has-error' : submitted && clientForm.title.$invalid }">
                 <label mean-token="'edit-title'" for="title" class="col-md-2 control-label">Title</label>
                 <div class="col-md-10">
-                    <input name="title" type="text" class="form-control" data-ng-model="client.title" id="title" placeholder="Title" required>
+                    <input name="title" type="text" class="form-control" data-ng-model="client.title" id="title" placeholder="Title" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.title" required>
                     <div ng-show="submitted && clientForm.title.$invalid" class="help-block">
                         <p ng-show="clientForm.title.$error.required">Title is required</p>
                     </div>
@@ -20,7 +20,7 @@
             <div class="form-group" ng-class="{ 'has-error' : submitted && clientForm.abbr.$invalid }">
                 <label mean-token="'edit-abbr'" for="abbr" class="col-md-2 control-label">Abbr</label>
                 <div class="col-md-10">
-                    <input name="abbr" type="text" class="form-control" data-ng-model="client.abbr" id="abbr" placeholder="Abbr" required>
+                    <input name="abbr" type="text" class="form-control" data-ng-model="client.abbr" id="abbr" placeholder="Abbr" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.abbr" required>
                     <div ng-show="submitted && clientForm.abbr.$invalid" class="help-block">
                         <p ng-show="clientForm.abbr.$error.required">Abbr is required</p>
                     </div>
@@ -31,7 +31,7 @@
             <div class="form-group" ng-class="{ 'has-error' : submitted && clientForm.content.$invalid }">
                 <label mean-token="'edit-content'" for="content" class="col-md-2 control-label">Content</label>
                 <div class="col-md-10">
-                    <textarea name="content" data-ng-model="client.content" id="content" cols="30" rows="10" placeholder="Content" class="form-control" required></textarea>
+                    <textarea name="content" data-ng-model="client.content" id="content" cols="30" rows="10" placeholder="Content" class="form-control" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.content" required></textarea>
                     <div ng-show="submitted && clientForm.content.$invalid" class="help-block">
                         <p ng-show="clientForm.content.$error.required">Content is required</p>
                     </div>
@@ -42,7 +42,7 @@
             <div class="form-group" ng-class="{ 'has-error' : submitted && clientForm.contactName.$invalid }">
                 <label mean-token="'create-contactName'" class="col-md-2 control-label">Contact Name</label>
                 <div class="col-md-10">
-                    <input name="contactName" type="text" class="form-control" data-ng-model="client.contactName" id="contactName" placeholder="Contact Name">
+                    <input name="contactName" type="text" class="form-control" data-ng-model="client.contactName" id="contactName" placeholder="Contact Name" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.contactName">
                 </div>
             </div>
 
@@ -50,7 +50,7 @@
             <div class="form-group" ng-class="{ 'has-error' : submitted && clientForm.contactEmail.$invalid }">
                 <label mean-token="'create-contactEmail'" class="col-md-2 control-label">Contact Email</label>
                 <div class="col-md-10">
-                    <input name="contactEmail" type="email" class="form-control" data-ng-model="client.contactEmail" id="contactEmail" placeholder="Contact Email">
+                    <input name="contactEmail" type="email" class="form-control" data-ng-model="client.contactEmail" id="contactEmail" placeholder="Contact Email" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.contactEmail">
                 </div>
             </div>
 
@@ -59,8 +59,8 @@
                 <a href class="thumbnail">
                     <img data-ng-src="{{client.logo}}" alt="{{client.title}} Logo">
                 </a>
-                <a class="btn" data-ng-click="removeLogo(client);">
-                    <i class="glyphicon glyphicon-trash"></i>
+                <a class="col-md-2 btn btn-danger" data-ng-click="removeLogo(client);" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.removeLogo">
+                    <i class="fa fa-trash-o fa-lg"></i>
                 </a>
             </div>
             <div data-ng-hide="client.logo" class="form-group" ng-class="{ 'has-error' : submitted && clientForm.logo.$invalid }">

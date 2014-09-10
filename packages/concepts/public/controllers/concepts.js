@@ -1,9 +1,16 @@
 'use strict';
 
-angular.module('mean').controller('ConceptsController', ['$scope', '$rootScope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Projects', 'Concepts', 'ShortUrl', 'Rounds', 'ClientProjects', 'Templates', '$upload', '$sce', '$timeout',
-    function($scope, $rootScope, $stateParams, $location, $http, $log, Global, Clients, Projects, Concepts, ShortUrl, Rounds, ClientProjects, Templates, $upload, $sce, $timeout) {
+angular.module('mean').controller('ConceptsController', ['$scope', '$rootScope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Projects', 'Concepts', 'ShortUrl', 'Rounds', 'ClientProjects', 'Templates', 'Tooltips', '$upload', '$sce', '$timeout',
+    function($scope, $rootScope, $stateParams, $location, $http, $log, Global, Clients, Projects, Concepts, ShortUrl, Rounds, ClientProjects, Templates, Tooltips, $upload, $sce, $timeout) {
         $scope.global = Global;
-        
+
+        // get tooltips
+        Tooltips.getTooltips('Concepts').then(function(tooltips) {
+            $scope.tooltips = tooltips;
+        }, function(err) {
+            console.log(err);
+        });
+
         // get client from query string
         var searchClient = $location.search().clientId;
         // get project from query string

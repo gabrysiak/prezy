@@ -9,7 +9,7 @@
             <div class="form-group" ng-class="{ 'has-error' : submitted && conceptForm.title.$invalid }">
                 <label mean-token="'create-title'" class="col-md-2 control-label">Title</label>
                 <div class="col-md-10">
-                    <input name="title" type="text" class="form-control" data-ng-model="title" id="title" placeholder="Title" required>
+                    <input name="title" type="text" class="form-control" data-ng-model="title" id="title" placeholder="Title" data-placement="right" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.title" required>
                     <div ng-show="submitted && conceptForm.title.$invalid" class="help-block">
                         <p ng-show="conceptForm.title.$error.required">Title is required</p>
                     </div>
@@ -19,7 +19,7 @@
             <div class="form-group" ng-class="{ 'has-error' : submitted && conceptForm.client.$invalid }">
                 <label mean-token="'edit-client'" for="client" class="col-md-2 control-label">Client</label>
                 <div class="col-md-10">
-                    <select class="form-control" name="client" data-ng-model="client" data-ng-options="client.value as client.text for client in clients" required>
+                    <select class="form-control" name="client" data-ng-model="client" data-ng-options="client.value as client.text for client in clients" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.client" required>
                     </select>
                     <div ng-show="submitted && conceptForm.client.$invalid" class="help-block">
                         <p ng-show="conceptForm.client.$error.required">Client is required</p>
@@ -30,7 +30,7 @@
             <div class="form-group" ng-class="{ 'has-error' : submitted && conceptForm.project.$invalid }">
                 <label mean-token="'edit-project'" for="project" class="col-md-2 control-label">Project</label>
                 <div class="col-md-10">
-                    <select class="form-control" name="project" data-ng-model="project" data-ng-options="project.value as project.text for project in projects" required>
+                    <select class="form-control" name="project" data-ng-model="project" data-ng-options="project.value as project.text for project in projects" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.project" required>
                     </select>
                     <div ng-show="submitted && conceptForm.project.$invalid" class="help-block">
                         <p ng-show="conceptForm.project.$error.required">Project is required</p>
@@ -41,7 +41,7 @@
             <div class="form-group" ng-class="{ 'has-error' : submitted && conceptForm.round.$invalid }">
                 <label mean-token="'edit-round'" for="round" class="col-md-2 control-label">Round</label>
                 <div class="col-md-10">
-                    <select class="form-control" name="round" data-ng-model="round" data-ng-options="round.value as round.text for round in rounds" required>
+                    <select class="form-control" name="round" data-ng-model="round" data-ng-options="round.value as round.text for round in rounds" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.round" required>
                     </select>
                     <div ng-show="submitted && conceptForm.round.$invalid" class="help-block">
                         <p ng-show="conceptForm.round.$error.required">Round is required</p>
@@ -54,7 +54,7 @@
             <div class="form-group">
                 <a class="btn btn-success col-md-2" data-ng-click="addSlide()"><i class="fa fa-plus fa-lg"></i> Slide</a>
                 <div class="col-md-10">
-                    <select class="form-control" data-ng-model="slides.template" data-ng-options="template.value as template.text for template in templates">
+                    <select class="form-control" data-ng-model="slides.template" data-ng-options="template.value as template.text for template in templates" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.addSlide">
                         <option value="">Default</option>
                     </select>
                 </div>
@@ -64,11 +64,11 @@
             <!-- Slides -->
             <div class="has-feedback transition" ng-repeat-reorder='slide in slides track by $index' ng-repeat-reorder-handle="i.fa.fa-bars">
                 
-                <i data-ng-hide="slides.length === 1" class="fa fa-bars fa-lg form-control-feedback" tg-reorder-slides></i>
-                <tg-slide-template slidemodel="slides[$index]"></tg-slide-template>
+                <i data-ng-hide="slides.length === 1" class="fa fa-bars fa-lg form-control-feedback" data-placement="top-right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" data-title="Drag to reorder slides" bs-tooltip tg-reorder-slides></i>
+                <tg-slide-template slidemodel="slides[$index]" tooltips="tooltips"></tg-slide-template>
                 <div data-ng-hide="slides.length === 1" class="form-group">
-                    <a class="col-md-2 btn btn-danger" data-ng-click="removeSlide(slide)"><i class="fa fa-minus fa-lg"></i> Remove Slide</a>
-                    <a class="col-md-2 btn btn-info" data-ng-click="duplicateSlide(slides, slide)"><i class="fa fa-refresh fa-spin fa-lg"></i> Duplicate Slide</a>
+                    <a class="col-md-2 btn btn-danger" data-ng-click="removeSlide(slide)" data-placement="top-right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" data-title="Click button to remove the slide above." bs-tooltip><i class="fa fa-minus fa-lg"></i> Remove Slide</a>
+                    <a class="col-md-2 btn btn-info" data-ng-click="duplicateSlide(slides, slide)" data-placement="top-right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" data-title="Click button to duplicate the slide above." bs-tooltip><i class="fa fa-refresh fa-spin fa-lg"></i> Duplicate Slide</a>
                     <div class="col-md-8">
                         
                     </div>

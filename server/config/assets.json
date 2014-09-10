@@ -8,6 +8,8 @@
                 "public/system/lib/owl.carousel2/assets/owl.theme.css",
                 "public/system/lib/owl.carousel2/assets/owl.transitions.css",
                 "public/system/lib/redactor/redactor.css",
+                "public/system/lib/angular-motion/dist/angular-motion.min.css",
+                "public/system/lib/bootstrap-additions/dist/bootstrap-additions.min.css",
                 "public/**/assets/css/*.css"
             ]
         },
@@ -18,11 +20,12 @@
                 "public/system/lib/angular-mocks/angular-mocks.js",
                 "public/system/lib/angular-cookies/angular-cookies.js",
                 "public/system/lib/angular-resource/angular-resource.js",
+                "public/system/lib/angular-animate/angular-animate.js",
                 "public/system/lib/angular-sanitize/angular-sanitize.js",
                 "public/system/lib/angular-ui-router/release/angular-ui-router.js",
                 "public/system/lib/angular-reorder/ngRepeatReorder.js",
-                "public/system/lib/angular-bootstrap/ui-bootstrap.js",
-                "public/system/lib/angular-bootstrap/ui-bootstrap-tpls.js",
+                "public/system/lib/angular-bootstrap/ui-bootstrap-custom-0.10.0.js",
+                "public/system/lib/angular-bootstrap/ui-bootstrap-custom-tpls-0.10.0.js",
                 "public/system/lib/bootstrap/dist/js/bootstrap.min.js",
                 "public/system/lib/hammerjs/hammer.min.js",
                 "public/system/lib/angular-hammer/angular-hammer.js",
@@ -33,6 +36,8 @@
                 "public/system/lib/danialfarid-angular-file-upload/dist/angular-file-upload.min.js",
                 "public/system/lib/owl.carousel2/owl.carousel.min.js",
                 "public/system/lib/redactor/redactor.js",
+                "public/system/lib/angular-strap/dist/angular-strap.min.js",
+                "public/system/lib/angular-strap/dist/angular-strap.tpl.min.js",
                 "public/init.js",
                 "public/*/*.js",
                 "public/*/{controllers,routes,services,directives}/*.js"

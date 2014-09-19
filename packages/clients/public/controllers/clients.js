@@ -4,6 +4,17 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
     function($scope, $stateParams, $location, $http, $log, $modal, Global, Clients, Concepts, Projects, FlashService, Tooltips, $timeout, $upload) {
         $scope.global = Global;
 
+        // get all background images
+        $http.get('/uploads/logos')
+            .success(function (data, status, headers, config) {
+                if (status !== 200) return;
+                //update the model
+                $scope.logos = data;
+
+            }).error(function (data, status, headers, config) {
+                console.log(data);
+        });
+
         // get tooltips
         Tooltips.getTooltips('Clients').then(function(tooltips) {
             $scope.tooltips = tooltips;
@@ -45,7 +56,13 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
             // $scope.upload = $upload.http({...})  see 88#issuecomment-31366487 for sample code.
         };
 
-        $scope.removeLogo = function(client) {
+        /**
+         * CURRENTLY UNUSED
+         * Delete a logo Perm from server
+         * @param  {object} client Client object
+         * @return {void}
+         */
+        $scope.deleteLogo = function(client) {
             if (client) {
                 // delete request to api
                 $http.delete('/uploads/logos/' + client._id)
@@ -243,6 +260,63 @@ angular.module('mean').controller('ClientsController', ['$scope', '$stateParams'
                 } else {
                     $scope.submitted = true;
                 }
+            };
+
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        };
+
+        // Modal to view previously uploaded logo images
+        $scope.viewLogos = function(logos) {
+            var modalInstance = $modal.open({
+                templateUrl: 'clients/views/partials/modal-logos.html',
+                controller: LogoModalInstanceController,
+                resolve: {
+                    logos: function () {
+                        return logos;
+                    },
+                    client: function () {
+                        return $scope.client;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (logo) {
+                if ($scope.client && $scope.client.logo) {
+                    $scope.client.logo = logo;
+                } else {
+                    $scope.logo = logo;
+                }
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+
+        var LogoModalInstanceController = function ($scope, $modalInstance, logos, client) {
+            $scope.selectedLogo = '';
+            $scope.logos = logos;
+
+            var getSelected = function(logoUrl) {
+                angular.forEach($scope.logos, function(logo) {
+                    if (logo.image === logoUrl) {
+                        logo.selected = true;
+                    } else {
+                        logo.selected = false;
+                    }
+                });
+            };
+
+            // initially set our selected which is bound to model
+            if (client && client.logo) getSelected(client.logo);    
+
+            $scope.selectLogo = function(logo) {
+                getSelected(logo.image);
+                $scope.selectedLogo = logo.image;
+            };
+
+            $scope.ok = function () {
+                $modalInstance.close($scope.selectedLogo);
             };
 
             $scope.cancel = function () {

@@ -53,14 +53,28 @@
                     <input name="contactEmail" type="email" class="form-control" data-ng-model="contactEmail" id="contactEmail" placeholder="Contact Email" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.contactEmail">
                 </div>
             </div>
-
+            
             <!-- Logo -->
-            <div class="form-group" ng-class="{ 'has-error' : submitted && clientForm.logo.$invalid }">
+            <div class="form-group">
                 <label mean-token="'create-logo'" class="col-md-2 control-label">Logo</label>
-                <div class="col-md-10" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.logo">
-                    <input name="logo" type="file" class="form-control" ng-file-select="onFileSelect($files)" id="logo">
+                <div class="col-md-10">
+                    <div class="col-md-6 btn btn-default" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.logo">    
+                        <div ng-file-drop-available="dropSupported=true" ng-file-drop="fileupload($files)" ng-file-drag-over-class="btn btn-success" ng-file-drag-over-delay="200" ng-show="dropSupported">Drop &amp; Upload Client Logo Here</div>
+                    </div>
+                    <button type="button" class="btn btn-primary" data-ng-click="viewLogos(logos);">Select Existing Logo</button>
+                    <button type="button" class="btn btn-danger" data-ng-show="logo" data-ng-click="logo = null ">Remove Logo</button>
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-10">
+                    <div data-ng-show="logo" class="col-md-5">
+                        <a href class="thumbnail">
+                            <img data-ng-src="{{logo}}"/>
+                        </a>
+                    </div>          
                 </div>
             </div>
+            
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <div class="pull-right">

@@ -9,7 +9,7 @@
             <div class="form-group" ng-class="{ 'has-error' : submitted && projectForm.title.$invalid }">
                 <label mean-token="'create-title'" class="col-md-2 control-label">Title</label>
                 <div class="col-md-10">
-                    <input name="title" type="text" class="form-control" data-ng-model="title" id="title" placeholder="Title" required>
+                    <input name="title" type="text" class="form-control" data-ng-model="title" id="title" placeholder="Title" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.title" required>
                     <div ng-show="submitted && projectForm.title.$invalid" class="help-block">
                         <p ng-show="projectForm.title.$error.required">Title is required</p>
                     </div>
@@ -20,7 +20,7 @@
             <div class="form-group" ng-class="{ 'has-error' : submitted && conceptForm.client.$invalid }">
                 <label mean-token="'edit-client'" for="client" class="col-md-2 control-label">Client</label>
                 <div class="col-md-10">
-                    <select class="form-control" name="client" data-ng-model="client" data-ng-options="client.value as client.text for client in clients" required>
+                    <select class="form-control" name="client" data-ng-model="client" data-ng-options="client.value as client.text for client in clients" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.client" required>
                     </select>
                     <div ng-show="submitted && conceptForm.client.$invalid" class="help-block">
                         <p ng-show="conceptForm.client.$error.required">Client is required</p>
@@ -32,7 +32,7 @@
             <div class="form-group" ng-class="{ 'has-error' : submitted && projectForm.content.$invalid }">
                 <label mean-token="'create-content'" for="content" class="col-md-2 control-label">Content</label>
                 <div class="col-md-10">
-                    <textarea name="content" data-ng-model="content" id="content" cols="30" rows="10" placeholder="Content" class="form-control" required></textarea>
+                    <textarea name="content" data-ng-model="content" id="content" cols="30" rows="10" placeholder="Content" class="form-control" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.content" required></textarea>
                     <div ng-show="submitted && projectForm.content.$invalid" class="help-block">
                         <p ng-show="projectForm.content.$error.required">Content is required</p>
                     </div>

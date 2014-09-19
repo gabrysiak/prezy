@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <h3 class="modal-title btn-info"> <i class="fa fa-exclamation-circle fa-lg"></i> Select a background</h3>
+</div>
+<div class="modal-body">
+    <div class="background-gallery">
+        <a href data-ng-repeat="background in backgrounds" data-ng-click="selectBackground(background)">
+            <img data-ng-class="{ active: background.selected }" data-ng-src="{{ background.image }}"/>
+        </a>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="pull-right">
+                <button class="btn btn-primary" data-ng-click="ok()">OK</button>
+                <button class="btn btn-warning" data-ng-click="cancel()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

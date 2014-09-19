@@ -1,8 +1,19 @@
 'use strict';
 
-angular.module('mean').controller('ConceptsController', ['$scope', '$rootScope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Projects', 'Concepts', 'ShortUrl', 'Rounds', 'ClientProjects', 'Templates', 'Tooltips', '$upload', '$sce', '$timeout',
-    function($scope, $rootScope, $stateParams, $location, $http, $log, Global, Clients, Projects, Concepts, ShortUrl, Rounds, ClientProjects, Templates, Tooltips, $upload, $sce, $timeout) {
+angular.module('mean').controller('ConceptsController', ['$scope', '$rootScope', '$stateParams', '$location', '$http', '$log', 'Global', 'Clients', 'Projects', 'Concepts', 'ShortUrl', 'Rounds', 'ClientProjects', 'Templates', 'Tooltips', '$upload', '$sce', '$timeout', '$modal',
+    function($scope, $rootScope, $stateParams, $location, $http, $log, Global, Clients, Projects, Concepts, ShortUrl, Rounds, ClientProjects, Templates, Tooltips, $upload, $sce, $timeout, $modal) {
         $scope.global = Global;
+
+        // get all background images
+        $http.get('/uploads/concepts/backgrounds')
+            .success(function (data, status, headers, config) {
+                if (status !== 200) return;
+                //update the model
+                $scope.backgrounds = data;
+
+            }).error(function (data, status, headers, config) {
+                console.log(data);
+        });
 
         // get tooltips
         Tooltips.getTooltips('Concepts').then(function(tooltips) {
@@ -30,7 +41,6 @@ angular.module('mean').controller('ConceptsController', ['$scope', '$rootScope',
             angular.forEach(rounds, function(round) {
                 $scope.rounds.push({ text: round.title, value: round._id });
             });
-            console.log($scope.rounds);
         });
 
         // initially populate the clients dropdown
@@ -88,6 +98,37 @@ angular.module('mean').controller('ConceptsController', ['$scope', '$rootScope',
             }
         };
 
+        $scope.onFileSelect = function($files, $index) {
+        //$files: an array of files selected, each file has name, size, and type.
+        for (var i = 0; i < $files.length; i++) {
+            var file = $files[i];
+            $scope.upload = $upload.upload({
+                url: '/uploads/concepts/backgrounds', //upload.php script, node.js route, or servlet url
+                // method: 'POST' or 'PUT',
+                // headers: {'header-key': 'header-value'},
+                // withCredentials: true,
+                // data: {client: this},
+                file: file, // or list of files: $files for html5 only
+                /* set the file formData name ('Content-Desposition'). Default is 'file' */
+                //fileFormDataName: myFile, //or a list of names for multiple files (html5).
+                /* customize how data is added to formData. See #40#issuecomment-28612000 for sample code */
+                //formDataAppender: function(formData, key, val){}
+            }).progress(function(evt) {
+                console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+            }).success(function(data, status, headers, config) {
+                // file is uploaded successfully
+                $scope.concept.slides[$index].bkgImage = JSON.parse(data);
+            });
+            //.error(...)
+            //.then(success, error, progress); 
+            //.xhr(function(xhr){xhr.upload.addEventListener(...)})// access and attach any event listener to XMLHttpRequest.
+            }
+            /* alternative way of uploading, send the file binary with the file's content-type.
+           Could be used to upload files to CouchDB, imgur, etc... html5 FileReader is needed. 
+           It could also be used to monitor the progress of a normal http post/put request with large data*/
+            // $scope.upload = $upload.http({...})  see 88#issuecomment-31366487 for sample code.
+        };
+
         // angular.js function encodeUriQuery was modified to add replace(/%2F/gi, '/'). on line 1248
         // without this the impressjs navigation carousel wont work
         $scope.carouselNav = function(id, start){
@@ -114,7 +155,7 @@ angular.module('mean').controller('ConceptsController', ['$scope', '$rootScope',
                 var concept = new Concepts({
                     title: this.title,
                     slides: this.slides,
-                    client: this.client,
+                    client: this.client._id,
                     project: this.project,
                     round: this.round,
                     shortUrl: null
@@ -213,6 +254,8 @@ angular.module('mean').controller('ConceptsController', ['$scope', '$rootScope',
                         slideNumber: newItemNo,
                         content: '',
                         contentRight: '',
+                        bkgColor: '',
+                        bkgImage: '',
                         dataX: $scope.slideDataX,
                         dataY: $scope.slideDataY
                     });
@@ -226,6 +269,8 @@ angular.module('mean').controller('ConceptsController', ['$scope', '$rootScope',
                     slideNumber: editItemNo,
                     content: '',
                     contentRight: '',
+                    bkgColor: '',
+                    bkgImage: '',
                     dataX: $scope.slideDataX,
                     dataY: $scope.slideDataY
                 });
@@ -280,6 +325,8 @@ angular.module('mean').controller('ConceptsController', ['$scope', '$rootScope',
                         slideNumber: newItemNo,
                         content: slide.content,
                         contentRight: slide.contentRight,
+                        bkgColor: slide.bkgColor,
+                        bkgImage: slide.bkgImage,
                         dataX: $scope.slideDataX,
                         dataY: $scope.slideDataY
                     });
@@ -295,6 +342,8 @@ angular.module('mean').controller('ConceptsController', ['$scope', '$rootScope',
                     slideNumber: editItemNo,
                     content: slide.content,
                     contentRight: slide.contentRight,
+                    bkgColor: slide.bkgColor,
+                    bkgImage: slide.bkgImage,
                     dataX: $scope.slideDataX,
                     dataY: $scope.slideDataY
                 });
@@ -377,6 +426,70 @@ angular.module('mean').controller('ConceptsController', ['$scope', '$rootScope',
             });
 
             callback(maxId);
+        };
+
+        // Modal to view previously uploaded background images
+        $scope.viewBackgrounds = function(backgrounds, slideindex) {
+            var modalInstance = $modal.open({
+                templateUrl: 'concepts/views/partials/modal-backgrounds.html',
+                controller: ModalInstanceController,
+                resolve: {
+                    backgrounds: function () {
+                        return backgrounds;
+                    },
+                    slideindex: function() {
+                        return slideindex;
+                    },
+                    slides: function() {
+                        if ($scope.concept && $scope.concept.slides) {
+                            return $scope.concept.slides;
+                        } else {
+                            return $scope.slides;
+                        }
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (background) {
+                if ($scope.concept && $scope.concept.slides) {
+                    $scope.concept.slides[slideindex].bkgImage = background;
+                } else {
+                    $scope.slides[slideindex].bkgImage = background;
+                }
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+
+        var ModalInstanceController = function ($scope, $modalInstance, backgrounds, slideindex, slides) {
+            $scope.selectedBackground = '';
+            $scope.backgrounds = backgrounds;
+
+            var getSelected = function(background) {
+                angular.forEach($scope.backgrounds, function(bkg) {
+                    if (bkg.image === background) {
+                        bkg.selected = true;
+                    } else {
+                        bkg.selected = false;
+                    }
+                });
+            };
+
+            // initially set our selected which is bound to model
+            getSelected(slides[slideindex].bkgImage);    
+
+            $scope.selectBackground = function(background) {
+                getSelected(background.image);
+                $scope.selectedBackground = background.image;
+            };
+
+            $scope.ok = function () {
+                $modalInstance.close($scope.selectedBackground);
+            };
+
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
         };
     }
 ]);

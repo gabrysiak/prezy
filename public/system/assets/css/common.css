@@ -132,7 +132,6 @@ body .btn {
     -ms-user-select: none;
     user-select: none;
 }
-
 /*
 Home Page
 ================================================================>
@@ -267,4 +266,28 @@ Home Page
   border-left: 15px solid #75caeb;
   border-top: 15px solid transparent;
   right: -15px;
+}
+
+/*
+Background & Logo Gallery Modal
+================================================================>
+*/
+
+.background-gallery > a,
+.logo-gallery > a {
+  text-decoration: none;
+}
+
+.background-gallery img,
+.logo-gallery img {
+  display: inline;
+  max-width: 20%;
+  padding: 10px;
+  opacity: 1;
+}
+
+.background-gallery img.active,
+.logo-gallery img.active {
+  opacity: 0.5;
+  border: 2px dashed gray;
 }

@@ -65,8 +65,7 @@
             <div class="has-feedback transition" ng-repeat-reorder='slide in slides track by $index' ng-repeat-reorder-handle="i.fa.fa-bars">
                 
                 <i data-ng-hide="slides.length === 1" class="fa fa-bars fa-lg form-control-feedback" data-placement="top-right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" data-title="Drag to reorder slides" bs-tooltip tg-reorder-slides></i>
-                <tg-slide-template slidemodel="slides[$index]" tooltips="tooltips"></tg-slide-template>
-                <div data-ng-hide="slides.length === 1" class="form-group">
+                <tg-slide-template slidemodel="slides[$index]" tooltips="tooltips" fileupload="onFileSelect" slideindex="$index" backgrounds="backgrounds" viewbackgrounds="viewBackgrounds">
                     <a class="col-md-2 btn btn-danger" data-ng-click="removeSlide(slide)" data-placement="top-right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" data-title="Click button to remove the slide above." bs-tooltip><i class="fa fa-minus fa-lg"></i> Remove Slide</a>
                     <a class="col-md-2 btn btn-info" data-ng-click="duplicateSlide(slides, slide)" data-placement="top-right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" data-title="Click button to duplicate the slide above." bs-tooltip><i class="fa fa-refresh fa-spin fa-lg"></i> Duplicate Slide</a>
                     <div class="col-md-8">

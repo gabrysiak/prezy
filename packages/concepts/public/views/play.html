@@ -11,11 +11,12 @@
             </div>
             <div id="impress">
                 <div id="start" class="step" data-x="0" data-y="0">
-                    <p>{{ concept.title }}</p>
+                    <div class="col-md-6">{{ concept.title }}</div>
+                    <div class="col-md-6"><img class="concept-client-logo" data-ng-src="{{ concept.client.logo }}"/></div>
                 </div>
 
-                <div data-ng-repeat="slide in concept.slides" class="step {{ slide.template ? slide.template : 'default' }}" data-x="{{slide.dataX}}" data-y="{{slide.dataY}}" data-z="{{slide.dataZ}}" data-rotate="{{slide.dataRotate}}" data-scale="{{slide.dataScale}}" tg-initiate-impress="">
-                    <tg-concepts-template></tg-concepts-template>
+                <div data-ng-repeat="slide in concept.slides" class="slide-{{$index}} step {{ slide.template ? slide.template : 'default' }}" data-x="{{slide.dataX}}" data-y="{{slide.dataY}}" data-z="{{slide.dataZ}}" data-rotate="{{slide.dataRotate}}" data-scale="{{slide.dataScale}}" tg-initiate-impress="">
+                    <tg-concepts-template tg-slide-background="{slideData:slide, concepts: concept.slides, index:$index}"></tg-concepts-template>
                 </div>
 
                 <!-- <div id="overview" class="step" data-x="3000" data-y="1500" data-scale="10"> -->

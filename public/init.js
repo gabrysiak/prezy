@@ -17,7 +17,7 @@ for (var index in window.modules) {
 }
 
 // Default modules
-var modules = ['ngAnimate', 'ngSanitize', 'ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'mean.system', 'mean.auth', 'checklist-model', 'angularFileUpload', 'hmTouchEvents', 'ngRepeatReorder', 'mgcrea.ngStrap'];
+var modules = ['ngAnimate', 'ngSanitize', 'ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'mean.system', 'mean.auth', 'checklist-model', 'angularFileUpload', 'hmTouchEvents', 'ngRepeatReorder', 'mgcrea.ngStrap.tooltip', 'colorpicker.module', 'flow'];
 modules = modules.concat(packageModules);
 
 // Combined modules
@@ -46,7 +46,22 @@ angular.module('mean', modules).run(['$rootScope','$location',
 ])
 // This is required for AngularStrap Tooltips
 .config(function($tooltipProvider) {
-  angular.extend($tooltipProvider.defaults, {
-    html: true
-  });
-});
+    angular.extend($tooltipProvider.defaults, {
+        html: true
+    });
+})
+
+.config(['flowFactoryProvider', function (flowFactoryProvider) {
+    flowFactoryProvider.defaults = {
+        target: '/uploads/concepts/backgrounds',
+        permanentErrors: [404, 500, 501],
+        maxChunkRetries: 1,
+        chunkRetryInterval: 5000,
+        simultaneousUploads: 4
+    };
+    flowFactoryProvider.on('catchAll', function (event) {
+        console.log('catchAll', arguments);
+    });
+    // Can be used with different implementations of Flow.js
+  // flowFactoryProvider.factory = fustyFlowFactory;
+}]);

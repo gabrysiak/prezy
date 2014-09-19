@@ -1,8 +1,15 @@
 'use strict';
 
-angular.module('mean').controller('ProjectsController', ['$scope', '$q', '$rootScope', '$stateParams', '$location', '$log', '$modal', 'Global', 'Clients', 'Projects', 'Rounds', 'Concepts', 'ShortUrl', 'FlashService', '$timeout',
-    function($scope, $q, $rootScope, $stateParams, $location, $log, $modal, Global, Clients, Projects, Rounds, Concepts, ShortUrl, FlashService, $timeout) {
+angular.module('mean').controller('ProjectsController', ['$scope', '$q', '$rootScope', '$stateParams', '$location', '$log', '$modal', 'Global', 'Clients', 'Projects', 'Rounds', 'Concepts', 'ShortUrl', 'Tooltips', 'FlashService', '$timeout',
+    function($scope, $q, $rootScope, $stateParams, $location, $log, $modal, Global, Clients, Projects, Rounds, Concepts, ShortUrl, Tooltips, FlashService, $timeout) {
         $scope.global = Global;
+
+        // get tooltips
+        Tooltips.getTooltips('Projects').then(function(tooltips) {
+            $scope.tooltips = tooltips;
+        }, function(err) {
+            console.log(err);
+        });
 
         // get client from query string
         var searchClient = $location.search().clientId;

@@ -31,6 +31,16 @@ var Slides = new Schema({
     required: false,
         trim: true
     },
+    bkgColor: {
+        type: String,
+    required: false,
+        trim: true
+    },
+    bkgImage: {
+        type: String,
+    required: false,
+        trim: true
+    },
     dataX: {
         type: Number,
     required: false,
@@ -126,7 +136,7 @@ ConceptSchema.path('project').validate(function(project) {
 ConceptSchema.statics.load = function(id, cb) {
     this.findOne({
         _id: id
-    }).populate('user', 'name username').exec(cb);
+    }).populate('user', 'name username').populate('client', '_id logo').exec(cb);
 };
 
 ConceptSchema.statics.saveClient = function(id, cb) {

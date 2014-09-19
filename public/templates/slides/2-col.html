@@ -3,6 +3,7 @@
     <label class="col-md-2 control-label"></label>
     <label class="col-md-9 control-label">{{ slidemodel.template ? slidemodel.template : 'default' }}</label>
 </div>
+
 <!-- Slide Number -->
 <div class="form-group" ng-class="{ 'has-error' : submitted && slidemodel.slideNumber.$invalid }" >
     <label mean-token="'create-slideNumber'" class="col-md-2 control-label">Slide Number</label>
@@ -14,6 +15,7 @@
     </div>
 </div>
 
+<!-- Content -->
 <div class="form-group">
     <label mean-token="'create-content'" for="content" class="col-md-2 control-label">Content</label>
     <div class="col-md-9">
@@ -21,10 +23,40 @@
     </div>
 </div>
 
+<!-- Content Right -->
 <div data-ng-show="slidemodel.template === '2-col'" class="form-group">
     <label mean-token="'create-content-right'" for="contentRight" class="col-md-2 control-label">Content Right</label>
     <div class="col-md-9">
         <redactor data-ng-model="slidemodel.contentRight" id="contentRight" class="form-control" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.contentRight"></redactor>
+    </div>
+</div>
+
+<!-- Background Color -->
+<div class="form-group">
+    <label mean-token="'create-bkgColor'" class="col-md-2 control-label">Background Color</label>
+    <div class="col-md-9">
+        <input colorpicker="rgba" colorpicker-position="right" type="text" name="bkgColor" id="bkgColor" class="form-control" ng-model="slidemodel.bkgColor" placeholder="rgba(255,255,255,1)" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.bkgColor"/>
+    </div>
+</div>
+
+<!-- Background Image -->
+<div class="form-group">
+    <label mean-token="'create-bkgImage'" class="col-md-2 control-label">Background Image</label>
+    <div class="col-md-10">
+        <div class="col-md-6 btn btn-default">    
+            <div ng-file-drop-available="dropSupported=true" ng-file-drop="fileupload($files, slideindex)" ng-file-drag-over-class="btn btn-success" ng-file-drag-over-delay="200" ng-show="dropSupported">Drop &amp; Upload Slide Background Image Here</div>
+        </div>
+        <button type="button" class="btn btn-primary" data-ng-click="viewbackgrounds(backgrounds, slideindex);">Select Existing Background</button>
+        <button type="button" class="btn btn-danger" data-ng-show="slidemodel.bkgImage" data-ng-click="slidemodel.bkgImage = null ">Remove Background</button>
+    </div>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-10">
+        <div data-ng-show="slidemodel.bkgImage" class="col-md-5">
+            <a href class="thumbnail">
+                <img data-ng-src="{{slidemodel.bkgImage}}"/>
+            </a>
+        </div>          
     </div>
 </div>
 

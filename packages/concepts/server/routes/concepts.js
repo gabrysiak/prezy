@@ -26,6 +26,9 @@ module.exports = function(Concepts, app, auth) {
     app.route('/uploads/concepts')
         .get(concepts.allUploads)
         .post(auth.requiresLogin, concepts.uploadConceptImage);
+    app.route('/uploads/concepts/backgrounds')
+        .get(concepts.allBackgrounds)
+        .post(auth.requiresLogin, concepts.uploadSlideBkg);
     app.route('/email/concepts')
         .post(auth.requiresLogin, concepts.email);
     app.route('/uploads/concepts/:conceptId')

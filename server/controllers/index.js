@@ -51,7 +51,7 @@ exports.render = function(req, res) {
         } : {},
         modules: modules,
         isAdmin: isAdmin,
-        version: 'Beta v.0.5.0',
+        version: 'Beta v.0.6.1',
         adminEnabled: isAdmin() && mean.moduleEnabled('mean-admin')
     });
 };

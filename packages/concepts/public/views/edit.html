@@ -1,7 +1,7 @@
 <div data-ng-include="'/public/system/views/misc-controls.html'"></div>
 <section data-ng-controller="ConceptsController" data-ng-init="findOne()">
     <div class="row">
-        <form name="conceptForm" class="form-horizontal" role="form" data-ng-submit="update(conceptForm.$valid)" novalidate>
+        <form name="conceptForm" enctype="multipart/form-data" class="form-horizontal" role="form" data-ng-submit="update(conceptForm.$valid)" novalidate>
             <!-- Form Name -->
             <h1>Concepts Edit</h1>
             <!-- Title -->
@@ -18,7 +18,7 @@
             <div class="form-group" ng-class="{ 'has-error' : submitted && conceptForm.client.$invalid }">
                 <label mean-token="'edit-client'" for="client" class="col-md-2 control-label">Client</label>
                 <div class="col-md-10">
-                    <select class="form-control" name="client" data-ng-model="concept.client" data-ng-options="client.value as client.text for client in clients" data-ng-change="updateProjects(concept.client)" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.client" required>
+                    <select class="form-control" name="client" data-ng-model="concept.client._id" data-ng-options="client.value as client.text for client in clients" data-ng-change="updateProjects(concept.client._id)" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.client" required>
                     </select>
                     <div ng-show="submitted && conceptForm.client.$invalid" class="help-block">
                         <p ng-show="conceptForm.client.$error.required">Client is required</p>
@@ -55,12 +55,12 @@
                 </div>
             </div>
             <hr>
-
+  
             <!-- Slides -->
             <div class="has-feedback transition" ng-repeat-reorder='slide in slides track by $index' ng-repeat-reorder-handle="i.fa.fa-bars">
                 
                 <i data-ng-hide="concept.slides.length === 1" class="fa fa-bars fa-lg form-control-feedback" data-placement="top-right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" data-title="Drag to reorder slides" bs-tooltip tg-reorder-slides></i>
-                <tg-slide-template slidemodel="concept.slides[$index]" tooltips="tooltips">
+                <tg-slide-template slidemodel="concept.slides[$index]" tooltips="tooltips" fileupload="onFileSelect" slideindex="$index" backgrounds="backgrounds" viewbackgrounds="viewBackgrounds">
 
                 </tg-slide-template>
                 <div data-ng-hide="concept.slides.length === 1" class="form-group">

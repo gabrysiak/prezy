@@ -10,6 +10,7 @@
                 "public/system/lib/redactor/redactor.css",
                 "public/system/lib/angular-motion/dist/angular-motion.min.css",
                 "public/system/lib/bootstrap-additions/dist/bootstrap-additions.min.css",
+                "public/system/lib/angular-bootstrap-colorpicker/css/colorpicker.css",
                 "public/**/assets/css/*.css"
             ]
         },
@@ -38,6 +39,8 @@
                 "public/system/lib/redactor/redactor.js",
                 "public/system/lib/angular-strap/dist/angular-strap.min.js",
                 "public/system/lib/angular-strap/dist/angular-strap.tpl.min.js",
+                "public/system/lib/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js",
+                "public/system/lib/ng-flow/dist/ng-flow-standalone.min.js",
                 "public/init.js",
                 "public/*/*.js",
                 "public/*/{controllers,routes,services,directives}/*.js"

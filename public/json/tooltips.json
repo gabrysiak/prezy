@@ -47,6 +47,12 @@
         "contentRight": {
             "title": "Enter the slide content to appear in right column. If blank, online single column layout will be used."
         },
+        "bkgColor": {
+            "title": "Enter background color for this slide."
+        },
+        "bkgImage": {
+            "title": "Enter a background image for this slide."
+        },
         "dataX": {
             "title": "Enter the slide position on the canvas X-Axis. Leave default for basic slide transitions."
         },
@@ -67,19 +73,31 @@
         }
     },
     "projects": {
-        "text1": {
-            "title": "learn projects"
+        "title": {
+            "title": "Enter the project title."
         },
-        "text2": {
-            "title": "build an projects app"
+        "client": {
+            "title": "Select the client for this project."
+        },
+        "content": {
+            "title": "Enter project notes."
         }
     },
     "rounds": {
-        "text3": {
-            "title": "learn rounds"
+        "title": {
+            "title": "Enter the round title."
         },
-        "text4": {
-            "title": "build an rounds app"
+        "content": {
+            "title": "Enter round notes."
+        },
+        "client": {
+            "title": "Select the client for this round."
+        },
+        "project": {
+            "title": "Select the project that this round will belong to."
+        },
+        "round": {
+            "title": "Select the round number."
         }
     }
 }

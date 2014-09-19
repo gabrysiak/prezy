@@ -17,6 +17,31 @@ Project = mongoose.model('Project');
 Concept = mongoose.model('Concept');
 
 /**
+ * Search directory for files
+ * @param  {string} dir Directory path
+ * @param  {string} dir Directory path
+ * @return {array}     Array of files found
+ */
+var walk = function(dir, subDir) {
+    var results = [],
+        rootFile,
+        list = fs.readdirSync(dir);
+
+    list.forEach(function(file) {
+        rootFile = dir + '/' + file;
+        var stat = fs.statSync(rootFile);
+        if (stat && stat.isDirectory()) {
+            results = results.concat(walk(rootFile));
+        } else {
+            if (typeof subDir !== 'undefined') {
+                results.push( appUploadPath + subDir + '/' + file);
+            }
+        }
+    });
+    return results;
+};
+
+/**
  * Find client by id
  */
 exports.client = function(req, res, next, id) {
@@ -43,6 +68,23 @@ exports.create = function(req, res) {
         }
         res.jsonp(client);
     });
+};
+
+/**
+ * Get all logos
+ */
+exports.allLogos = function(req, res) {
+    var logosFolder = '/logos',
+        files = walk( process.env.PWD + appUploadPath + logosFolder, logosFolder ),
+        logos = [];
+
+    files.forEach(function(file) {
+        logos.push({
+        'filelink': file, 'thumb': file, 'image': file
+        });
+    });
+    
+    res.jsonp(logos);
 };
 
 /**

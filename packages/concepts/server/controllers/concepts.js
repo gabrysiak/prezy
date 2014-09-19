@@ -12,6 +12,8 @@ var mongoose = require('mongoose'),
     uploadPath = process.cwd() + appUploadPath,
     // slidePlayUrl = '/public/play/',
     fs = require('fs'),
+        // temporaryFolder = '/public/uploads/concepts/backgrounds',
+    // flow = require(process.cwd() + '/server/lib/flow')('/public/uploads/concepts/backgrounds'),
     api_key = 'key-3zip4qju2ns3t1cliicl3xwfb5rqk-f0',
     domain = 'prezy.mailgun.org',
     Mailgun = require('mailgun-js'),
@@ -32,6 +34,31 @@ var mongoose = require('mongoose'),
 
 //     return newLinks;
 // };
+    
+/**
+ * Search directory for files
+ * @param  {string} dir Directory path
+ * @param  {string} dir Directory path
+ * @return {array}     Array of files found
+ */
+var walk = function(dir, subDir) {
+    var results = [],
+        rootFile,
+        list = fs.readdirSync(dir);
+
+    list.forEach(function(file) {
+        rootFile = dir + '/' + file;
+        var stat = fs.statSync(rootFile);
+        if (stat && stat.isDirectory()) {
+            results = results.concat(walk(rootFile));
+        } else {
+            if (typeof subDir !== 'undefined') {
+                results.push( appUploadPath + subDir + '/' + file);
+            }
+        }
+    });
+    return results;
+};
 
 /**
  * Find concept by id
@@ -49,23 +76,9 @@ exports.concept = function(req, res, next, id) {
  * Show concept images
  */
 exports.allUploads = function(req, res) {
-    var walk = function(dir) {
-        var results = [],
-            rootFile,
-            list = fs.readdirSync(dir);
-        list.forEach(function(file) {
-            rootFile = dir + '/' + file;
-            var stat = fs.statSync(rootFile);
-            if (stat && stat.isDirectory()) {
-                results = results.concat(walk(rootFile));
-            } else {
-                results.push( appUploadPath + '/concepts/' + file);
-            }
-        });
-        return results;
-    };
 
-    var files = walk( process.env.PWD + appUploadPath + '/concepts'),
+    var conceptFolder = '/concepts',
+        files = walk( process.env.PWD + appUploadPath + conceptFolder, conceptFolder ),
         conceptImages = [];
 
     files.forEach(function(file) {
@@ -75,6 +88,20 @@ exports.allUploads = function(req, res) {
     });
     
     res.jsonp(conceptImages);
+};
+
+exports.allBackgrounds = function(req, res) {
+    var backgroundFolder = '/concepts/backgrounds',
+        files = walk( process.env.PWD + appUploadPath + backgroundFolder, backgroundFolder ),
+        backgroundImages = [];
+
+    files.forEach(function(file) {
+        backgroundImages.push({
+        'filelink': file, 'thumb': file, 'image': file
+        });
+    });
+    
+    res.jsonp(backgroundImages);
 };
 
 /**
@@ -90,6 +117,23 @@ exports.uploadConceptImage = function(req, res) {
         file.pipe(fstream);
         fstream.on('close', function () {
             res.jsonp({'filelink': appUploadPath + '/concepts/' + filename, 'thumb': appUploadPath + '/concepts/' + filename, 'image': appUploadPath + '/concepts/' + filename});
+        });
+    });
+};
+
+/**
+ * Upload a concept slide background
+ */
+exports.uploadSlideBkg = function(req, res) {
+    // Handle Image upload
+    var fstream;
+    req.pipe(req.busboy);
+    req.busboy.on('file', function (fieldname, file, filename) {
+        console.log('Uploading: ' + filename); 
+        fstream = fs.createWriteStream(uploadPath + '/concepts/backgrounds/' + filename);
+        file.pipe(fstream);
+        fstream.on('close', function () {
+            res.jsonp(appUploadPath + '/concepts/backgrounds/' + filename);
         });
     });
 };

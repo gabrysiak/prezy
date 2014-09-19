@@ -32,7 +32,12 @@ angular.module('mean')
             restrict: 'E',
             scope: {
                 slidemodel: '=',
-                tooltips: '='
+                tooltips: '=',
+                fileupload: '=',
+                slideindex: '=',
+                backgrounds: '=',
+                modal: '=',
+                viewbackgrounds: '='
             },
             link: function(scope, element, attrs) {
                 var loader = getTemplate(scope.slidemodel.template),

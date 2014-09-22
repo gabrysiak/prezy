@@ -59,7 +59,7 @@
                 <label mean-token="'create-logo'" class="col-md-2 control-label">Logo</label>
                 <div class="col-md-10">
                     <div class="col-md-6 btn btn-default" data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.logo">    
-                        <div ng-file-drop-available="dropSupported=true" ng-file-drop="fileupload($files)" ng-file-drag-over-class="btn btn-success" ng-file-drag-over-delay="200" ng-show="dropSupported">Drop &amp; Upload Client Logo Here</div>
+                        <div ng-file-drop-available="dropSupported=true" ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="btn btn-success" ng-file-drag-over-delay="200" ng-show="dropSupported">Drop &amp; Upload Client Logo Here</div>
                     </div>
                     <button type="button" class="btn btn-primary" data-ng-click="viewLogos(logos);">Select Existing Logo</button>
                     <button type="button" class="btn btn-danger" data-ng-show="client.logo" data-ng-click="client.logo = null " data-placement="right" data-container="body" data-type="info" data-trigger="hover" data-animation="am-flip-x" bs-tooltip="tooltips.removeLogo">Remove Logo</button>

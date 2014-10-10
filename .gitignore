@@ -13,3 +13,4 @@ modules/views/
 /public/build/
 /nbproject/private/
 public/uploads/*
+sftp-config.json
